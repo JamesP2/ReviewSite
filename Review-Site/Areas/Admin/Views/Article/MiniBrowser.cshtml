@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Review_Site.Models.Article>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayoutBare.cshtml";
+    ViewBag.Title = "Article Browser";
+}
+
+<h2>Select An Article</h2>
+
+<table class="table table-bordered table-condensed table-striped">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Category
+        </th>
+        <th>
+            Author
+        </th>
+        <th>
+            Created
+        </th>
+        <th>
+            
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.FirstName) @Html.DisplayFor(modelItem => item.User.LastName) (@Html.DisplayFor(modelItem => item.User.Username)) 
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Created)
+        </td>
+        <td>
+            <a href="#" onclick="sendBack('@item.ID.ToString()', '@item.Title')">Select</a> |
+            @Html.ActionLink("View", "GetArticle", new { controller = "Home", area = "", id = item.ID }, new { target = "_blank" })
+        </td>
+    </tr>
+}
+
+@if (!Model.Any())
+{
+    <tr>
+        <td colspan="5" style="text-align: center"><strong>There is nothing here.</strong></td>
+    </tr>
+}
+
+</table>
+
+<script type="text/javascript">
+    function sendBack(id, title) {
+        window.opener.setArticle(id, title);
+        window.close();
+    }
+</script>

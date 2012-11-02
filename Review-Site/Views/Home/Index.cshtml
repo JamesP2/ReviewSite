@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+<div class="row">
+    <div class="span12">
+        <div class="gridsquare tall">
+            <div class="overlay inverse anchorBottomMiddle">
+                <a href="@Url.Action("GetArticle", new { id = "37E6A254-29D8-4593-BA1A-8D4D404AE478" })"><h1>Large height</h1></a>
+            </div>
+            <img alt="Image" src="@Url.Content("~/Content/images/teststuff/mariogalaxy.jpg")" />
+        </div>
+    </div>
+</div>
+<div class="row padtop">
+    <div class="span8">
+        <div class="gridsquare green bg-black">
+            <div class="overlay">
+                <a href="#"><h1>regular height &amp; inverted heading.</h1></a>
+            </div>
+            <img alt="Image" src="@Url.Content("~/Content/images/teststuff/mariogalaxy.jpg")" />
+        </div>
+    </div>
+    <div class="span4">
+        <div class="gridsquare purple bg-black">
+                <div class="overlay">
+                    <a href="#"><h1>And another.</h1></a>
+                </div>
+                <img alt="Image" src="@Url.Content("~/Content/images/teststuff/mariogalaxy.jpg")" />
+        </div>
+    </div>
+</div>
+<div class="row padtop">
+    <div class="span4">
+        <div class="gridsquare small green bg-black">
+            <div class="overlay">
+                <a href="#"><h1>Small height.</h1></a>
+            </div>
+            <img alt="Image" src="@Url.Content("~/Content/images/teststuff/mariogalaxy.jpg")" />
+        </div>
+    </div>
+    <div class="span4">
+        <div class="gridsquare small blue bg-black">
+                <div class="overlay anchorTopMiddle">
+                    <a href="#"><h1>Three to a row.</h1></a>
+                </div>
+                <img alt="Image" src="@Url.Content("~/Content/images/teststuff/mariogalaxy.jpg")" />
+        </div>
+    </div>
+    <div class="span4">
+        <div class="gridsquare small purple bg-black">
+                <div class="overlay anchorVeryBottom">
+                    <a href="#"><h1>And another.</h1></a>
+                </div>
+                <img alt="Image" src="@Url.Content("~/Content/images/teststuff/mariogalaxy.jpg")" />
+        </div>
+    </div>
+</div>

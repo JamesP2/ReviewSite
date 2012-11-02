@@ -1,0 +1,68 @@
+﻿@model Review_Site.Models.GridElement
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>GridElement</legend>
+
+    <div class="display-label">Color</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Color.Name)
+    </div>
+
+    <div class="display-label">Article</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Article.Title)
+    </div>
+
+    <div class="display-label">Grid</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Grid.Name)
+    </div>
+
+    <div class="display-label">Resource</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Resource.Title)
+    </div>
+
+    <div class="display-label">SizeClass</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.SizeClass)
+    </div>
+
+    <div class="display-label">HeadingClass</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.HeadingClass)
+    </div>
+
+    <div class="display-label">InverseHeading</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.InverseHeading)
+    </div>
+
+    <div class="display-label">HeadingText</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.HeadingText)
+    </div>
+
+    <div class="display-label">Width</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Width)
+    </div>
+
+    <div class="display-label">UseHeadingText</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UseHeadingText)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

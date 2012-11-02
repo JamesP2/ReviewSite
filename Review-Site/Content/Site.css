@@ -1,0 +1,183 @@
+﻿.header h1
+{
+    font-family: Rockwell;
+    font-size: 90px;
+    font-weight: normal;
+    color: #948A54;
+    padding-top: 30px;
+    display: inline-block;
+}
+
+.header h2
+{
+    color: #C2D69B;
+    font-weight: normal;
+    font-size: 40px;
+    display: inline;
+    position: absolute;
+    top: 30px;
+}
+
+.menu ul
+{
+    list-style: none;
+    margin: 15px 0px 10px 10px;
+}
+
+.menu ul li
+{
+    display: inline-block;
+    font-size: 20px;
+    font-family: Cambria;
+    font-weight: bold;
+    color: #858786;
+}
+
+.menu li.separator
+{
+    color: #000;
+}
+
+.row.padtop
+{
+    padding-top: 5px;
+}
+
+.gridsquare
+{
+    border: 6px solid #CCC;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+    height: 300px;
+}
+
+.gridsquare.blue
+{
+    border-color: #1582B3;
+}
+
+.gridsquare.green
+{
+    border-color: #77933C;
+}
+
+.gridsquare.purple
+{
+    border-color: #9900FF;
+}
+
+.gridsquare.tall
+{
+    height: 500px;
+}
+
+.gridsquare.small
+{
+    height: 200px;
+}
+
+.gridsquare .overlay
+{
+    background-image: url("images/alphaw.png");
+    background-repeat: repeat;
+    min-height: 60px;
+    width: 100%;
+    top: 0px;
+    display: block;
+    z-index: 999;
+    position: absolute;
+}
+
+.gridsquare .overlay.inverse
+{
+    background-image: url("images/alphab.png");
+}
+
+.gridsquare .overlay.anchorTopMiddle
+{
+    top: 40px;
+}
+
+.gridsquare .overlay.anchorBottomMiddle
+{
+    top: 80px;
+}
+
+.gridsquare .overlay.anchorVeryBottom
+{
+    top: auto;
+    bottom: 0px;
+}
+
+.gridsquare.large .overlay.anchorTopMiddle
+{
+    top: 160px;
+}
+
+.gridsquare.large .overlay.anchorBottomMiddle
+{
+    top: auto;
+    bottom: 100px;
+}
+
+.gridsquare.large .overlay.anchorVeryBottom
+{
+    top: auto;
+    bottom: 0px;
+}
+
+.gridsquare .overlay h1
+{
+    font-size: 26px;
+    padding-left: 10px;
+}
+
+.gridsquare .overlay.inverse h1
+{
+    color: #CCC;
+}
+
+.gridsquare .overlay a
+{
+    text-decoration: none;
+    color: inherit;
+}
+
+.gridsquare img
+{
+    z-index: 100;
+    float: left;
+    display: block;
+    position: absolute;
+}
+
+footer ul
+{
+    list-style: none;
+    margin-right: 30px;
+    margin-left: 15px;
+    float: left;
+}
+
+footer li.header
+{
+    font-weight: bold;
+}
+
+div.footerRightText p
+{
+    margin: 0px;
+}
+
+.article
+{
+    position: relative;
+}
+
+.article-info
+{
+    position: absolute;
+    right: 0px;
+    top: 5px;
+}

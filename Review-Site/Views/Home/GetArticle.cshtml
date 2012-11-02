@@ -1,0 +1,19 @@
+﻿@model Review_Site.Models.Article
+@{
+    ViewBag.Title = "GetArticle";
+}
+<div class="article">
+    <h1>@Model.Title</h1>
+    <p class="article-info">Written by @Model.User.FirstName @Model.User.LastName on the @Model.Created.ToShortDateString() at @Model.Created.ToShortTimeString()</p>
+    @{
+        if (Model.LastModified.Value != Model.Created)
+        {
+            <p class="article-info" style="top: 20px">Edited on the @Model.LastModified.Value.ToShortDateString() at @Model.LastModified.Value.ToShortTimeString()</p>
+        }
+    }
+        
+    
+    <div class="article-content">
+    @Html.Raw(Model.Text)
+    </div>
+</div>

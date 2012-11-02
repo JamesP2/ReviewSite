@@ -1,0 +1,30 @@
+﻿@model Review_Site.Models.Grid
+
+@*
+    Renders all the grid elements associated with a particular grid.
+    This is probably quite a messy way to do this, and looks terrible in razor...but it should work!
+ *@
+
+@{
+    int curused = 0;
+    @:<div class="row">
+    @foreach(var square in Model.GridElements){
+        if(curused == 12 || (curused + square.Width) > 12){
+            //Start a new row!
+            @:</div>
+            @:<div class="row">
+            curused = 0;
+        }
+        @:<div class="gridsquare @square.SizeClass span@(square.Width)" style="border-color: #@(String.IsNullOrEmpty(square.Color.Value) ? "CCCCCC" : square.Color.Value)">
+            @:<div class="overlay @square.HeadingClass @(square.InverseHeading == 1 ? "inverse")">
+                @:<a href="@Url.Action("GetArticle", new { controller="Home", area="", id=square.ArticleID })">
+                    @:<h1>@(square.UseHeadingText == 1 ? square.HeadingText : square.Article.Title)</h1>
+                @:</a>
+            @:</div>
+            @:<img alt="Grid Image @square.Resource.Title" src="@Url.Action("GetResource", new { controller="Home", area="", id=square.ImageID })"/>
+        @:</div>
+        //Append this square's width to the currently used up width of this row.
+        curused += square.Width; 
+    @}
+    @:</div>
+}

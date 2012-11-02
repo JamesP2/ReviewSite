@@ -1,0 +1,35 @@
+﻿@model Review_Site.Models.User
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>User</legend>
+
+    <div class="display-label">Username</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Username)
+    </div>
+
+    <div class="display-label">AuthWithAD</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AuthWithAD)
+    </div>
+
+    <div class="display-label">FirstName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FirstName)
+    </div>
+
+    <div class="display-label">LastName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastName)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

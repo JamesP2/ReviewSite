@@ -1,0 +1,43 @@
+﻿@model Review_Site.Models.Category
+
+@{
+    ViewBag.Title = "Edit Category";
+}
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+<h2>Edit Category</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+
+
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ColorID, "Colour")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("ColorID", String.Empty)
+            @Html.ValidationMessageFor(model => model.ColorID)
+        </div>
+
+        <p>
+            <input type="submit" class="btn btn-primary" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

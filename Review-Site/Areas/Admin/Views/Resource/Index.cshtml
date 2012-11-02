@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Review_Site.Models.Resource>
+
+@{
+    ViewBag.Title = "Resources";
+}
+
+
+
+<h2>Resources</h2>
+
+<p>
+    @Html.ActionLink("Upload", "Upload")
+</p>
+<table class="table table-striped table-bordered table-condensed">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Type
+        </th>
+        <th>
+            Date Added
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateAdded)
+        </td>
+        <td>
+            @Html.ActionLink("Rename", "Rename", new { id = item.ID }) |
+            @Html.ActionLink("View", "GetResource", new { controller = "Home", area = "", id = item.ID }, new { target = "_blank" }) |
+            <a href="#" onclick="deleteModal('@item.ID.ToString()', '@item.Title')">Delete</a>
+        </td>
+    </tr>
+}
+
+@if (!Model.Any())
+{
+    <tr>
+        <td colspan="4" style="text-align: center"><strong>There is nothing here.</strong></td>
+    </tr>
+}
+
+</table>
+
+<script type="text/javascript">
+    function deleteModal(id, name) {
+        $("#resTitle").html(name);
+        $("#deleteLink").attr("href", "@Url.Action("Delete", "Resource")/" + id);
+        $("#deleteModal").modal();
+    }
+</script>
+
+
+<div class="modal hide" id="deleteModal">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3>Delete Resource?</h3>
+  </div>
+  <div class="modal-body">
+    <p>The resource <span id="resTitle"></span> will not be deleted. This cannot be undone.</p>
+    <br />
+    <p>This will also cause pages that include this resource to display <strong>missing content</strong>.</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal">Cancel</button>
+    <a class="btn btn-danger" id="deleteLink" href="@Url.Action("Delete", "Resource")">Delete Resource</a>
+  </div>
+</div>

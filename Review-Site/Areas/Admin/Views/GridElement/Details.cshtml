@@ -1,0 +1,65 @@
+﻿@model Review_Site.Models.GridElement
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>GridElement</legend>
+
+    <div class="display-label">BorderColorID</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BorderColorID)
+    </div>
+
+    <div class="display-label">ArticleID</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ArticleID)
+    </div>
+
+    <div class="display-label">GridID</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.GridID)
+    </div>
+
+    <div class="display-label">ImageID</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ImageID)
+    </div>
+
+    <div class="display-label">SizeClass</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.SizeClass)
+    </div>
+
+    <div class="display-label">HeadingClass</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.HeadingClass)
+    </div>
+
+    <div class="display-label">InverseHeading</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.InverseHeading)
+    </div>
+
+    <div class="display-label">HeadingText</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.HeadingText)
+    </div>
+
+    <div class="display-label">Width</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Width)
+    </div>
+
+    <div class="display-label">UseHeadingText</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UseHeadingText)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

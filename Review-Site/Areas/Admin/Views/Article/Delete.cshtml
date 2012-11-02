@@ -1,0 +1,51 @@
+﻿@model Review_Site.Models.Article
+
+@{
+    ViewBag.Title = "Delete Article";
+}
+
+<h2>Delete Article</h2>
+
+<p>Click the button below to delete the article. This action <strong>cannot</strong> be undone.</p>
+<fieldset>
+    <legend>Article</legend>
+
+    <div class="display-label">Category</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Category.Title)
+    </div>
+
+    <div class="display-label">Author</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.User.FirstName) @Html.DisplayFor(model => model.User.LastName) (@Html.DisplayFor(model => model.User.Username)) 
+    </div>
+
+    <div class="display-label">Title</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Title)
+    </div>
+    @{
+        if(Model.ShortDescription != null){
+        <div class="display-label">Short Description</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.ShortDescription)
+        </div>
+        }
+    }
+
+    <div class="display-label">Created</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Created)
+    </div>
+
+    <div class="display-label">Last Modified</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastModified)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" class="btn btn-danger" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
