@@ -9,7 +9,7 @@ namespace Review_Site.Core
 {
     public class SiteMembershipProvider : MembershipProvider
     {
-        private ReviewSiteEntities db = new ReviewSiteEntities();
+        private SiteContext db = new SiteContext();
         public override bool ValidateUser(string username, string password)
         {
             User u = db.Users.Where(x => x.Username == username.ToLower()).SingleOrDefault();

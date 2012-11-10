@@ -4,9 +4,9 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<h2>Delete Grid</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to delete this grid?</h3>
 <fieldset>
     <legend>Grid</legend>
 
@@ -25,6 +25,8 @@
         @Html.DisplayFor(model => model.Description)
     </div>
 </fieldset>
+<p>&nbsp;</p>
+<p style="color: #FF0000;"><strong>All</strong> Grid Elements belonging to this grid will be deleted!</p>
 @using (Html.BeginForm()) {
     <p>
         <input type="submit" value="Delete" /> |

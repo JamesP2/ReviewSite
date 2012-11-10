@@ -89,7 +89,7 @@
                     @Html.EditorFor(model => model.HeadingText, new { maxlength = 150 })
                     @Html.ValidationMessageFor(model => model.HeadingText)
                 </div>
-                @Html.HiddenFor(model => model.UseHeadingText)
+                @Html.Hidden("UseHeadingText", "false")
             </div>
         </div>
         <p>&nbsp;</p>
@@ -124,9 +124,9 @@
     $("form").submit(function(){
         //If we're using custom heading text, set the hidden field to true
         if($("[name='HeadingText']").val() != ""){
-            $("[name='UseHeadingText']").val(1);
+            $("[name='UseHeadingText']").val("true");
         }else{
-            $("[name='UseHeadingText']").val(0);
+            $("[name='UseHeadingText']").val("false");
         }
         return true;
     });

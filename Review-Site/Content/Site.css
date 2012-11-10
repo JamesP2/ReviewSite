@@ -110,18 +110,18 @@
     bottom: 0px;
 }
 
-.gridsquare.large .overlay.anchorTopMiddle
+.gridsquare.tall .overlay.anchorTopMiddle
 {
     top: 160px;
 }
 
-.gridsquare.large .overlay.anchorBottomMiddle
+.gridsquare.tall .overlay.anchorBottomMiddle
 {
     top: auto;
     bottom: 100px;
 }
 
-.gridsquare.large .overlay.anchorVeryBottom
+.gridsquare.tall .overlay.anchorVeryBottom
 {
     top: auto;
     bottom: 0px;
@@ -175,9 +175,24 @@ div.footerRightText p
     position: relative;
 }
 
+.article-content
+{
+    margin-top: 10px;
+}
+
 .article-info
 {
-    position: absolute;
-    right: 0px;
-    top: 5px;
+    display: block;
+    text-align: right;
+    margin-bottom: 0px;
+}
+
+.article-title
+{
+    margin-bottom: 0px;
+}
+
+.article p
+{
+    padding-left: 10px;
 }

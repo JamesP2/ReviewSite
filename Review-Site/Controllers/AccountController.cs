@@ -33,7 +33,7 @@ namespace Review_Site.Controllers
             {
                 if (membership.ValidateUser(model.UserName, model.Password))
                 {
-                    ReviewSiteEntities db = new ReviewSiteEntities();
+                    SiteContext db = new SiteContext();
                     User u = db.Users.Single(x => x.Username.ToLower() == model.UserName.ToLower());
                     SiteAuthentication.SetAuthCookie(u, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")

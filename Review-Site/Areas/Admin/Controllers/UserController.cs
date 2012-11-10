@@ -12,7 +12,7 @@ namespace Review_Site.Areas.Admin.Controllers
 { 
     public class UserController : Controller
     {
-        private ReviewSiteEntities db = new ReviewSiteEntities();
+        private SiteContext db = new SiteContext();
 
         //
         // GET: /Admin/User/
@@ -65,7 +65,7 @@ namespace Review_Site.Areas.Admin.Controllers
 
                 if (form.Password.Equals(form.ConfirmedPassword))
                 {
-                    db.Users.AddObject(formToUser(form));
+                    db.Users.Add(formToUser(form));
                     db.SaveChanges();
                 }
                 else
@@ -140,7 +140,7 @@ namespace Review_Site.Areas.Admin.Controllers
                 user.LastName = form.LastName;
                 user.Username = form.Username;
 
-                db.ObjectStateManager.ChangeObjectState(user, EntityState.Modified);
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -163,7 +163,7 @@ namespace Review_Site.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(Guid id)
         {            
             User user = db.Users.Single(u => u.ID == id);
-            db.Users.DeleteObject(user);
+            db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

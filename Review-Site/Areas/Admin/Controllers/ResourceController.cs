@@ -14,7 +14,7 @@ namespace Review_Site.Areas.Admin.Controllers
     [Authorize]
     public class ResourceController : Controller
     {
-        private ReviewSiteEntities db = new ReviewSiteEntities();
+        private SiteContext db = new SiteContext();
 
         //
         // GET: /Admin/Resource/
@@ -65,7 +65,7 @@ namespace Review_Site.Areas.Admin.Controllers
             {
                 var path = Path.Combine(Server.MapPath("~/ResourceUploads"), fileName);
                 file.SaveAs(path);
-                db.Resources.AddObject(resource);
+                db.Resources.Add(resource);
                 db.SaveChanges();
                 return RedirectToAction("Index");  
             }
@@ -91,7 +91,7 @@ namespace Review_Site.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 db.Resources.Attach(resource);
-                db.ObjectStateManager.ChangeObjectState(resource, EntityState.Modified);
+                db.Entry(resource).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -105,7 +105,7 @@ namespace Review_Site.Areas.Admin.Controllers
         public ActionResult Delete(Guid id)
         {
             Resource resource = db.Resources.Single(r => r.ID == id);
-            db.Resources.DeleteObject(resource);
+            db.Resources.Remove(resource);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -162,7 +162,7 @@ namespace Review_Site.Areas.Admin.Controllers
             {
                 var path = Path.Combine(Server.MapPath("~/ResourceUploads"), fileName);
                 file.SaveAs(path);
-                db.Resources.AddObject(resource);
+                db.Resources.Add(resource);
                 db.SaveChanges();
                 return RedirectToAction("MiniBrowser");
             }

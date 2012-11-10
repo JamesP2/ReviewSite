@@ -11,7 +11,7 @@ namespace Review_Site.Areas.Admin.Controllers
 { 
     public class GridController : Controller
     {
-        private ReviewSiteEntities db = new ReviewSiteEntities();
+        private SiteContext db = new SiteContext();
 
         //
         // GET: /Admin/Grid/
@@ -47,7 +47,7 @@ namespace Review_Site.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 grid.ID = Guid.NewGuid();
-                db.Grids.AddObject(grid);
+                db.Grids.Add(grid);
                 db.SaveChanges();
                 return RedirectToAction("Index");  
             }
@@ -73,7 +73,7 @@ namespace Review_Site.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 db.Grids.Attach(grid);
-                db.ObjectStateManager.ChangeObjectState(grid, EntityState.Modified);
+                db.Entry(grid).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -96,7 +96,12 @@ namespace Review_Site.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(Guid id)
         {            
             Grid grid = db.Grids.Single(g => g.ID == id);
-            db.Grids.DeleteObject(grid);
+            List<GridElement> elements = grid.GridElements.ToList();
+            foreach (GridElement element in elements)
+            {
+                db.GridElements.Remove(element);
+            }
+            db.Grids.Remove(grid);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

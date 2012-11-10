@@ -11,7 +11,7 @@ namespace Review_Site.Areas.Admin.Controllers
 { 
     public class GridElementController : Controller
     {
-        private ReviewSiteEntities db = new ReviewSiteEntities();
+        private SiteContext db = new SiteContext();
 
         //
         // GET: /Admin/GridElement/
@@ -62,14 +62,14 @@ namespace Review_Site.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 gridelement.ID = Guid.NewGuid();
-                db.GridElements.AddObject(gridelement);
+                db.GridElements.Add(gridelement);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.BorderColorID = new SelectList(db.Colors, "ID", "Name", gridelement.BorderColorID);
             ViewBag.GridID = new SelectList(db.Grids, "ID", "Name", gridelement.GridID);
             populateFormViewBag();
-            if(gridelement.ImageID != null) gridelement.Resource = db.Resources.Single(x => x.ID == gridelement.ImageID);
+            if(gridelement.ImageID != null) gridelement.Image = db.Resources.Single(x => x.ID == gridelement.ImageID);
             return View(gridelement);
         }
         
@@ -94,7 +94,7 @@ namespace Review_Site.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 db.GridElements.Attach(gridelement);
-                db.ObjectStateManager.ChangeObjectState(gridelement, EntityState.Modified);
+                db.Entry(gridelement).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -139,7 +139,7 @@ namespace Review_Site.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(Guid id)
         {            
             GridElement gridelement = db.GridElements.Single(g => g.ID == id);
-            db.GridElements.DeleteObject(gridelement);
+            db.GridElements.Remove(gridelement);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

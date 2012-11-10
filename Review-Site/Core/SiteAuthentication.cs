@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Review_Site.Models;
 using System.Web.Security;
+using System.Data;
 
 namespace Review_Site.Core
 {
@@ -24,11 +25,11 @@ namespace Review_Site.Core
             if (encCookie != null)
             {
                 FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(encCookie.Value);
-                ReviewSiteEntities db = new ReviewSiteEntities();
+                SiteContext db = new SiteContext();
 
                 User user = db.Users.Single(x => x.ID == new Guid(ticket.UserData));
 
-                db.ObjectStateManager.ChangeObjectState(user, System.Data.EntityState.Detached);
+                db.Entry(user).State = EntityState.Modified;
                 return user;
             }
 

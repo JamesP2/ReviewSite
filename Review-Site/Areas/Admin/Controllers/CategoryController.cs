@@ -12,7 +12,7 @@ namespace Review_Site.Areas.Admin.Controllers
     [Authorize]
     public class CategoryController : Controller
     {
-        private ReviewSiteEntities db = new ReviewSiteEntities();
+        private SiteContext db = new SiteContext();
 
         //
         // GET: /Admin/Category/
@@ -40,7 +40,7 @@ namespace Review_Site.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 category.ID = Guid.NewGuid();
-                db.Categories.AddObject(category);
+                db.Categories.Add(category);
                 db.SaveChanges();
                 return RedirectToAction("Index");  
             }
@@ -67,7 +67,7 @@ namespace Review_Site.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 db.Categories.Attach(category);
-                db.ObjectStateManager.ChangeObjectState(category, EntityState.Modified);
+                db.Entry(category).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -81,8 +81,12 @@ namespace Review_Site.Areas.Admin.Controllers
         public ActionResult Delete(Guid id)
         {
             Category category = db.Categories.Single(c => c.ID == id);
-            db.Categories.DeleteObject(category);
-            db.SaveChanges();
+            if (!category.IsSystemCategory)
+            {
+                db.Categories.Remove(category);
+                db.SaveChanges();
+            }
+            else ModelState.AddModelError("", "That category belongs to the system. It cannot be deleted.");
             return RedirectToAction("Index");
         }
 

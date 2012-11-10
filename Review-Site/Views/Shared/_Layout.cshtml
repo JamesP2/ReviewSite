@@ -15,7 +15,7 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="span12 header"><h1><span style="color: #C4BC96;">the</span>REVIEW</h1><h2>| Inspiring text here...</h2></div>
+            <div class="span12 header"><h1><span style="color: #C4BC96;">the</span>REVIEW</h1><h2>| A Sixth Form Publication</h2></div>
         </div>
         <div class="row">
             <div class="span12 menu">
@@ -40,14 +40,17 @@
                 </ul>
             </div>
         </div>
-        @RenderBody()
+            @RenderBody()
         <hr />
         <footer>
             <div class="pull-right footerRightText">
             <p>Work In Progress.</p>
             @{
                 if(User.Identity.IsAuthenticated){
-                    <p>Logged in as @User.Identity.Name (<a href="@Url.Action("LogOut", new { controller = "Account" })">Logout</a>)</p>
+                    <p>
+                        Logged in as @User.Identity.Name (@Html.ActionLink("Site Admin", "Index", new { controller = "Admin", area = "Admin" }) | 
+                        @Html.ActionLink("Logout", "LogOut", new { controller = "Account" }))
+                    </p>
                 }
             }
             </div>

@@ -13,7 +13,7 @@ namespace Review_Site.Areas.Admin.Controllers
     [Authorize]
     public class ArticleController : Controller
     {
-        private ReviewSiteEntities db = new ReviewSiteEntities();
+        private SiteContext db = new SiteContext();
 
         //
         // GET: /Admin/Article/
@@ -63,7 +63,7 @@ namespace Review_Site.Areas.Admin.Controllers
                 article.LastModified = currentTime;
                 article.Created = currentTime;
                 article.AuthorID = SiteAuthentication.GetUserCookie().ID;
-                db.Articles.AddObject(article);
+                db.Articles.Add(article);
                 db.SaveChanges();
                 return RedirectToAction("Index");  
             }
@@ -92,7 +92,7 @@ namespace Review_Site.Areas.Admin.Controllers
             {
                 article.LastModified = DateTime.Now;
                 db.Articles.Attach(article);
-                db.ObjectStateManager.ChangeObjectState(article, EntityState.Modified);
+                db.Entry(article).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -116,7 +116,7 @@ namespace Review_Site.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(Guid id)
         {            
             Article article = db.Articles.Single(a => a.ID == id);
-            db.Articles.DeleteObject(article);
+            db.Articles.Remove(article);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

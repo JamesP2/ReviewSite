@@ -9,12 +9,17 @@
 
 <h2>Edit Category</h2>
 
+@if (Model.IsSystemCategory)
+{
+    <p>As this category belongs to the system, only the grid can be edited.</p>
+}
+
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
 
-
         @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.IsSystemCategory)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Title)

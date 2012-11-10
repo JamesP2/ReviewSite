@@ -10,7 +10,7 @@ namespace Review_Site.Controllers
 {
     public class HomeController : Controller
     {
-        private ReviewSiteEntities db = new ReviewSiteEntities();
+        private SiteContext db = new SiteContext();
         public ActionResult Index()
         {
             return View();
@@ -37,8 +37,25 @@ namespace Review_Site.Controllers
         public ActionResult GetArticle(Guid id)
         {
             //get the article and present it!
+            if (!db.Articles.Any(x => x.ID == id)) throw new HttpException(404, "That article does not exist");
             Article article = db.Articles.Single(x => x.ID == id);
             return View(article);
+        }
+
+        public ActionResult GetGrid(Guid id)
+        {
+            if (!db.Grids.Any(x => x.ID == id)) throw new HttpException(404, "That grid does not exist");
+            Grid grid = db.Grids.Single(x => x.ID == id);
+            return View(grid);
+        }
+
+        public ActionResult GetGrid(string id)
+        {
+            //Try by aliad instead.
+            string alias = id.ToLower();
+            if (!db.Grids.Any(x => x.Alias == alias)) throw new HttpException(404, "That grid does not exist");
+            Grid grid = db.Grids.Single(x => x.Alias == alias);
+            return View(grid);
         }
 
         public ActionResult About()

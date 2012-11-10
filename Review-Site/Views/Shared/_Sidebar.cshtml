@@ -1,0 +1,21 @@
+﻿@model Review_Site.Models.Article
+<div class="well well-small">
+    <ul class="nav nav-list">
+        <li class="nav-header">Latest Articles By @Model.User.FirstName @Model.User.LastName</li>
+        @foreach (var article in Model.User.Articles.OrderByDescending(x => x.Created).Take(3))
+        {
+        <li>@Html.ActionLink(article.Title, "GetArticle", "Home")</li>
+        }
+    </ul>
+</div>
+@if(Model.Category != null){
+<div class="well well-small">
+    <ul class="nav nav-list">
+        <li class="nav-header">Latest Articles in @Model.Category.Title</li>
+        @foreach (var article in Model.Category.Articles.OrderByDescending(x => x.Created).Take(3))
+        {
+        <li>@Html.ActionLink(article.Title, "GetArticle", "Home")</li>
+        }
+    </ul>
+</div>
+}

@@ -36,6 +36,12 @@ namespace Review_Site
             );
 
             routes.MapRoute(
+                "GetGrid",
+                "Grid/{id}",
+                new { controller = "Home", action = "GetGrid" }
+            );
+
+            routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
@@ -50,8 +56,8 @@ namespace Review_Site
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
-            ReviewSiteEntities db = new ReviewSiteEntities();
-            if (!db.Users.Select(x => x.Username).Contains("admin"))
+            SiteContext db = new SiteContext();
+            if (!db.Users.Any(x => x.Username.ToLower() == "admin"))
             {
                 //Create a test user!
                 User u = new User
@@ -63,23 +69,39 @@ namespace Review_Site
                     LastName = "Phillips",
                 };
 
-                db.Users.AddObject(u);
+                db.Users.Add(u);
                 db.SaveChanges();
             }
 
             if (!db.Colors.Any())
             {
                 //No colours. add some.
-                db.Colors.AddObject(new Color { ID = Guid.NewGuid(), Name = "Light Green", Value = "8AA359" });
-                db.Colors.AddObject(new Color { ID = Guid.NewGuid(), Name = "Purple", Value = "9900FF" });
-                db.Colors.AddObject(new Color { ID = Guid.NewGuid(), Name = "Blue", Value = "0B76C2" });
-                db.Colors.AddObject(new Color { ID = Guid.NewGuid(), Name = "Light Orange", Value = "F3B32B" });
-                db.Colors.AddObject(new Color { ID = Guid.NewGuid(), Name = "Light Red", Value = "FF5250" });
-                db.Colors.AddObject(new Color { ID = Guid.NewGuid(), Name = "Pink", Value = "FF36FF" });
-                db.Colors.AddObject(new Color { ID = Guid.NewGuid(), Name = "Light Blue", Value = "1582B3" });
-                db.Colors.AddObject(new Color { ID = Guid.NewGuid(), Name = "Light Brown", Value = "DA9349" });
-                db.Colors.AddObject(new Color { ID = Guid.NewGuid(), Name = "Grey", Value = "858786" });
+                db.Colors.Add(new Color { ID = Guid.NewGuid(), Name = "Light Green", Value = "8AA359" });
+                db.Colors.Add(new Color { ID = Guid.NewGuid(), Name = "Purple", Value = "9900FF" });
+                db.Colors.Add(new Color { ID = Guid.NewGuid(), Name = "Blue", Value = "0B76C2" });
+                db.Colors.Add(new Color { ID = Guid.NewGuid(), Name = "Light Orange", Value = "F3B32B" });
+                db.Colors.Add(new Color { ID = Guid.NewGuid(), Name = "Light Red", Value = "FF5250" });
+                db.Colors.Add(new Color { ID = Guid.NewGuid(), Name = "Pink", Value = "FF36FF" });
+                db.Colors.Add(new Color { ID = Guid.NewGuid(), Name = "Light Blue", Value = "1582B3" });
+                db.Colors.Add(new Color { ID = Guid.NewGuid(), Name = "Light Brown", Value = "DA9349" });
+                db.Colors.Add(new Color { ID = Guid.NewGuid(), Name = "Grey", Value = "858786" });
                 db.SaveChanges();
+            }
+
+            if (!db.Categories.Any(x => x.Title == "Home"))
+            {
+                //Add a system category to serve as the base for the homepage
+                db.Categories.Add(new Category
+                {
+                    ID = Guid.NewGuid(),
+                    Title = "Home",
+                    IsSystemCategory = true,
+                    Color = db.Colors.Single(x => x.Name == "Grey")
+                }
+                );
+
+                db.SaveChanges();
+
             }
         }
     }
