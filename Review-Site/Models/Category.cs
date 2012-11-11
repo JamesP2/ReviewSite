@@ -12,7 +12,7 @@ namespace Review_Site.Models
         [Key]
         public virtual Guid ID { get; set; }
         public virtual Guid ColorID { get; set; }
-        public virtual Guid GridID { get; set; }
+        public virtual Guid? GridID { get; set; }
 
         [Required(ErrorMessage = "You must provide a category title.")]
         public virtual string Title { get; set; }
@@ -28,7 +28,7 @@ namespace Review_Site.Models
         public CategoryConfiguration()
         {
             HasRequired(x => x.Color).WithMany().HasForeignKey(x => x.ColorID);
-            HasRequired(x => x.Grid).WithMany().HasForeignKey(x => x.GridID);
+            HasOptional(x => x.Grid).WithMany().HasForeignKey(x => x.GridID);
         }
     }
 }

@@ -15,7 +15,9 @@ namespace Review_Site.Models
         public virtual Guid CategoryID { get; set; }
         public virtual Guid AuthorID { get; set; }
 
+        [Required(ErrorMessage="You must provide a title!")]
         public virtual string Title { get; set; }
+        [MaxLength(150)]
         public virtual string ShortDescription { get; set; }
         [AllowHtml, Required(ErrorMessage = "You must enter some article text.")]
         public virtual string Text { get; set; }

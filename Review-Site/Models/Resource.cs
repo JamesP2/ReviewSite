@@ -13,6 +13,7 @@ namespace Review_Site.Models
         public virtual Guid ID { get; set; }
         public virtual Guid CreatorID { get; set; }
 
+        [Required(ErrorMessage="You must name your Resource.")]
         public virtual string Title { get; set; }
         public virtual string Type { get; set; }
 

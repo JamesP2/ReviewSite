@@ -11,15 +11,22 @@ namespace Review_Site.Models
     {
         [Key]
         public virtual Guid ID { get; set; }
+        [Required(ErrorMessage = "You must select a colour to use.")]
         public virtual Guid BorderColorID { get; set; }
+        [Required(ErrorMessage = "You must select an article to reference.")]
         public virtual Guid ArticleID { get; set; }
+        [Required(ErrorMessage = "You must associate this element with a grid.")]
         public virtual Guid GridID { get; set; }
+        [Required(ErrorMessage="You must select an image to use.")]
         public virtual Guid ImageID { get; set; }
-
+        [Required]
         public virtual string SizeClass { get; set; }
+        [Required]
         public virtual string HeadingClass { get; set; }
+        [Required]
         public virtual string HeadingText { get; set; }
 
+        [Required]
         public virtual int Width { get; set; }
 
         public virtual bool UseHeadingText { get; set; }
@@ -36,7 +43,7 @@ namespace Review_Site.Models
         public GridElementConfiguration()
         {
             HasRequired(x => x.BorderColor).WithMany().HasForeignKey(x => x.BorderColorID);
-            HasRequired(x => x.Article).WithMany().HasForeignKey(x => x.ArticleID);
+            HasRequired(x => x.Article).WithMany().HasForeignKey(x => x.ArticleID).WillCascadeOnDelete(false);
             HasRequired(x => x.Grid).WithMany(x => x.GridElements).HasForeignKey(x => x.GridID);
             HasRequired(x => x.Image).WithMany().HasForeignKey(x => x.ImageID);
         }

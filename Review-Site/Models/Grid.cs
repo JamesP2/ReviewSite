@@ -12,8 +12,13 @@ namespace Review_Site.Models
         [Key]
         public Guid ID { get; set; }
 
+        [Required(ErrorMessage="You must provide a name.")]
         public string Name { get; set; }
+
+        [Required(ErrorMessage = "You must provide an alias.")]
+        [RegularExpression(@"(\S)+", ErrorMessage = "Spaces cannot be used in an alias.")]
         public string Alias { get; set; }
+
         public string Description { get; set; }
 
         public virtual ICollection<GridElement> GridElements { get; set; }

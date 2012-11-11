@@ -98,6 +98,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201211110034349_InitialCreate.cs" />
+    <Compile Include="Migrations\201211110034349_InitialCreate.Designer.cs">
+      <DependentUpon>201211110034349_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201211110039561_Initial.cs" />
+    <Compile Include="Migrations\201211110039561_Initial.Designer.cs">
+      <DependentUpon>201211110039561_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\Category.cs" />
@@ -685,6 +694,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Sidebar.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201211110034349_InitialCreate.resx">
+      <DependentUpon>201211110034349_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201211110039561_Initial.resx">
+      <DependentUpon>201211110039561_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
