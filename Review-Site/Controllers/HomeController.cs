@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using Review_Site.Models;
 using System.IO;
+using System.Web.Helpers;
+using Review_Site.Core;
 
 namespace Review_Site.Controllers
 {
@@ -12,6 +14,13 @@ namespace Review_Site.Controllers
     {
         private SiteContext db = new SiteContext();
         public ActionResult Index()
+        {
+            if (!User.Identity.IsAuthenticated) return RedirectToAction("LandingPage");
+            
+            Category cat = db.Categories.Single(x => x.ID == new Guid("a323a95c-b475-4886-9f8d-006c2cc84c64"));
+            return View("Index", cat);
+        }
+        public ActionResult LandingPage()
         {
             return View();
         }
@@ -31,6 +40,14 @@ namespace Review_Site.Controllers
 
             stream.Close();
 
+            if (res.Type.StartsWith("image"))
+            {
+                WebImage image = new WebImage(streamBytes);
+                if (!string.IsNullOrWhiteSpace(res.Source)) image.AddTextWatermark(res.Source, "#" + ((res.SourceTextColor == null) ? "FFFFFF" : res.SourceTextColor.Value));
+                streamBytes = new byte[image.GetBytes().Length];
+                streamBytes = image.GetBytes();
+            }
+
             return File(streamBytes, res.Type);
         }
 
@@ -42,25 +59,52 @@ namespace Review_Site.Controllers
             return View(article);
         }
 
-        public ActionResult GetGrid(Guid id)
+        public ActionResult GetCategory(string id)
         {
-            if (!db.Grids.Any(x => x.ID == id)) throw new HttpException(404, "That grid does not exist");
-            Grid grid = db.Grids.Single(x => x.ID == id);
-            return View(grid);
+            Guid categoryguid;
+            Category category;
+            if (Guid.TryParse(id, out categoryguid))
+            {
+                if (!db.Categories.Any(x => x.ID == categoryguid)) throw new HttpException(404, "That category does not exist");
+                category = db.Categories.Single(x => x.ID == categoryguid);
+                return View(category);
+            }
+            else
+            {
+                //Try and match to category name instead.
+                string name = id.Replace('-', ' ').ToLower();
+                if (!db.Categories.Any(x => x.Title.ToLower() == name)) throw new HttpException(404, "That category does not exist");
+                category = db.Categories.Single(x => x.Title.ToLower() == name);
+                return View(category);
+            }
         }
 
         public ActionResult GetGrid(string id)
         {
-            //Try by aliad instead.
+            Guid gridguid;
+            Grid grid;
+            //Is it a GUID?
+            if (Guid.TryParse(id, out gridguid))
+            {
+                if (!db.Grids.Any(x => x.ID == gridguid)) throw new HttpException(404, "That grid does not exist");
+                grid = db.Grids.Single(x => x.ID == gridguid);
+                return View(grid);
+            }
+            //No? try the ID instead.
             string alias = id.ToLower();
-            if (!db.Grids.Any(x => x.Alias == alias)) throw new HttpException(404, "That grid does not exist");
-            Grid grid = db.Grids.Single(x => x.Alias == alias);
+            if (!db.Grids.Any(x => x.Alias.ToLower() == alias)) throw new HttpException(404, "That grid does not exist");
+            grid = db.Grids.Single(x => x.Alias.ToLower() == alias);
             return View(grid);
         }
 
         public ActionResult About()
         {
             return View();
+        }
+
+        public ActionResult Error(Exception e)
+        {
+            return Content(e.ToString());
         }
     }
 }

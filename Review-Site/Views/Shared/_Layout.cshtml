@@ -11,6 +11,14 @@
     <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
     <script src="@Url.Content("~/Scripts/jquery-1.8.2.min.js")" type="text/javascript"></script>
+    @if (ViewBag.ImageBorderColor != null)
+    {    
+        <style type="text/css">
+            .article-content img{
+                border: 6px solid #@ViewBag.ImageBorderColor;
+            }
+        </style>
+    }
 </head>
 <body>
     <div class="container">
@@ -20,23 +28,23 @@
         <div class="row">
             <div class="span12 menu">
                 <ul>
-                    <li style="color: #F3B32B;">World News</li>
+                    <li style="color: #F3B32B;"><a href="@Url.Action("GetCategory", new { Controller="Home", area="", id="World-News" })">World News</a></li>
                     <li class="separator">|</li>
-                    <li style="color: #DA9349;">Student News</li>
+                    <li style="color: #DA9349;"><a href="@Url.Action("GetCategory", new { Controller="Home", area="", id="Student-News" })">Student News</a></li>
                     <li class="separator">|</li>
-                    <li style="color: #8AA359;">Science/Tech</li>
+                    <li style="color: #8AA359;"><a href="@Url.Action("GetCategory", new { Controller="Home", area="", id="Science/Tech" })">Science/Tech</a></li>
                     <li class="separator">|</li>
-                    <li style="color: #0B76C2;">Media</li>
+                    <li style="color: #0B76C2;"><a href="@Url.Action("GetCategory", new { Controller="Home", area="", id="Media" })">Media</a></li>
                     <li class="separator">|</li>
-                    <li style="color: #FF5250;">Sport</li>
+                    <li style="color: #FF5250;"><a href="@Url.Action("GetCategory", new { Controller="Home", area="", id="Sport" })">Sport</a></li>
                     <li class="separator">|</li>
-                    <li style="color: #FF36FF;">Fashion</li>
+                    <li style="color: #FF36FF;"><a href="@Url.Action("GetCategory", new { Controller="Home", area="", id="Fashion" })">Fashion</a></li>
                     <li class="separator">|</li>
-                    <li style="color: #A11CFF;">Creative</li>
+                    <li style="color: #A11CFF;"><a href="@Url.Action("GetCategory", new { Controller="Home", area="", id="Creative" })">Creative</a></li>
                     <li class="separator">|</li>
-                    <li>Misc</li>
+                    <li><a href="#">Misc</a></li>
                     <li class="separator">|</li>
-                    <li>About Us</li>
+                    <li><a href="#">About Us</a></li>
                 </ul>
             </div>
         </div>
@@ -46,7 +54,8 @@
             <div class="pull-right footerRightText">
             <p>Work In Progress.</p>
             @{
-                if(User.Identity.IsAuthenticated){
+                if (User.Identity.IsAuthenticated)
+                {
                     <p>
                         Logged in as @User.Identity.Name (@Html.ActionLink("Site Admin", "Index", new { controller = "Admin", area = "Admin" }) | 
                         @Html.ActionLink("Logout", "LogOut", new { controller = "Account" }))

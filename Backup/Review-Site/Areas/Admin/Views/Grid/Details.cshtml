@@ -1,0 +1,29 @@
+﻿@model Review_Site.Models.Grid
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Grid Details</h2>
+
+<p>
+    @Html.ActionLink("Edit Grid Details", "Edit", new { id=Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+<div class="display-label">Name</div>
+<div class="display-field">
+    @Html.DisplayFor(model => model.Name)
+</div>
+
+<div class="display-label">Alias</div>
+<div class="display-field">
+    @Html.DisplayFor(model => model.Alias)
+</div>
+
+<div class="display-label">Description</div>
+<div class="display-field">
+    @Html.DisplayFor(model => model.Description)
+</div>
+
+<p>@Html.ActionLink("View Elements Of This Grid", "Index", new { id = Model.ID, controller = "GridElement", area = "Admin" })</p>

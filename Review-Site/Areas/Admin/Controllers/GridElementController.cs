@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Review_Site.Models;
+using Review_Site.Core;
 
 namespace Review_Site.Areas.Admin.Controllers
 { 
@@ -16,26 +16,28 @@ namespace Review_Site.Areas.Admin.Controllers
         //
         // GET: /Admin/GridElement/
 
+        [Restrict(Identifier = "Admin.GridElement.Index")]
         public ActionResult Index(Guid? id)
         {
             IEnumerable<GridElement> gridelements;
             if (id != null)
             {
                 if (!db.Grids.Any(x => x.ID == id)) return HttpNotFound();
-                gridelements = db.GridElements.Where(x => x.GridID == id).Include("Article").Include("Color").Include("Grid").Include("Resource");
+                gridelements = db.GridElements.Where(x => x.GridID == id).Include("Article").Include("BorderColor").Include("Grid").Include("Image");
                 Grid grid = db.Grids.Single(x => x.ID == id);
                 ViewBag.GridName = grid.Name;
             }
             else
             {
-                gridelements = db.GridElements.Include("Article").Include("Color").Include("Grid").Include("Resource");
+                gridelements = db.GridElements.Include("Article").Include("BorderColor").Include("Grid").Include("Image");
             }
-            return View(gridelements.ToList());
+            return View(gridelements.OrderBy(x => x.Article.Title).ToList());
         }
 
         //
         // GET: /Admin/GridElement/Details/5
 
+        [Restrict(Identifier = "Admin.GridElement.Index")]
         public ViewResult Details(Guid id)
         {
             GridElement gridelement = db.GridElements.Single(g => g.ID == id);
@@ -45,6 +47,7 @@ namespace Review_Site.Areas.Admin.Controllers
         //
         // GET: /Admin/GridElement/Create
 
+        [Restrict(Identifier = "Admin.GridElement.Create")]
         public ActionResult Create()
         {
             ViewBag.BorderColorID = new SelectList(db.Colors, "ID", "Name");
@@ -57,6 +60,7 @@ namespace Review_Site.Areas.Admin.Controllers
         // POST: /Admin/GridElement/Create
 
         [HttpPost]
+        [Restrict(Identifier = "Admin.GridElement.Create")]
         public ActionResult Create(GridElement gridelement)
         {
             if (ModelState.IsValid)
@@ -75,7 +79,8 @@ namespace Review_Site.Areas.Admin.Controllers
         
         //
         // GET: /Admin/GridElement/Edit/5
- 
+
+        [Restrict(Identifier = "Admin.GridElement.Edit")]
         public ActionResult Edit(Guid id)
         {
             GridElement gridelement = db.GridElements.Single(g => g.ID == id);
@@ -89,6 +94,7 @@ namespace Review_Site.Areas.Admin.Controllers
         // POST: /Admin/GridElement/Edit/5
 
         [HttpPost]
+        [Restrict(Identifier = "Admin.GridElement.Edit")]
         public ActionResult Edit(GridElement gridelement)
         {
             if (ModelState.IsValid)
@@ -107,7 +113,7 @@ namespace Review_Site.Areas.Admin.Controllers
         private void populateFormViewBag()
         {
             
-            ViewBag.Width = new SelectList(new List<int> { 4, 5, 6, 7, 8, 9, 10, 11, 12 });
+            ViewBag.Width = new SelectList(new List<int> { 4, 6, 8, 12 });
             ViewBag.SizeClass = new SelectList(new Dictionary<String, String> 
             { 
                 {"Tall", "tall"},
@@ -125,7 +131,8 @@ namespace Review_Site.Areas.Admin.Controllers
 
         //
         // GET: /Admin/GridElement/Delete/5
- 
+
+        [Restrict(Identifier = "Admin.GridElement.Delete")]
         public ActionResult Delete(Guid id)
         {
             GridElement gridelement = db.GridElements.Single(g => g.ID == id);
@@ -136,6 +143,7 @@ namespace Review_Site.Areas.Admin.Controllers
         // POST: /Admin/GridElement/Delete/5
 
         [HttpPost, ActionName("Delete")]
+        [Restrict(Identifier = "Admin.GridElement.Delete")]
         public ActionResult DeleteConfirmed(Guid id)
         {            
             GridElement gridelement = db.GridElements.Single(g => g.ID == id);

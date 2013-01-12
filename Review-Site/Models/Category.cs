@@ -15,6 +15,7 @@ namespace Review_Site.Models
         public virtual Guid? GridID { get; set; }
 
         [Required(ErrorMessage = "You must provide a category title.")]
+        [RegularExpression(@"[^-]*", ErrorMessage = "Titles may not contain dashes.")]
         public virtual string Title { get; set; }
         public virtual bool IsSystemCategory { get; set; }
 

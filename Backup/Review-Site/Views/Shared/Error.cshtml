@@ -1,0 +1,21 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+}
+
+<h2>
+    Sorry, an error occurred while processing your request.
+</h2>
+<p></p>
+@{
+    if(User.Identity.IsAuthenticated){
+        <p>As you are logged in, the detailed error message is below:</p>
+<pre>
+@Model.Exception.ToString()
+</pre>
+    }
+    else{
+        <p>If the problem persists, please contact an Administrator.</p>
+    }
+}

@@ -13,6 +13,7 @@
     color: #C2D69B;
     font-weight: normal;
     font-size: 40px;
+    font-family: Garamond;
     display: inline;
     position: absolute;
     top: 30px;
@@ -38,6 +39,17 @@
     color: #000;
 }
 
+.menu li a
+{
+    text-decoration: none;
+    color: inherit;
+}
+
+.menu li a:hover 
+{
+    color: #BBB;
+}
+
 .row.padtop
 {
     padding-top: 5px;
@@ -50,21 +62,6 @@
     overflow: hidden;
     position: relative;
     height: 300px;
-}
-
-.gridsquare.blue
-{
-    border-color: #1582B3;
-}
-
-.gridsquare.green
-{
-    border-color: #77933C;
-}
-
-.gridsquare.purple
-{
-    border-color: #9900FF;
 }
 
 .gridsquare.tall
@@ -195,4 +192,31 @@ div.footerRightText p
 .article p
 {
     padding-left: 10px;
+}
+
+.article-content img
+{
+    border: 6px solid #CCC;
+}
+
+.imageCaption
+{
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.gridsquare.blue
+{
+    border-color: #1582B3;
+}
+
+.gridsquare.green
+{
+    border-color: #77933C;
+}
+
+.gridsquare.purple
+{
+    border-color: #9900FF;
 }

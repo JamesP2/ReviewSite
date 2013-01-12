@@ -1,0 +1,28 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Review-Site\Migrations\201211110034349_InitialCreate.cs">
+    <Files>
+      <File FileName="Review-Site\Migrations\201212010123318_RolesAndPermissions.cs" Line="1" Column="1" />
+      <File FileName="Review-Site\Migrations\201211292113261_ResourceSourceColour.cs" Line="1" Column="1" />
+      <File FileName="Review-Site\Migrations\201211122055052_HeadingTextNotRequired.cs" Line="1" Column="1" />
+      <File FileName="Review-Site\Migrations\201211111224429_ArticleNullableDateTime.cs" Line="1" Column="1" />
+      <File FileName="Review-Site\Migrations\201211110039561_Initial.cs" Line="1" Column="1" />
+      <File FileName="Review-Site\Migrations\201211110034349_InitialCreate.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Review-Site" expanded="True">
+            <Node name="Migrations" expanded="True">
+              <Node name="201211110034349_InitialCreate.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
