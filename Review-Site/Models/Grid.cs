@@ -22,6 +22,9 @@ namespace Review_Site.Models
         public string Description { get; set; }
 
         public virtual IList<GridElement> GridElements { get; set; }
+
+        public virtual DateTime? Created { get; set; }
+        public virtual DateTime? LastModified { get; set; }
     }
 
     public class GridConfiguration : EntityTypeConfiguration<Grid>

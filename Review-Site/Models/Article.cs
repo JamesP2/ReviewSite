@@ -22,7 +22,7 @@ namespace Review_Site.Models
         [AllowHtml, Required(ErrorMessage = "You must enter some article text.")]
         public virtual string Text { get; set; }
         
-        public virtual DateTime Created { get; set; }
+        public virtual DateTime? Created { get; set; }
         public virtual DateTime? LastModified { get; set; }
 
         public virtual int Issue { get; set; }

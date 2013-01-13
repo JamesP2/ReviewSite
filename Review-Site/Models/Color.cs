@@ -13,5 +13,8 @@ namespace Review_Site.Models
 
         public virtual string Name { get; set; }
         public virtual string Value { get; set; }
+
+        public virtual DateTime? Created { get; set; }
+        public virtual DateTime? LastModified { get; set; }
     }
 }

@@ -26,6 +26,9 @@ namespace Review_Site.Models
 
         public virtual string HeadingText { get; set; }
 
+        public virtual DateTime? Created { get; set; }
+        public virtual DateTime? LastModified { get; set; }
+
         [Required]
         public virtual int Width { get; set; }
 

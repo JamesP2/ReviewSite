@@ -23,6 +23,7 @@ namespace Review_Site.Models
         public virtual string Source { get; set; }
 
         public virtual DateTime DateAdded { get; set; }
+        public virtual DateTime? LastModified { get; set; }
 
         public virtual User Creator { get; set; }
         [Display(Name="Source Text Colour")]

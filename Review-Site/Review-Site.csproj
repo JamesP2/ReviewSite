@@ -164,6 +164,10 @@
     <Compile Include="Migrations\201212010123318_RolesAndPermissions.Designer.cs">
       <DependentUpon>201212010123318_RolesAndPermissions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201301132002554_OptionalDates.cs" />
+    <Compile Include="Migrations\201301132002554_OptionalDates.Designer.cs">
+      <DependentUpon>201301132002554_OptionalDates.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Article.cs" />
@@ -793,6 +797,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201212010123318_RolesAndPermissions.resx">
       <DependentUpon>201212010123318_RolesAndPermissions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201301132002554_OptionalDates.resx">
+      <DependentUpon>201301132002554_OptionalDates.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
