@@ -12,7 +12,7 @@
         if(curused == 12 || (curused + square.Width) > 12){
             //Start a new row!
             @:</div>
-            @:<div class="row">
+            @:<div class="row padtop">
             curused = 0;
         }
         @:<div class="gridsquare @square.SizeClass span@(square.Width)" style="border-color: #@(String.IsNullOrEmpty(square.BorderColor.Value) ? "CCCCCC" : square.BorderColor.Value)">
