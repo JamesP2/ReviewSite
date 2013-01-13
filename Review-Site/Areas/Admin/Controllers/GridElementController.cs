@@ -72,8 +72,8 @@ namespace Review_Site.Areas.Admin.Controllers
             }
             ViewBag.BorderColorID = new SelectList(db.Colors, "ID", "Name", gridelement.BorderColorID);
             ViewBag.GridID = new SelectList(db.Grids, "ID", "Name", gridelement.GridID);
-            populateFormViewBag();
-            if(gridelement.ImageID != null) gridelement.Image = db.Resources.Single(x => x.ID == gridelement.ImageID);
+            populateFormViewBag(gridelement);
+            if(gridelement.ImageID != Guid.Empty) gridelement.Image = db.Resources.Single(x => x.ID == gridelement.ImageID);
             return View(gridelement);
         }
         
@@ -86,7 +86,7 @@ namespace Review_Site.Areas.Admin.Controllers
             GridElement gridelement = db.GridElements.Single(g => g.ID == id);
             ViewBag.BorderColorID = new SelectList(db.Colors, "ID", "Name", gridelement.BorderColorID);
             ViewBag.GridID = new SelectList(db.Grids, "ID", "Name", gridelement.GridID);
-            populateFormViewBag();
+            populateFormViewBag(gridelement);
             return View(gridelement);
         }
 
@@ -106,27 +106,35 @@ namespace Review_Site.Areas.Admin.Controllers
             }
             ViewBag.BorderColorID = new SelectList(db.Colors, "ID", "Name", gridelement.BorderColorID);
             ViewBag.GridID = new SelectList(db.Grids, "ID", "Name", gridelement.GridID);
-            populateFormViewBag();
+            populateFormViewBag(gridelement);
             return View(gridelement);
         }
 
         private void populateFormViewBag()
         {
-            
-            ViewBag.Width = new SelectList(new List<int> { 4, 6, 8, 12 });
-            ViewBag.SizeClass = new SelectList(new Dictionary<String, String> 
+            populateFormViewBag(null);
+        }
+
+        private void populateFormViewBag(GridElement Model)
+        {
+
+            SelectList width = new SelectList(new List<int> { 4, 6, 8, 12 }, ((Model != null) ? Model.Width.ToString() : "4"));
+            SelectList sizeClass = new SelectList(new Dictionary<String, String> 
             { 
                 {"Tall", "tall"},
                 {"Regular", "regular"},
                 {"Small", "small"},
-            }, "Value", "Key");
-            ViewBag.HeadingClass = new SelectList(new Dictionary<String, String>
+            }, "Value", "Key", ((Model != null) ? Model.SizeClass : "tall"));
+            SelectList headingClass = new SelectList(new Dictionary<String, String>
             {
                 {"Very Top", "anchorVeryTop"},
                 {"Top Middle", "anchorTopMiddle"},
                 {"Bottom Middle", "anchorBottomMiddle"},
                 {"Very Bottom", "anchorVeryBottom"},
-            }, "Value", "Key");
+            }, "Value", "Key", ((Model != null) ? Model.HeadingClass : "anchorVeryTop"));
+            ViewBag.Width = width;
+            ViewBag.SizeClass = sizeClass;
+            ViewBag.HeadingClass = headingClass;
         }
 
         //

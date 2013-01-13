@@ -35,14 +35,14 @@
             </div>
             <div class="tab-pane" id="visual-styling">
                 <div class="editor-label">
-                    @Html.LabelFor(model => model.BorderColorID, "Colour")
+                    @Html.LabelFor(model => model.BorderColorID, "Border Colour")
                 </div>
                 <div class="editor-field">
-                    @Html.DropDownList("BorderColorID", String.Empty)
+                    @Html.DropDownList("BorderColorID")
                     @Html.ValidationMessageFor(model => model.BorderColorID)
                 </div>
                 <div class="editor-label">
-                    <p>Selected Image: <span id="selectedImage">@((Model == null || Model.Image.Title == null) ? "None" : Model.Image.Title)</span></p>
+                    <p>Selected Image: <span id="selectedImage">@((Model == null || Model.Image == null || Model.Image.Title == null) ? "None" : Model.Image.Title)</span></p>
                     <a class="btn" href="#" onclick="openResourceSelector()">Select Image</a>
                 </div>
                 <div class="editor-field">
@@ -53,7 +53,7 @@
                     @Html.LabelFor(model => model.HeadingClass, "Heading Position")
                 </div>
                 <div class="editor-field">
-                    @Html.DropDownList("HeadingClass")
+                    @Html.DropDownListFor(model => model.HeadingClass, (SelectList)ViewBag.HeadingClass)
                     @Html.ValidationMessageFor(model => model.HeadingClass)
                 </div>
 
@@ -70,14 +70,14 @@
                     @Html.LabelFor(model => model.SizeClass, "Height")
                 </div>
                 <div class="editor-field">
-                    @Html.DropDownList("SizeClass")
+                    @Html.DropDownListFor(model => model.SizeClass, (SelectList)ViewBag.SizeClass)
                     @Html.ValidationMessageFor(model => model.SizeClass)
                 </div>
                 <div class="editor-label">
                     @Html.LabelFor(model => model.Width)
                 </div>
                 <div class="editor-field">
-                    @Html.DropDownList("Width")
+                    @Html.DropDownListFor(model => model.Width, (SelectList)ViewBag.Width)
                     @Html.ValidationMessageFor(model => model.Width)
                 </div>
             </div>
