@@ -25,35 +25,35 @@ namespace Review_Site
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            //routes.MapRoute(
-            //    "GetResource",
-            //    "Resource/{id}",
-            //    new { controller = "Home", action = "GetResource" }
-            //);
+            routes.MapRoute(
+                "GetResource",
+                "Resource/{id}",
+                new { controller = "Home", action = "GetResource" }
+            );
 
-            //routes.MapRoute(
-            //    "GetArticle",
-            //    "Article/{id}",
-            //    new { controller = "Home", action = "GetArticle" }
-            //);
+            routes.MapRoute(
+                "GetArticle",
+                "Article/{id}",
+                new { controller = "Home", action = "GetArticle" }
+            );
 
-            //routes.MapRoute(
-            //    "GetGrid",
-            //    "Grid/{id}",
-            //    new { controller = "Home", action = "GetGrid" }
-            //);
+            routes.MapRoute(
+                "GetGrid",
+                "Grid/{id}",
+                new { controller = "Home", action = "GetGrid" }
+            );
 
-            //routes.MapRoute(
-            //    "GetCategory",
-            //    "Category/{*id}",
-            //    new { controller = "Home", action = "GetCategory" }
-            //);
+            routes.MapRoute(
+                "GetCategory",
+                "Category/{*id}",
+                new { controller = "Home", action = "GetCategory" }
+            );
 
-            //routes.MapRoute(
-            //    "Default", // Route name
-            //    "{controller}/{action}/{id}", // URL with parameters
-            //    new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
-            //);
+            routes.MapRoute(
+                "Default", // Route name
+                "{controller}/{action}/{id}", // URL with parameters
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+            );
 
         }
 
