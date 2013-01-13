@@ -27,4 +27,6 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
-[Rr]esourceUploads/*
+Review-Site/[Rr]esourceUploads/*
+Backup/*
+Review-Site/Web.*
