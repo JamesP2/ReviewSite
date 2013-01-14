@@ -7,6 +7,7 @@ using FluentNHibernate.Conventions.Helpers;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Context;
+using NHibernate.Tool.hbm2ddl;
 
 namespace Review_Site.Core.Data
 {
@@ -78,10 +79,12 @@ namespace Review_Site.Core.Data
         }
 
         // Returns our database configuration
-        private static MsSqlConfiguration CreateDbConfig()
+        private static IPersistenceConfigurer CreateDbConfig()
         {
-            return MsSqlConfiguration.MsSql2008
-                .ConnectionString(c => c.FromConnectionStringWithKey("SiteContext"));
+            return MySQLConfiguration.Standard
+                .ConnectionString(c => c.FromConnectionStringWithKey("SiteMyContext"));
+            //return MsSqlConfiguration.MsSql2008
+            //    .ConnectionString(c => c.FromConnectionStringWithKey("SiteContext"));
         }
 
         // Returns our mappings
@@ -97,8 +100,8 @@ namespace Review_Site.Core.Data
         // or drops and creates it if it doesn't exist
         private static void UpdateSchema(Configuration cfg)
         {
-            //TODO: new SchemaUpdate(cfg)
-            //    .Execute(false, true);
+            new SchemaUpdate(cfg)
+                .Execute(false, true);
         }
     }
 }

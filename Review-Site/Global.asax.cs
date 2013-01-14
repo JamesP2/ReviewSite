@@ -8,6 +8,21 @@ namespace Review_Site
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
 
+    public class MonoWebFormViewEngine : WebFormViewEngine
+    {
+        protected override bool FileExists(ControllerContext controllerContext, string virtualPath)
+        {
+            return base.FileExists(controllerContext, virtualPath.Replace("~", ""));
+        }
+    }
+    public class MonoRazorViewEngine : RazorViewEngine
+    {
+        protected override bool FileExists(ControllerContext controllerContext, string virtualPath)
+        {
+            return base.FileExists(controllerContext, virtualPath.Replace("~", ""));
+        }
+    }
+
     public class MvcApplication : HttpApplication
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
@@ -53,6 +68,11 @@ namespace Review_Site
 
         protected void Application_Start()
         {
+            // Put Mono-supporting view engines in the context
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new MonoWebFormViewEngine());
+            ViewEngines.Engines.Add(new MonoRazorViewEngine());
+
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
