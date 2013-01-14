@@ -30,3 +30,4 @@ _ReSharper*/
 Review-Site/[Rr]esourceUploads/*
 Backup/*
 Review-Site/Web.*
+Review-Site/lucene_index/*

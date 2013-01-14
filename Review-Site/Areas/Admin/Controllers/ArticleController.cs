@@ -18,7 +18,7 @@ namespace Review_Site.Areas.Admin.Controllers
         //
         // GET: /Admin/Article/
 
-        [Restrict(Identifier="Admin.Article.Index")]
+        [Restrict(Identifier = "Admin.Article.Index")]
         public ViewResult Index()
         {
             var articles = db.Articles.Include("Category").Include("Author");
@@ -50,7 +50,7 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             ViewBag.CategoryID = new SelectList(db.Categories, "ID", "Title");
             return View();
-        } 
+        }
 
         //
         // POST: /Admin/Article/Create
@@ -68,13 +68,16 @@ namespace Review_Site.Areas.Admin.Controllers
                 article.AuthorID = SiteAuthentication.GetUserCookie().ID;
                 db.Articles.Add(article);
                 db.SaveChanges();
-                return RedirectToAction("Index");  
+
+                LuceneSearch.AddUpdate(article);
+
+                return RedirectToAction("Index");
             }
 
             ViewBag.CategoryID = new SelectList(db.Categories, "ID", "Title", article.CategoryID);
             return View(article);
         }
-        
+
         //
         // GET: /Admin/Article/Edit/5
 
@@ -101,6 +104,8 @@ namespace Review_Site.Areas.Admin.Controllers
                 db.Entry(article).State = EntityState.Modified;
                 db.SaveChanges();
 
+                LuceneSearch.AddUpdate(article);
+
                 return RedirectToAction("Index");
             }
             ViewBag.CategoryID = new SelectList(db.Categories, "ID", "Title", article.CategoryID);
@@ -123,10 +128,13 @@ namespace Review_Site.Areas.Admin.Controllers
         [HttpPost, ActionName("Delete")]
         [Restrict(Identifier = "Admin.Article.Delete")]
         public ActionResult DeleteConfirmed(Guid id)
-        {            
+        {
             Article article = db.Articles.Single(a => a.ID == id);
             db.Articles.Remove(article);
             db.SaveChanges();
+
+            LuceneSearch.Remove(id);
+
             return RedirectToAction("Index");
         }
 

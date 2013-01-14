@@ -25,6 +25,14 @@ namespace Review_Site.Controllers
             return View();
         }
 
+        public ActionResult Search(string query)
+        {
+            var results = LuceneSearch.SearchDefault(query).Select(x => x.ID).ToList();
+            var articles = db.Articles.Where(x => results.Any(y => y == x.ID));
+
+            return View(articles);
+        }
+        
         public ActionResult GetResource(Guid id)
         {
             //get the resource.

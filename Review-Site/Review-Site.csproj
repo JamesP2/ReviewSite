@@ -66,6 +66,12 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.0.0-alpha2\lib\net40\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net">
+      <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=6.6.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -127,6 +133,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Core\ActionFilters.cs" />
+    <Compile Include="Core\LuceneSearch.cs" />
     <Compile Include="Core\PermissionManager.cs" />
     <Compile Include="Core\SiteAuthentication.cs" />
     <Compile Include="Core\SiteMembershipProvider.cs" />
@@ -207,6 +214,7 @@
     <Content Include="Scripts\ckeditor\samples\sample_posteddata.php" />
     <Content Include="Scripts\ckeditor\skins\moono\readme.md" />
     <Content Include="Views\Shared\_AnalyticsJS.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
     <None Include="Web.MonoRelease.config">
       <SubType>Designer</SubType>
     </None>
