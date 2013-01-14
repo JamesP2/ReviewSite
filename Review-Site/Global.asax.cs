@@ -83,7 +83,8 @@ namespace Review_Site
                     ID = Guid.NewGuid(),
                     Title = "Home",
                     IsSystemCategory = true,
-                    Color = db.Colors.Single(x => x.Name == "Grey")
+                    Color = db.Colors.Single(x => x.Name == "Grey"),
+                    Created = DateTime.Now
                 }
                 );
 
