@@ -1,0 +1,3 @@
+[submodule "Review-Site/Scripts/ckeditor"]
+	path = Review-Site/Scripts/ckeditor
+	url = git://github.com/ckeditor/ckeditor-releases.git
