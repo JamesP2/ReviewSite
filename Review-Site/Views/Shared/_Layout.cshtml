@@ -29,6 +29,8 @@
         <div class="row">
             <div class="span12 menu">
                 <ul>
+                    <li style="color: #948A54;"><a href="@Url.Action("Home", new { Controller="Home", area=""})">Home</a></li>
+                    <li class="separator">|</li>
                     <li style="color: #F3B32B;"><a href="@Url.Action("GetCategory", new { Controller="Home", area="", id="World-News" })">World News</a></li>
                     <li class="separator">|</li>
                     <li style="color: #DA9349;"><a href="@Url.Action("GetCategory", new { Controller="Home", area="", id="Student-News" })">Student News</a></li>
@@ -43,7 +45,7 @@
                     <li class="separator">|</li>
                     <li style="color: #A11CFF;"><a href="@Url.Action("GetCategory", new { Controller="Home", area="", id="Creative" })">Creative</a></li>
                     <li class="separator">|</li>
-                    <li><a href="#">Misc</a></li>
+                    <li><a href="@Url.Action("GetCategory", new { Controller="Home", area="", id="Misc" })">Misc</a></li>
                     <li class="separator">|</li>
                     <li><a href="#">About Us</a></li>
                 </ul>
