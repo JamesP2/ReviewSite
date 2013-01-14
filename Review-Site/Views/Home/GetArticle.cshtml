@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = Model.Title;
     if(Model.Category != null) {
-        ViewBag.ImageBorderColor = Model.Category.Color.Value;
+        ViewBag.ImageBorderColor = Model.Category.Colour.Value;
     }
 }
 <div class="row">
@@ -10,7 +10,7 @@
         <h1 class="article-title">@Model.Title</h1>
         <div class="article">
             <p class="article-info">
-                Written by @Model.Author.FullName on the @Model.Created.ToShortDateString()
+                Written by @Model.User.FullName on the @Model.Created.ToShortDateString()
                 at @Model.Created.ToShortTimeString()</p>
             @{
                 if (Model.LastModified.Value != Model.Created)

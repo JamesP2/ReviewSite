@@ -35,11 +35,11 @@
             </div>
             <div class="tab-pane" id="visual-styling">
                 <div class="editor-label">
-                    @Html.LabelFor(model => model.BorderColorID, "Border Colour")
+                    @Html.LabelFor(model => model.BorderColourID, "Border Colour")
                 </div>
                 <div class="editor-field">
-                    @Html.DropDownList("BorderColorID")
-                    @Html.ValidationMessageFor(model => model.BorderColorID)
+                    @Html.DropDownList("BorderColourID")
+                    @Html.ValidationMessageFor(model => model.BorderColourID)
                 </div>
                 <div class="editor-label">
                     <p>Selected Image: <span id="selectedImage">@((Model == null || Model.Image == null || Model.Image.Title == null) ? "None" : Model.Image.Title)</span></p>

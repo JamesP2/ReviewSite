@@ -32,11 +32,11 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.AuthorID, "Article Author")
+            @Html.LabelFor(model => model.UserID, "Article User")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("AuthorID")
-            @Html.ValidationMessageFor(model => model.AuthorID)
+            @Html.DropDownList("UserID")
+            @Html.ValidationMessageFor(model => model.UserID)
         </div>
 
         <div class="editor-label">

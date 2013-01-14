@@ -1,27 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using Review_Site.Core.Data;
 using Review_Site.Models;
 using Review_Site.Core;
-using Review_Site.Areas.Admin.Models;
 
 namespace Review_Site.Areas.Admin.Controllers
 {
     [Authorize]
     public class ArticleController : Controller
     {
-        private SiteContext db = new SiteContext();
+        private readonly IRepository<Article> articleRepository = new Repository<Article>();
+        private readonly IRepository<Category> categoryRepository = new Repository<Category>();
+        private readonly IRepository<User> userRepository = new Repository<User>();
 
         //
         // GET: /Admin/Article/
 
-        [Restrict(Identifier="Admin.Article.Index")]
+        [Restrict(Identifier = "Admin.Article.Index")]
         public ViewResult Index()
         {
-            var articles = db.Articles.Include("Category").Include("Author");
+            var articles = articleRepository.GetAll();
+
             return View(articles.OrderBy(x => x.Title).ToList());
         }
 
@@ -31,7 +31,7 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.Article.Index")]
         public ActionResult MiniBrowser()
         {
-            return View(db.Articles.ToList());
+            return View(articleRepository.GetAll());
         }
 
         //
@@ -39,7 +39,8 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.Article.Index")]
         public ViewResult Details(Guid id)
         {
-            Article article = db.Articles.Single(a => a.ID == id);
+            var article = articleRepository.Get(a => a.ID == id).Single();
+
             return View(article);
         }
 
@@ -48,9 +49,9 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.Article.Create")]
         public ActionResult Create()
         {
-            ViewBag.CategoryID = new SelectList(db.Categories, "ID", "Title");
+            ViewBag.CategoryID = new SelectList(categoryRepository.GetAll(), "ID", "Title");
             return View();
-        } 
+        }
 
         //
         // POST: /Admin/Article/Create
@@ -61,29 +62,29 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                article.ID = Guid.NewGuid();
-                DateTime currentTime = DateTime.Now;
-                article.LastModified = currentTime;
-                article.Created = currentTime;
-                article.AuthorID = SiteAuthentication.GetUserCookie().ID;
-                db.Articles.Add(article);
-                db.SaveChanges();
-                return RedirectToAction("Index");  
+                article.LastModified = article.Created = DateTime.Now;
+                article.UserID = SiteAuthentication.GetUserCookie().ID;
+
+                articleRepository.SaveOrUpdate(article);
+
+                return RedirectToAction("Index");
             }
 
-            ViewBag.CategoryID = new SelectList(db.Categories, "ID", "Title", article.CategoryID);
+            ViewBag.CategoryID = new SelectList(categoryRepository.GetAll(), "ID", "Title", article.CategoryID);
             return View(article);
         }
-        
+
         //
         // GET: /Admin/Article/Edit/5
 
         [Restrict(Identifier = "Admin.Article.Edit")]
         public ActionResult Edit(Guid id)
         {
-            Article article = db.Articles.Single(a => a.ID == id);
-            ViewBag.CategoryID = new SelectList(db.Categories, "ID", "Title", article.CategoryID);
-            ViewBag.AuthorID = new SelectList(db.Users, "ID", "FullName", article.AuthorID);
+            var article = articleRepository.Get(a => a.ID == id).Single();
+
+            ViewBag.CategoryID = new SelectList(categoryRepository.GetAll(), "ID", "Title", article.CategoryID);
+            ViewBag.UserID = new SelectList(userRepository.GetAll(), "ID", "FullName", article.UserID);
+
             return View(article);
         }
 
@@ -97,14 +98,15 @@ namespace Review_Site.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 article.LastModified = DateTime.Now;
-                db.Articles.Attach(article);
-                db.Entry(article).State = EntityState.Modified;
-                db.SaveChanges();
+
+                articleRepository.SaveOrUpdate(article);
 
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryID = new SelectList(db.Categories, "ID", "Title", article.CategoryID);
-            ViewBag.AuthorID = new SelectList(db.Users, "ID", "FullName", article.AuthorID);
+
+            ViewBag.CategoryID = new SelectList(categoryRepository.GetAll(), "ID", "Title", article.CategoryID);
+            ViewBag.UserID = new SelectList(userRepository.GetAll(), "ID", "FullName", article.UserID);
+
             return View(article);
         }
 
@@ -113,7 +115,8 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.Article.Delete")]
         public ActionResult Delete(Guid id)
         {
-            Article article = db.Articles.Single(a => a.ID == id);
+            var article = articleRepository.Get(a => a.ID == id).Single();
+
             return View(article);
         }
 
@@ -123,17 +126,12 @@ namespace Review_Site.Areas.Admin.Controllers
         [HttpPost, ActionName("Delete")]
         [Restrict(Identifier = "Admin.Article.Delete")]
         public ActionResult DeleteConfirmed(Guid id)
-        {            
-            Article article = db.Articles.Single(a => a.ID == id);
-            db.Articles.Remove(article);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
         {
-            db.Dispose();
-            base.Dispose(disposing);
+            var article = articleRepository.Get(a => a.ID == id).Single();
+
+            articleRepository.Delete(article);
+
+            return RedirectToAction("Index");
         }
     }
 }

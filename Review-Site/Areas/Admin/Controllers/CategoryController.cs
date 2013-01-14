@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using Review_Site.Core.Data;
 using Review_Site.Models;
 using Review_Site.Core;
 
@@ -12,14 +10,16 @@ namespace Review_Site.Areas.Admin.Controllers
     [Authorize]
     public class CategoryController : Controller
     {
-        private SiteContext db = new SiteContext();
+        private readonly IRepository<Category> categoryRepository = new Repository<Category>();
+        private readonly IRepository<Colour> colourRepository = new Repository<Colour>();
+        private readonly IRepository<Grid> gridRepository = new Repository<Grid>();
 
         //
         // GET: /Admin/Category/
         [Restrict(Identifier="Admin.Category.Index")]
         public ViewResult Index()
         {
-            return View(db.Categories.OrderBy(x => x.Title).ToList());
+            return View(categoryRepository.GetAll().OrderBy(x => x.Title));
         }
 
         //
@@ -27,8 +27,9 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.Category.Create")]
         public ActionResult Create()
         {
-            ViewBag.ColorID = new SelectList(db.Colors, "ID", "Name");
-            ViewBag.GridID = new SelectList(db.Grids, "ID", "Name");
+            ViewBag.ColourID = new SelectList(colourRepository.GetAll(), "ID", "Name");
+            ViewBag.GridID = new SelectList(gridRepository.GetAll(), "ID", "Name");
+
             return View();
         } 
 
@@ -41,13 +42,14 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                category.ID = Guid.NewGuid();
-                db.Categories.Add(category);
-                db.SaveChanges();
+                categoryRepository.SaveOrUpdate(category);
+
                 return RedirectToAction("Index");  
             }
-            ViewBag.ColorID = new SelectList(db.Colors, "ID", "Name");
-            ViewBag.GridID = new SelectList(db.Grids, "ID", "Name");
+
+            ViewBag.ColourID = new SelectList(colourRepository.GetAll(), "ID", "Name");
+            ViewBag.GridID = new SelectList(gridRepository.GetAll(), "ID", "Name");
+
             return View(category);
         }
         
@@ -57,9 +59,11 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.Category.Edit")]
         public ActionResult Edit(Guid id)
         {
-            Category category = db.Categories.Single(c => c.ID == id);
-            ViewBag.ColorID = new SelectList(db.Colors, "ID", "Name", category.ColorID);
-            ViewBag.GridID = new SelectList(db.Grids, "ID", "Name", category.GridID);
+            var category = categoryRepository.Get(c => c.ID == id).Single();
+
+            ViewBag.ColourID = new SelectList(colourRepository.GetAll(), "ID", "Name", category.ColourID);
+            ViewBag.GridID = new SelectList(gridRepository.GetAll(), "ID", "Name", category.GridID);
+
             return View(category);
         }
 
@@ -72,13 +76,14 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Categories.Attach(category);
-                db.Entry(category).State = EntityState.Modified;
-                db.SaveChanges();
+                categoryRepository.SaveOrUpdate(category);
+
                 return RedirectToAction("Index");
             }
-            ViewBag.ColorID = new SelectList(db.Colors, "ID", "Name", category.ColorID);
-            ViewBag.GridID = new SelectList(db.Grids, "ID", "Name", category.GridID);
+
+            ViewBag.ColourID = new SelectList(colourRepository.GetAll(), "ID", "Name", category.ColourID);
+            ViewBag.GridID = new SelectList(gridRepository.GetAll(), "ID", "Name", category.GridID);
+
             return View(category);
         }
 
@@ -88,20 +93,14 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.Category.Delete")]
         public ActionResult Delete(Guid id)
         {
-            Category category = db.Categories.Single(c => c.ID == id);
+            var category = categoryRepository.Get(c => c.ID == id).Single();
+
             if (!category.IsSystemCategory)
             {
-                db.Categories.Remove(category);
-                db.SaveChanges();
+                categoryRepository.Delete(category);
             }
             else ModelState.AddModelError("", "That category belongs to the system. It cannot be deleted.");
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            db.Dispose();
-            base.Dispose(disposing);
         }
     }
 }

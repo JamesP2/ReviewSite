@@ -15,7 +15,7 @@
             @:<div class="row padtop">
             curused = 0;
         }
-        @:<div class="gridsquare @square.SizeClass span@(square.Width)" style="border-color: #@(String.IsNullOrEmpty(square.BorderColor.Value) ? "CCCCCC" : square.BorderColor.Value)">
+        @:<div class="gridsquare @square.SizeClass span@(square.Width)" style="border-color: #@(String.IsNullOrEmpty(square.BorderColour.Value) ? "CCCCCC" : square.BorderColour.Value)">
             @:<div class="overlay @square.HeadingClass @(square.InverseHeading ? "inverse" : "")">
                 @:<a href="@Url.Action("GetArticle", new { controller="Home", area="", id=square.ArticleID })">
                     @:<h1>@(square.UseHeadingText ? square.HeadingText : square.Article.Title)</h1>

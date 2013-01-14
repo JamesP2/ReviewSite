@@ -25,8 +25,31 @@ Thumbs.db
 *.sbr
 obj/
 [Rr]elease*/
-_ReSharper*/
 [Tt]est[Rr]esult*
 Review-Site/[Rr]esourceUploads/*
 Backup/*
 Review-Site/Web.*
+
+#Tooling
+_ReSharper*/
+*.resharper
+[Tt]est[Rr]esult*
+
+#Project files
+[Bb]uild/
+
+#Subversion files
+.svn
+
+# Office Temp Files
+~$*
+
+#NuGet
+packages/
+
+#ncrunch
+*ncrunch*
+*crunch*.local.xml
+
+# visual studio database projects
+*.dbmdl

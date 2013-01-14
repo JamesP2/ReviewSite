@@ -37,11 +37,11 @@
         }
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.ColorID, "Colour")
+            @Html.LabelFor(model => model.ColourID, "Colour")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("ColorID", (SelectList)ViewBag.ColorID)
-            @Html.ValidationMessageFor(model => model.ColorID)
+            @Html.DropDownList("ColourID", (SelectList)ViewBag.ColourID)
+            @Html.ValidationMessageFor(model => model.ColourID)
         </div>
 
         <div class="editor-label">

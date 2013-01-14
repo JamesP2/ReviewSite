@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
-using System.Web.Routing;
 using System.Web.Security;
+using Review_Site.Core.Data;
 using Review_Site.Models;
 using Review_Site.Core;
 
@@ -12,12 +9,11 @@ namespace Review_Site.Controllers
 {
     public class AccountController : Controller
     {
-
-        private SiteMembershipProvider membership = new SiteMembershipProvider();
+        private readonly IRepository<User> userRepository = new Repository<User>();
+        private readonly SiteMembershipProvider membership = new SiteMembershipProvider();
 
         //
         // GET: /Account/LogIn
-
         public ActionResult LogIn()
         {
             return View();
@@ -25,7 +21,6 @@ namespace Review_Site.Controllers
 
         //
         // POST: /Account/LogIn
-
         [HttpPost]
         public ActionResult LogIn(LogInModel model, string returnUrl)
         {
@@ -33,23 +28,18 @@ namespace Review_Site.Controllers
             {
                 if (membership.ValidateUser(model.UserName, model.Password))
                 {
-                    SiteContext db = new SiteContext();
-                    User u = db.Users.Single(x => x.Username.ToLower() == model.UserName.ToLower());
+                    var u = userRepository.Get(x => x.Username.ToLower() == model.UserName.ToLower()).Single();
+
                     SiteAuthentication.SetAuthCookie(u, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
                     {
                         return Redirect(returnUrl);
                     }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                    return RedirectToAction("Index", "Home");
                 }
-                else
-                {
-                    ModelState.AddModelError("", "The user name or password provided is incorrect.");
-                }
+
+                ModelState.AddModelError("", "The user name or password provided is incorrect.");
             }
 
             // If we got this far, something failed, redisplay form
@@ -58,7 +48,6 @@ namespace Review_Site.Controllers
 
         //
         // GET: /Account/LogOut
-
         public ActionResult LogOut()
         {
             FormsAuthentication.SignOut();

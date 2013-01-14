@@ -1,92 +1,97 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using Review_Site.Core.Data;
 using Review_Site.Models;
 using Review_Site.Core;
 
 namespace Review_Site.Areas.Admin.Controllers
-{ 
+{
     public class GridElementController : Controller
     {
-        private SiteContext db = new SiteContext();
+        private readonly IRepository<Colour> colourRepository = new Repository<Colour>();
+        private readonly IRepository<Grid> gridRepository = new Repository<Grid>();
+        private readonly IRepository<GridElement> gridElementRepository = new Repository<GridElement>();
+        private readonly IRepository<Resource> resourceRepository = new Repository<Resource>();
 
         //
         // GET: /Admin/GridElement/
-
         [Restrict(Identifier = "Admin.GridElement.Index")]
         public ActionResult Index(Guid? id)
         {
-            IEnumerable<GridElement> gridelements;
+            IEnumerable<GridElement> gridelements = gridElementRepository.GetAll();
             if (id != null)
             {
-                if (!db.Grids.Any(x => x.ID == id)) return HttpNotFound();
-                gridelements = db.GridElements.Where(x => x.GridID == id).Include("Article").Include("BorderColor").Include("Grid").Include("Image");
-                Grid grid = db.Grids.Single(x => x.ID == id);
+                if (!gridRepository.GetAll().Any(x => x.ID == id)) return HttpNotFound();
+
+                gridelements = gridelements.Where(x => x.GridID == id);
+
+                var grid = gridRepository.Get(x => x.ID == id).Single();
                 ViewBag.GridName = grid.Name;
             }
-            else
-            {
-                gridelements = db.GridElements.Include("Article").Include("BorderColor").Include("Grid").Include("Image");
-            }
+
             return View(gridelements.OrderBy(x => x.Article.Title).ToList());
         }
 
         //
         // GET: /Admin/GridElement/Details/5
-
         [Restrict(Identifier = "Admin.GridElement.Index")]
         public ViewResult Details(Guid id)
         {
-            GridElement gridelement = db.GridElements.Single(g => g.ID == id);
+            var gridelement = gridElementRepository.Get(g => g.ID == id).Single();
+
             return View(gridelement);
         }
 
         //
         // GET: /Admin/GridElement/Create
-
         [Restrict(Identifier = "Admin.GridElement.Create")]
         public ActionResult Create()
         {
-            ViewBag.BorderColorID = new SelectList(db.Colors, "ID", "Name");
-            ViewBag.GridID = new SelectList(db.Grids, "ID", "Name");
-            populateFormViewBag();
+            ViewBag.BorderColourID = new SelectList(colourRepository.GetAll(), "ID", "Name");
+            ViewBag.GridID = new SelectList(gridRepository.GetAll(), "ID", "Name");
+
+            PopulateFormViewBag();
+
             return View();
-        } 
+        }
 
         //
         // POST: /Admin/GridElement/Create
-
         [HttpPost]
         [Restrict(Identifier = "Admin.GridElement.Create")]
         public ActionResult Create(GridElement gridelement)
         {
             if (ModelState.IsValid)
             {
-                gridelement.ID = Guid.NewGuid();
-                db.GridElements.Add(gridelement);
-                db.SaveChanges();
+                gridElementRepository.SaveOrUpdate(gridelement);
+
                 return RedirectToAction("Index");
             }
-            ViewBag.BorderColorID = new SelectList(db.Colors, "ID", "Name", gridelement.BorderColorID);
-            ViewBag.GridID = new SelectList(db.Grids, "ID", "Name", gridelement.GridID);
-            populateFormViewBag(gridelement);
-            if(gridelement.ImageID != Guid.Empty) gridelement.Image = db.Resources.Single(x => x.ID == gridelement.ImageID);
+
+            ViewBag.BorderColourID = new SelectList(colourRepository.GetAll(), "ID", "Name", gridelement.BorderColourID);
+            ViewBag.GridID = new SelectList(gridRepository.GetAll(), "ID", "Name", gridelement.GridID);
+
+            PopulateFormViewBag(gridelement);
+
+            if (gridelement.ImageID != Guid.Empty) gridelement.Image = resourceRepository.Get(x => x.ID == gridelement.ImageID).Single();
+
             return View(gridelement);
         }
-        
+
         //
         // GET: /Admin/GridElement/Edit/5
-
         [Restrict(Identifier = "Admin.GridElement.Edit")]
         public ActionResult Edit(Guid id)
         {
-            GridElement gridelement = db.GridElements.Single(g => g.ID == id);
-            ViewBag.BorderColorID = new SelectList(db.Colors, "ID", "Name", gridelement.BorderColorID);
-            ViewBag.GridID = new SelectList(db.Grids, "ID", "Name", gridelement.GridID);
-            populateFormViewBag(gridelement);
+            var gridelement = gridElementRepository.Get(g => g.ID == id).Single();
+
+            ViewBag.BorderColourID = new SelectList(colourRepository.GetAll(), "ID", "Name", gridelement.BorderColourID);
+            ViewBag.GridID = new SelectList(gridRepository.GetAll(), "ID", "Name", gridelement.GridID);
+
+            PopulateFormViewBag(gridelement);
+
             return View(gridelement);
         }
 
@@ -99,39 +104,38 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.GridElements.Attach(gridelement);
-                db.Entry(gridelement).State = EntityState.Modified;
-                db.SaveChanges();
+                gridElementRepository.SaveOrUpdate(gridelement);
+
                 return RedirectToAction("Index");
             }
-            ViewBag.BorderColorID = new SelectList(db.Colors, "ID", "Name", gridelement.BorderColorID);
-            ViewBag.GridID = new SelectList(db.Grids, "ID", "Name", gridelement.GridID);
-            populateFormViewBag(gridelement);
+
+            ViewBag.BorderColourID = new SelectList(colourRepository.GetAll(), "ID", "Name", gridelement.BorderColourID);
+            ViewBag.GridID = new SelectList(gridRepository.GetAll(), "ID", "Name", gridelement.GridID);
+
+            PopulateFormViewBag(gridelement);
+
             return View(gridelement);
         }
 
-        private void populateFormViewBag()
+        private void PopulateFormViewBag(GridElement model = null)
         {
-            populateFormViewBag(null);
-        }
+            var width = new SelectList(new List<int> { 4, 6, 8, 12 }, ((model != null) ? model.Width.ToString() : "4"));
 
-        private void populateFormViewBag(GridElement Model)
-        {
-
-            SelectList width = new SelectList(new List<int> { 4, 6, 8, 12 }, ((Model != null) ? Model.Width.ToString() : "4"));
-            SelectList sizeClass = new SelectList(new Dictionary<String, String> 
+            var sizeClass = new SelectList(new Dictionary<String, String> 
             { 
                 {"Tall", "tall"},
                 {"Regular", "regular"},
                 {"Small", "small"},
-            }, "Value", "Key", ((Model != null) ? Model.SizeClass : "tall"));
-            SelectList headingClass = new SelectList(new Dictionary<String, String>
+            }, "Value", "Key", ((model != null) ? model.SizeClass : "tall"));
+
+            var headingClass = new SelectList(new Dictionary<String, String>
             {
                 {"Very Top", "anchorVeryTop"},
                 {"Top Middle", "anchorTopMiddle"},
                 {"Bottom Middle", "anchorBottomMiddle"},
                 {"Very Bottom", "anchorVeryBottom"},
-            }, "Value", "Key", ((Model != null) ? Model.HeadingClass : "anchorVeryTop"));
+            }, "Value", "Key", ((model != null) ? model.HeadingClass : "anchorVeryTop"));
+
             ViewBag.Width = width;
             ViewBag.SizeClass = sizeClass;
             ViewBag.HeadingClass = headingClass;
@@ -143,7 +147,8 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.GridElement.Delete")]
         public ActionResult Delete(Guid id)
         {
-            GridElement gridelement = db.GridElements.Single(g => g.ID == id);
+            var gridelement = gridElementRepository.Get(g => g.ID == id).Single();
+
             return View(gridelement);
         }
 
@@ -153,17 +158,12 @@ namespace Review_Site.Areas.Admin.Controllers
         [HttpPost, ActionName("Delete")]
         [Restrict(Identifier = "Admin.GridElement.Delete")]
         public ActionResult DeleteConfirmed(Guid id)
-        {            
-            GridElement gridelement = db.GridElements.Single(g => g.ID == id);
-            db.GridElements.Remove(gridelement);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
         {
-            db.Dispose();
-            base.Dispose(disposing);
+            var gridelement = gridElementRepository.Get(g => g.ID == id).Single();
+
+            gridElementRepository.Delete(gridelement);
+
+            return RedirectToAction("Index");
         }
     }
 }

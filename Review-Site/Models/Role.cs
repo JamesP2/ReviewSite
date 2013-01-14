@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Data.Entity.ModelConfiguration;
 using System.ComponentModel.DataAnnotations;
 
 namespace Review_Site.Models
@@ -16,13 +13,5 @@ namespace Review_Site.Models
 
         public virtual IList<Permission> Permissions { get; set; }
         public virtual IList<User> AssignedUsers { get; set; }
-    }
-
-    public class RoleConfiguration : EntityTypeConfiguration<Role>
-    {
-        public RoleConfiguration()
-        {
-            HasMany(x => x.Permissions).WithMany(x => x.Roles);
-        }
     }
 }

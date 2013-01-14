@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using Review_Site.Core.Data;
 using Review_Site.Models;
 using System.Web.Security;
 
@@ -9,13 +8,13 @@ namespace Review_Site.Core
 {
     public class SiteMembershipProvider : MembershipProvider
     {
-        private SiteContext db = new SiteContext();
+        private readonly IRepository<User> userRepository = new Repository<User>();
+
         public override bool ValidateUser(string username, string password)
         {
-            User u = db.Users.Where(x => x.Username == username.ToLower()).SingleOrDefault();
-            if (u == null) return false;
-            if(PasswordHashing.HashesMatch(PasswordHashing.GetHash(password), u.Password)) return true;
-            return false;
+            var u = userRepository.Get(x => x.Username == username.ToLower()).SingleOrDefault();
+
+            return u != null && PasswordHashing.HashesMatch(PasswordHashing.GetHash(password), u.Password);
         }
 
         public override string ApplicationName

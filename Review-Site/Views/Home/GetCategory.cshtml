@@ -1,11 +1,11 @@
 ﻿@model Review_Site.Models.Category
 @{
-    ViewBag.Title = Model.Title ;
+    ViewBag.Title = Model.Title;
 }
 
 @if (ViewBag.NoHeader == null || ViewBag.NoHeader != false)
 {
-<h2>@Model.Title</h2>
+    <h2>@Model.Title</h2>
 }
 
 @* If the category has a grid associated with it, render it. *@
@@ -13,4 +13,15 @@
 {
     @Html.Partial("_Grid", Model.Grid)
 }
+else
+{
+@* Show a list of articles *@
+    <h3>Articles</h3>
 
+    <ul>
+        @foreach (var article in Model.Articles)
+        {
+            <li>@Html.Partial("_ArticleSummary", article)</li>
+        }
+    </ul>
+}

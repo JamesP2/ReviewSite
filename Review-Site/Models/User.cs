@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Data.Entity.ModelConfiguration;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using FluentNHibernate.Automapping;
+using FluentNHibernate.Automapping.Alterations;
 
 namespace Review_Site.Models
 {
@@ -21,27 +20,28 @@ namespace Review_Site.Models
 
         public virtual bool AuthWithAD { get; set; }
 
-        public virtual ICollection<Article> Articles { get; set; }
-        public virtual ICollection<Resource> Resources { get; set; }
-        public virtual ICollection<Role> Roles { get; set; }
+        public virtual IList<Article> Articles { get; set; }
+        public virtual IList<Resource> Resources { get; set; }
+        public virtual IList<Role> Roles { get; set; }
 
         public virtual DateTime? Created { get; set; }
         public virtual DateTime? LastModified { get; set; }
 
         [NotMapped]
-        public virtual string FullName {
-            get{
+        public virtual string FullName
+        {
+            get
+            {
                 return FirstName + " " + LastName;
             }
         }
     }
 
-    public class UserConfiguration : EntityTypeConfiguration<User>
+    public class UserMappingOverrides : IAutoMappingOverride<User>
     {
-        public UserConfiguration()
+        public void Override(AutoMapping<User> mapping)
         {
-            HasMany(x => x.Articles).WithRequired(x => x.Author).HasForeignKey(x => x.AuthorID);
-            HasMany(x => x.Roles).WithMany(x => x.AssignedUsers);
+            mapping.IgnoreProperty(x => x.FullName);
         }
     }
 }

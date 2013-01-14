@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Review_Site.Models;
-using Review_Site.Core;
-using System.Net;
 using Review_Site.Controllers;
 
 namespace Review_Site
@@ -14,7 +8,7 @@ namespace Review_Site
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
 
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
@@ -63,33 +57,18 @@ namespace Review_Site
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-
-            SiteContext db = new SiteContext();
-
-
-
-
-            if (!db.Categories.Any(x => x.Title == "Home"))
-            {
-                //Add a system category to serve as the base for the homepage
-                db.Categories.Add(new Category
-                {
-                    ID = Guid.NewGuid(),
-                    Title = "Home",
-                    IsSystemCategory = true,
-                    Color = db.Colors.Single(x => x.Name == "Grey")
-                }
-                );
-
-                db.SaveChanges();
-
-            }
         }
 
         protected void Application_Error()
         {
-            HomeController controller = new HomeController();
-            controller.Error(Server.GetLastError());
+            var controller = new HomeController();
+            var result = controller.Error(Server.GetLastError());
+
+            var httpContext = new HttpContextWrapper(HttpContext.Current);
+            var requestContext = new RequestContext(httpContext, RouteTable.Routes.GetRouteData(httpContext));
+            var context = new ControllerContext(requestContext, controller);
+
+            result.ExecuteResult(context);
         }
     }
 }

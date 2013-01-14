@@ -9,7 +9,7 @@ namespace Review_Site.Areas.Admin.Models
     public class CropForm
     {
         public Guid ResourceID { get; set; }
-        public Guid? SourceTextColorID { get; set; }
+        public Guid? SourceTextColourID { get; set; }
 
         [Required(ErrorMessage="You must provide a new title for the image."), Display(Name="New Image Title")]
         public string Title { get; set; }

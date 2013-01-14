@@ -1,32 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using Review_Site.Core.Data;
 using Review_Site.Models;
 using Review_Site.Areas.Admin.Models;
 using Review_Site.Core;
 
 namespace Review_Site.Areas.Admin.Controllers
-{ 
+{
     public class UserController : Controller
     {
-        private SiteContext db = new SiteContext();
-
+        private readonly IRepository<User> userRepository = new Repository<User>();
+        private readonly IRepository<Role> roleRepository = new Repository<Role>();
 
         private List<SelectListItem> GetRoleList()
         {
-            List<SelectListItem> list = new List<SelectListItem>();
-            foreach (Role r in db.Roles)
-            {
-                list.Add(new SelectListItem
+            return roleRepository.GetAll()
+                .Select(r => new SelectListItem
                 {
                     Value = r.ID.ToString(),
                     Text = r.Name
-                });
-            }
-            return list;
+                }).ToList();
         }
 
         //
@@ -34,7 +29,7 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.User.Index")]
         public ViewResult Index()
         {
-            return View(db.Users.OrderBy(x => x.Username).ToList());
+            return View(userRepository.GetAll().OrderBy(x => x.Username).ToList());
         }
 
         //
@@ -43,7 +38,8 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.User.Index")]
         public ViewResult Details(Guid id)
         {
-            User user = db.Users.Single(u => u.ID == id);
+            var user = userRepository.Get(u => u.ID == id).Single();
+
             return View(user);
         }
 
@@ -53,9 +49,10 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.User.Create")]
         public ActionResult Create()
         {
-            ViewBag.RoleList = GetRoleList(); 
+            ViewBag.RoleList = GetRoleList();
+
             return View();
-        } 
+        }
 
         //
         // POST: /Admin/User/Create
@@ -66,7 +63,6 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 //We must check for passwords here, since they are not always required in the form.
                 if (form.Password == null)
                 {
@@ -82,30 +78,27 @@ namespace Review_Site.Areas.Admin.Controllers
                     return View(form);
                 }
 
-                if (db.Users.Where(x => x.Username == form.Username.ToLower()).Count() != 0)
+                if (userRepository.Get(x => x.Username == form.Username.ToLower()).Any())
                 {
                     ModelState.AddModelError("Username", "Username taken!");
                     ViewBag.RoleList = GetRoleList();
                     return View(form);
                 }
 
-                form.ID = Guid.NewGuid();
-
-                if (form.Password.Equals(form.ConfirmedPassword))
-                {
-                    db.Users.Add(formToUser(form));
-                    db.SaveChanges();
-                }
-                else
+                if (!form.Password.Equals(form.ConfirmedPassword))
                 {
                     ModelState.AddModelError("ConfirmedPassword", "Passwords do not match!");
                     ViewBag.RoleList = GetRoleList();
                     return View(form);
                 }
-                
-                return RedirectToAction("Index");  
+
+                userRepository.SaveOrUpdate(FormToUser(form));
+
+                return RedirectToAction("Index");
             }
+
             ViewBag.RoleList = GetRoleList();
+
             return View(form);
         }
 
@@ -115,38 +108,34 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.User.Edit")]
         public ActionResult Edit(Guid id)
         {
-            User user = db.Users.Single(u => u.ID == id);
+            var user = userRepository.Get(u => u.ID == id).Single();
+
             ViewBag.RoleList = GetRoleList();
-            return View(userToForm(user));
+
+            return View(UserToForm(user));
         }
 
-        private User formToUser(UserForm form)
+        private User FormToUser(UserForm form)
         {
-            ICollection<Role> roleList = new List<Role>();
-            foreach (Guid g in form.SelectedRoleIds)
-            {
-                roleList.Add(db.Roles.Single(x => x.ID == g));
-            }
+            var roleList = form.SelectedRoleIds.Select(g => roleRepository.Get(x => x.ID == g).Single()).ToList();
+
             return new User
             {
                 ID = form.ID,
                 FirstName = form.FirstName,
                 LastName = form.LastName,
                 Username = form.Username,
-                Password = Core.PasswordHashing.GetHash(form.Password),
+                Password = PasswordHashing.GetHash(form.Password),
                 Roles = roleList
             };
         }
 
-        private UserForm userToForm(User user)
+        private static UserForm UserToForm(User user)
         {
-            ICollection<Guid> roleGuids = new List<Guid>();
-            foreach (Role r in user.Roles)
-            {
-                roleGuids.Add(r.ID);
-            }
+            var roleGuids = user.Roles.Select(r => r.ID).ToList();
+
             return new UserForm
-            { 
+            {
                 ID = user.ID,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -164,19 +153,19 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = db.Users.Single(x => x.ID == form.ID);
+                var user = userRepository.Get(u => u.ID == form.ID).Single();
 
                 //Check for new passwords
                 if (form.Password != null && form.ConfirmedPassword != null)
                 {
                     if (form.ConfirmedPassword.Equals(form.Password))
                     {
-                        user.Password = Core.PasswordHashing.GetHash(form.Password);
+                        user.Password = PasswordHashing.GetHash(form.Password);
                     }
                     else
                     {
                         ModelState.AddModelError("ConfirmedPassword", "The new Passwords do not match.");
-                        ViewBag.RoleList = GetRoleList(); 
+                        ViewBag.RoleList = GetRoleList();
                         return View(form);
                     }
                 }
@@ -194,46 +183,21 @@ namespace Review_Site.Areas.Admin.Controllers
 
                 user.Roles.Clear();
 
-                List<Role> userRoles = new List<Role>();
-                foreach (Guid g in form.SelectedRoleIds)
+                foreach (var g in form.SelectedRoleIds)
                 {
-                    user.Roles.Add(db.Roles.Single(x => x.ID == g));
+                    var g1 = g;
+
+                    user.Roles.Add(roleRepository.Get(x => x.ID == g1).Single());
                 }
 
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
+                userRepository.SaveOrUpdate(user);
+
                 return RedirectToAction("Index");
             }
-            ViewBag.RoleList = GetRoleList(); 
+
+            ViewBag.RoleList = GetRoleList();
+
             return View(form);
-        }
-
-        //
-        // GET: /Admin/User/Delete/5
-        /*
-        public ActionResult Delete(Guid id)
-        {
-            User user = db.Users.Single(u => u.ID == id);
-            return View(user);
-        }
-
-        //
-        // POST: /Admin/User/Delete/5
-
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(Guid id)
-        {            
-            User user = db.Users.Single(u => u.ID == id);
-            db.Users.Remove(user);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-         */
-
-        protected override void Dispose(bool disposing)
-        {
-            db.Dispose();
-            base.Dispose(disposing);
         }
     }
 }

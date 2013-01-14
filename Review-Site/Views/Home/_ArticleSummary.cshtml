@@ -1,0 +1,8 @@
+﻿@model Review_Site.Models.Article
+<h4><a href="@Url.Action("GetArticle", new { Id = Model.ID })">@Model.Title</a> by @Model.User.FullName</h4>
+<p>
+    @Model.ShortDescription
+</p>
+<p>
+    <a href="@Url.Action("GetArticle", new { Id = Model.ID })">... read more!</a>
+</p>
