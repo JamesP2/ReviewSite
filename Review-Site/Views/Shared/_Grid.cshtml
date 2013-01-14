@@ -21,7 +21,9 @@
                     @:<h1>@(square.UseHeadingText ? square.HeadingText : square.Article.Title)</h1>
                 @:</a>
             @:</div>
-            @:<img alt="Grid Image @square.Image.Title" src="@Url.Action("GetResource", new { controller="Home", area="", id=square.ImageID })"/>
+            @:<a href="@Url.Action("GetArticle", new { controller="Home", area="", id=square.ArticleID })">
+                @:<img alt="Grid Image @square.Image.Title" src="@Url.Action("GetResource", new { controller="Home", area="", id=square.ImageID })"/>
+            @:</a>
         @:</div>
         //Append this square's width to the currently used up width of this row.
         curused += square.Width; 
