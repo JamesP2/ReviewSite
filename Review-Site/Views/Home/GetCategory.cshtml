@@ -14,3 +14,33 @@
     @Html.Partial("_Grid", Model.Grid)
 }
 
+<p>&nbsp;</p>
+
+@foreach(Review_Site.Models.Article article in Model.Articles)
+{
+    <div class="media">
+            <img class="media-object pull-left" data-src="holder.js/64x64">
+        <div class="media-body">
+            <a href="@Url.Action("GetArticle", "Home", new { area = "", id = article.ID })"><h4 class="media-heading">@article.Title</h4></a>
+            <p>@article.ShortDescription</p>
+        </div>
+    </div>
+}
+
+<div class="pagination pagination-centered">
+  <ul>
+    @if (ViewBag.CurrentPage == 1)
+    {
+        <li class="disabled"><a href="#">Prev</a></li>
+    }
+    else
+    {
+        <li><a href="@Url.Action("GetCategory", "Home", new { area = "", id = Model.ID, page = ViewBag.CurrentPage - 1 })">Prev</a></li>
+    }
+    <li><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">Next</a></li>
+  </ul>
+</div>

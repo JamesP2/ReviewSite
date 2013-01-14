@@ -67,7 +67,7 @@ namespace Review_Site.Controllers
             return View(article);
         }
 
-        public ActionResult GetCategory(string id)
+        public ActionResult GetCategory(string id, int? page)
         {
             Guid categoryguid;
             Category category;
@@ -75,7 +75,6 @@ namespace Review_Site.Controllers
             {
                 if (!db.Categories.Any(x => x.ID == categoryguid)) throw new HttpException(404, "That category does not exist");
                 category = db.Categories.Single(x => x.ID == categoryguid);
-                return View(category);
             }
             else
             {
@@ -83,8 +82,13 @@ namespace Review_Site.Controllers
                 string name = id.Replace('-', ' ').ToLower();
                 if (!db.Categories.Any(x => x.Title.ToLower() == name)) throw new HttpException(404, "That category does not exist");
                 category = db.Categories.Single(x => x.Title.ToLower() == name);
-                return View(category);
             }
+            int totalPages = (int)Math.Ceiling((double)category.Articles.Count() / 5);
+            if (!page.HasValue || page < 0 || page > totalPages) page = 1;
+            category.Articles = category.Articles.Skip((page.Value - 1) * 5).Take(5).ToList();
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = page;
+            return View(category);
         }
 
         public ActionResult GetGrid(string id)
