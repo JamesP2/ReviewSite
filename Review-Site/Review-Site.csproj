@@ -206,6 +206,7 @@
     <Content Include="Scripts\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
     <Content Include="Scripts\ckeditor\samples\sample_posteddata.php" />
     <Content Include="Scripts\ckeditor\skins\moono\readme.md" />
+    <Content Include="Views\Shared\_AnalyticsJS.cshtml" />
     <None Include="Web.MonoRelease.config">
       <SubType>Designer</SubType>
     </None>
