@@ -26,14 +26,16 @@
               <li><a href="@Url.Action("Index", new { controller="Grid", area = "Admin" })">Grids</a></li>
               <li><a href="@Url.Action("Index", new { controller="User", area = "Admin" })">Users</a></li>
             </ul>
+            <p class="pull-right navbar-text" style="margin-right: 10px;">
             @{
                 if(User.Identity.IsAuthenticated){
-                    <p class="pull-right navbar-text" style="margin-right: 10px;">Hello, @User.Identity.Name. <a href="@Url.Action("LogOut", new { controller = "Account", area = ""})">Log Out</a></p>
+                    @:Hello, @User.Identity.Name. <a href="@Url.Action("LogOut", new { controller = "Account", area = ""})">Log Out</a>
                 }else{
-                    <p class="pull-right navbar-text" style="margin-right: 10px;">Hello, Guest. <a href="@Url.Action("LogIn", new { controller = "Account" })">Log In</a></p>
+                    @:Hello, Guest. <a href="@Url.Action("LogIn", new { controller = "Account" })">Log In</a>
                 }
             }
-            
+            | <a href="@Url.Action("Index", "Home", new{ area = "" })">Site Home</a>
+            </p>
           </div>
         </div>
         @RenderBody()

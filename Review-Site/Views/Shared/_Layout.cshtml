@@ -14,6 +14,7 @@
     @if (ViewBag.ImageBorderColor != null)
     {    
         <style type="text/css">
+            /* This is calculated dynamically by the server /*
             .article-content img{
                 border: 6px solid #@ViewBag.ImageBorderColor;
             }
@@ -23,7 +24,7 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="span12 header"><h1><span style="color: #C4BC96;">the</span>REVIEW</h1><h2>| A Sixth Form Publication</h2></div>
+            <div class="span12 header"><a href="@Url.Action("Index", "Home", new { area = "" })"><h1><span style="color: #C4BC96;">the</span>REVIEW</h1><h2>| A Sixth Form Publication</h2></a></div>
         </div>
         <div class="row">
             <div class="span12 menu">
