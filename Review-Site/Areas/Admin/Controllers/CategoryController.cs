@@ -16,7 +16,7 @@ namespace Review_Site.Areas.Admin.Controllers
 
         //
         // GET: /Admin/Category/
-        [Restrict(Identifier="Admin.Category.Index")]
+        [Restrict(Identifier = "Admin.Category.Index")]
         public ViewResult Index()
         {
             return View(db.Categories.OrderBy(x => x.Title).ToList());
@@ -27,10 +27,10 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.Category.Create")]
         public ActionResult Create()
         {
-            ViewBag.ColorID = new SelectList(db.Colors, "ID", "Name");
-            ViewBag.GridID = new SelectList(db.Grids, "ID", "Name");
+            ViewBag.Colors = new SelectList(db.Colors, "ID", "Name");
+            ViewBag.Grids = new SelectList(GetGrids(), "Value", "Text");
             return View();
-        } 
+        }
 
         //
         // POST: /Admin/Category/Create
@@ -46,13 +46,13 @@ namespace Review_Site.Areas.Admin.Controllers
                 category.LastModified = DateTime.Now;
                 db.Categories.Add(category);
                 db.SaveChanges();
-                return RedirectToAction("Index");  
+                return RedirectToAction("Index");
             }
-            ViewBag.ColorID = new SelectList(db.Colors, "ID", "Name");
-            ViewBag.GridID = new SelectList(db.Grids, "ID", "Name");
+            ViewBag.Colors = new SelectList(db.Colors, "ID", "Name");
+            ViewBag.Grids = new SelectList(GetGrids(), "Value", "Text");
             return View(category);
         }
-        
+
         //
         // GET: /Admin/Category/Edit/5
 
@@ -60,8 +60,8 @@ namespace Review_Site.Areas.Admin.Controllers
         public ActionResult Edit(Guid id)
         {
             Category category = db.Categories.Single(c => c.ID == id);
-            ViewBag.ColorID = new SelectList(db.Colors, "ID", "Name", category.ColorID);
-            ViewBag.GridID = new SelectList(db.Grids, "ID", "Name", category.GridID);
+            ViewBag.Colors = new SelectList(db.Colors, "ID", "Name", category.ColorID);
+            ViewBag.Grids = new SelectList(GetGrids(), "Value", "Text", category.GridID);
             return View(category);
         }
 
@@ -80,8 +80,8 @@ namespace Review_Site.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ColorID = new SelectList(db.Colors, "ID", "Name", category.ColorID);
-            ViewBag.GridID = new SelectList(db.Grids, "ID", "Name", category.GridID);
+            ViewBag.Colors = new SelectList(db.Colors, "ID", "Name", category.ColorID);
+            ViewBag.Grids = new SelectList(GetGrids(), "Value", "Text", category.GridID);
             return View(category);
         }
 
@@ -99,6 +99,13 @@ namespace Review_Site.Areas.Admin.Controllers
             }
             else ModelState.AddModelError("", "That category belongs to the system. It cannot be deleted.");
             return RedirectToAction("Index");
+        }
+
+        private IEnumerable<SelectListItem> GetGrids()
+        {
+            return
+                new List<SelectListItem> { new SelectListItem { Text = " -- None --", Value = null } }.Concat(
+                    db.Grids.ToList().Select(x => new SelectListItem { Text = x.Name, Value = x.ID.ToString() }));
         }
 
         protected override void Dispose(bool disposing)
