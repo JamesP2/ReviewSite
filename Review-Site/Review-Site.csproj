@@ -168,6 +168,10 @@
     <Compile Include="Migrations\201301132002554_OptionalDates.Designer.cs">
       <DependentUpon>201301132002554_OptionalDates.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201301132205077_FixArticleDateTime.cs" />
+    <Compile Include="Migrations\201301132205077_FixArticleDateTime.Designer.cs">
+      <DependentUpon>201301132205077_FixArticleDateTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Article.cs" />
@@ -800,6 +804,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201301132002554_OptionalDates.resx">
       <DependentUpon>201301132002554_OptionalDates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201301132205077_FixArticleDateTime.resx">
+      <DependentUpon>201301132205077_FixArticleDateTime.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
