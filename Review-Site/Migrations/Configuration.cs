@@ -44,7 +44,9 @@ namespace Review_Site.Migrations
                     ID = Guid.Parse("a323a95c-b475-4886-9f8d-006c2cc84c64"),
                     Title = "Home",
                     IsSystemCategory = true,
-                    ColorID = context.Colors.Single(x => x.Name == "Grey").ID
+                    ColorID = context.Colors.Single(x => x.Name == "Grey").ID,
+                    Created = DateTime.Now,
+                    LastModified = DateTime.Now
                 }
                 );
 
@@ -199,7 +201,9 @@ namespace Review_Site.Migrations
                 LastName = "Administrator",
                 Roles = new Role[]{
                     context.Roles.Single(x => x.Name == "Global Administrator")
-                }
+                },
+                Created = DateTime.Now,
+                LastModified = DateTime.Now
             });
 
         }

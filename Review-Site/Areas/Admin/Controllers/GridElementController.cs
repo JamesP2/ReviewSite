@@ -66,6 +66,8 @@ namespace Review_Site.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 gridelement.ID = Guid.NewGuid();
+                gridelement.LastModified = DateTime.Now;
+                gridelement.Created = DateTime.Now;
                 db.GridElements.Add(gridelement);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -99,6 +101,7 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                gridelement.LastModified = DateTime.Now;
                 db.GridElements.Attach(gridelement);
                 db.Entry(gridelement).State = EntityState.Modified;
                 db.SaveChanges();

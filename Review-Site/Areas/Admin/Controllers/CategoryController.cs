@@ -42,6 +42,8 @@ namespace Review_Site.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 category.ID = Guid.NewGuid();
+                category.Created = DateTime.Now;
+                category.LastModified = DateTime.Now;
                 db.Categories.Add(category);
                 db.SaveChanges();
                 return RedirectToAction("Index");  
@@ -72,6 +74,7 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                category.LastModified = DateTime.Now;
                 db.Categories.Attach(category);
                 db.Entry(category).State = EntityState.Modified;
                 db.SaveChanges();

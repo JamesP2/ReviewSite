@@ -93,7 +93,10 @@ namespace Review_Site.Areas.Admin.Controllers
 
                 if (form.Password.Equals(form.ConfirmedPassword))
                 {
-                    db.Users.Add(formToUser(form));
+                    User user = formToUser(form);
+                    user.Created = DateTime.Now;
+                    user.LastModified = DateTime.Now;
+                    db.Users.Add(user);
                     db.SaveChanges();
                 }
                 else
@@ -134,7 +137,9 @@ namespace Review_Site.Areas.Admin.Controllers
                 LastName = form.LastName,
                 Username = form.Username,
                 Password = Core.PasswordHashing.GetHash(form.Password),
-                Roles = roleList
+                Roles = roleList,
+                Created = form.Created,
+                LastModified = form.LastModified
             };
         }
 
@@ -151,7 +156,9 @@ namespace Review_Site.Areas.Admin.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Username = user.Username.ToLower(), //Just in case...
-                SelectedRoleIds = roleGuids
+                SelectedRoleIds = roleGuids,
+                Created = user.Created,
+                LastModified = user.LastModified
             };
         }
 
@@ -200,6 +207,7 @@ namespace Review_Site.Areas.Admin.Controllers
                     user.Roles.Add(db.Roles.Single(x => x.ID == g));
                 }
 
+                user.LastModified = DateTime.Now;
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

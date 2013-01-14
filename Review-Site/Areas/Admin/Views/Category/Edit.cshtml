@@ -20,6 +20,8 @@
 
         @Html.HiddenFor(model => model.ID)
         @Html.HiddenFor(model => model.IsSystemCategory)
+        @Html.HiddenFor(model => model.Created)
+        @Html.HiddenFor(model => model.LastModified)
 
         @if (Model.IsSystemCategory)
         {

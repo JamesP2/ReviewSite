@@ -8,7 +8,7 @@
 @{
     int curused = 0;
     <div class="row">
-    @foreach(var square in Model.GridElements){
+    @foreach(var square in Model.GridElements.OrderBy(x => x.Created)){
         if(curused == 12 || (curused + square.Width) > 12){
             //Start a new row!
             @:</div>

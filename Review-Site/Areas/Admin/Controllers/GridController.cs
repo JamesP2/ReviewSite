@@ -48,6 +48,8 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                grid.Created = DateTime.Now;
+                grid.LastModified = DateTime.Now;
                 grid.ID = Guid.NewGuid();
                 db.Grids.Add(grid);
                 db.SaveChanges();
@@ -76,6 +78,7 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                grid.LastModified = DateTime.Now;
                 db.Grids.Attach(grid);
                 db.Entry(grid).State = EntityState.Modified;
                 db.SaveChanges();

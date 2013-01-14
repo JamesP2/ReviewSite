@@ -23,7 +23,7 @@ namespace Review_Site.Models
 
         public virtual IList<GridElement> GridElements { get; set; }
 
-        public virtual DateTime? Created { get; set; }
+        public virtual DateTime Created { get; set; }
         public virtual DateTime? LastModified { get; set; }
     }
 

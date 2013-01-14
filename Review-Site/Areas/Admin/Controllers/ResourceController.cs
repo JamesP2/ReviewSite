@@ -59,6 +59,7 @@ namespace Review_Site.Areas.Admin.Controllers
                 resource.Type = file.ContentType;
                 resource.CreatorID = SiteAuthentication.GetUserCookie().ID;
                 resource.DateAdded = DateTime.Now;
+                resource.LastModified = DateTime.Now;
                 fileName = resource.ID.ToString();
             }
             else
@@ -99,6 +100,7 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                resource.LastModified = DateTime.Now;
                 db.Resources.Attach(resource);
                 db.Entry(resource).State = EntityState.Modified;
                 db.SaveChanges();

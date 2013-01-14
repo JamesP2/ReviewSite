@@ -24,6 +24,9 @@ namespace Review_Site.Areas.Admin.Models
         [DataType(DataType.Password)]
         public string ConfirmedPassword { get; set; }
 
+        public virtual DateTime Created { get; set; }
+        public virtual DateTime? LastModified { get; set; }
+
         [Display(Name = "User Roles (Hold Control to select multiple Roles)")]
         [Required(ErrorMessage="Please assign at least one role.")]
         public ICollection<Guid> SelectedRoleIds { get; set; }
