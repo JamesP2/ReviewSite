@@ -201,6 +201,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Properties\PublishProfiles\CentOS VM Ftp.pubxml" />
+    <Content Include="Content\Favicon.ico" />
     <Content Include="Scripts\ckeditor\.git" />
     <Content Include="Scripts\ckeditor\CHANGES.md" />
     <Content Include="Scripts\ckeditor\LICENSE.md" />
