@@ -1,75 +1,9 @@
-﻿@model IEnumerable<Review_Site.Models.Article>
+﻿@model Review_Site.Models.SearchViewModel
 
 @{
     ViewBag.Title = "Search";
 }
 
-<h2>Search</h2>
+<h2>Search for @Model.Query</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
-    <tr>
-        <th>
-            CategoryID
-        </th>
-        <th>
-            AuthorID
-        </th>
-        <th>
-            Title
-        </th>
-        <th>
-            ShortDescription
-        </th>
-        <th>
-            Text
-        </th>
-        <th>
-            Created
-        </th>
-        <th>
-            LastModified
-        </th>
-        <th>
-            Issue
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CategoryID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AuthorID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ShortDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Text)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Created)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastModified)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Issue)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
-
-</table>
+@Html.Partial("_Articles", Model)
