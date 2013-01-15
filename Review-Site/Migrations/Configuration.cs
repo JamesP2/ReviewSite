@@ -177,19 +177,34 @@ namespace Review_Site.Migrations
 
             context.SaveChanges();
 
-            context.Roles.AddOrUpdate(new Role[]{
-                new Role{
-                    ID = Guid.Parse("eae9a548-8930-485d-b37c-10587492a216"),
-                    Name = "Global Administrator",
-                    Permissions = GetPermissionCollection("Admin")
-                },
-                new Role{
-                    ID = Guid.Parse("e736f81e-4d2d-4135-9b49-93134a614580"),
-                    Name = "Content Editor",
-                    Permissions = GetPermissionCollection("Admin.Article").Union(GetPermissionCollection("Admin.Resource")).ToList()
-                }
-            });
+            Role globalAdmin = (db.Roles.Where(x => x.ID == new Guid("eae9a548-8930-485d-b37c-10587492a216")).Count() > 0)
+                ? db.Roles.Single(x => x.ID == new Guid("eae9a548-8930-485d-b37c-10587492a216"))
+                : new Role();
 
+            Role contentEditor = (db.Roles.Where(x => x.ID == new Guid("e736f81e-4d2d-4135-9b49-93134a614580")).Count() > 0)
+                ? db.Roles.Single(x => x.ID == new Guid("e736f81e-4d2d-4135-9b49-93134a614580"))
+                : new Role();
+
+            foreach (Permission permission in GetPermissionCollection("Admin"))
+            {
+                if (!PermissionManager.HasPermission(globalAdmin, permission))
+                {
+                    globalAdmin.Permissions.Add(permission);
+                }
+            }
+
+            context.Roles.AddOrUpdate(globalAdmin);
+            context.SaveChanges();
+
+            foreach (Permission permission in GetPermissionCollection("Admin.Article").Union(GetPermissionCollection("Admin.Resource")).ToList())
+            {
+                if (!PermissionManager.HasPermission(contentEditor, permission))
+                {
+                    contentEditor.Permissions.Add(permission);
+                }
+            }
+
+            context.Roles.AddOrUpdate(contentEditor);
             context.SaveChanges();
 
             context.Users.AddOrUpdate(new User

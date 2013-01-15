@@ -26,5 +26,15 @@ namespace Review_Site.Core
             }
             return false;
         }
+
+        public static bool HasPermission(Role role, Permission permission)
+        {
+            return HasPermission(role, permission.Identifier);
+        }
+
+        public static bool HasPermission(User user, Permission permission)
+        {
+            return HasPermission(user, permission.Identifier);
+        }
     }
 }
