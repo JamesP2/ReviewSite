@@ -29,7 +29,8 @@
             @Html.DisplayFor(modelItem => item.Color.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) | 
+            @Html.ActionLink("View", "GetCategory", new { controller = "Home", area = "", id = item.ID }, new { target = "_blank" })
             @if(!item.IsSystemCategory){
                 @: | 
                 @Html.ActionLink("Delete", "Delete", new { id=item.ID })

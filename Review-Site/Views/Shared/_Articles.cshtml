@@ -1,25 +1,34 @@
 ﻿@model Review_Site.Models.PagedArticleList
+<div class="row padtop">
+    <div class="span8 offset2">
 @foreach (var article in Model.Articles)
 {
-    <div class="media">
-        <img class="media-object pull-left" src="http://placehold.it/64x64">
-        <div class="media-body">
-            <a href="@Url.Action("GetArticle", "Home", new { area = "", id = article.ID })">
-                <h4 class="media-heading">@article.Title</h4>
-            </a>
-            @if (string.IsNullOrEmpty(article.ShortDescription))
-            {
-                <p>
-                    <a href="@Url.Action("GetArticle", "Home", new { area = "", id = article.ID })">Read more...</a>
-                </p>
+            <div class="media">
+                <div class="dateBlock">
+                    <h1>@article.Created.Day</h1>
+                    <h2>@article.Created.ToString("MMM").ToUpper()</h2>
+                </div>
+                <div class="media-body">
+                    <a href="@Url.Action("GetArticle", "Home", new { area = "", id = article.ID })">
+                        <h4 class="media-heading">@article.Title</h4>
+                    </a>
+                    <p class="pull-right" style="font-style: italic;">@article.Author.FullName</p>
+                    <p>&nbsp;</p>
+                    @if (string.IsNullOrEmpty(article.ShortDescription))
+                    {
+                        <p>
+                            <a href="@Url.Action("GetArticle", "Home", new { area = "", id = article.ID })">Read more...</a>
+                        </p>
             }
-            else
-            {
-                <p>@article.ShortDescription</p>
+                    else
+                    {
+                        <p>@article.ShortDescription</p>
             }
-        </div>
-    </div>
+                </div>
+            </div>
 }
+            </div>
+</div>
 
 <div class="pagination pagination-centered">
     <ul>

@@ -12,6 +12,7 @@ namespace Review_Site.Models
     {
         [Key]
         public virtual Guid ID { get; set; }
+        [Required(ErrorMessage="You must select a Category!")]
         public virtual Guid CategoryID { get; set; }
         public virtual Guid AuthorID { get; set; }
 

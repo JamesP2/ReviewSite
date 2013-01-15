@@ -220,3 +220,28 @@ div.footerRightText p
 {
     border-color: #9900FF;
 }
+
+.dateBlock 
+{
+    float: left;
+    height: 64px;
+    width: 64px;
+}
+
+.dateBlock h1 {
+    font-family: Rockwell;
+    font-size: 40px;
+    font-weight: bold;
+    padding: 5px 0px 0px 0px;
+    margin: 0px;
+    text-align: center;
+}
+
+.dateBlock h2 {
+    font-family: Rockwell;
+    font-size: 20px;
+    font-weight: bold;
+    margin: -15px 0px 0px 0px;
+    padding: 0px;
+    text-align: center;
+}
