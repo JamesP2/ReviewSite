@@ -96,7 +96,17 @@ namespace Review_Site
         protected void Application_Error()
         {
             HomeController controller = new HomeController();
-            controller.Error(Server.GetLastError());
+            var view = controller.Error(Server.GetLastError());
+
+            var httpContext = new HttpContextWrapper(HttpContext.Current);
+            var route = RouteTable.Routes.GetRouteData(httpContext);
+
+            if (route == null) return;
+
+            Server.ClearError();
+
+            var controllerContext = new ControllerContext(new RequestContext(httpContext, route), controller);
+            view.ExecuteResult(controllerContext);
         }
     }
 }

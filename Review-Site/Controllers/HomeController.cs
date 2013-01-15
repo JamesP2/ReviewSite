@@ -33,15 +33,18 @@ namespace Review_Site.Controllers
         public ActionResult Search(string query, int? page = 1)
         {
             var results = LuceneSearch.SearchDefault(query).Select(x => x.ID).ToList();
-            var articles = db.Articles.Where(x => results.Any(y => y == x.ID));
 
             var totalPages = (int)Math.Ceiling(results.Count() / 5d);
             if (!page.HasValue || page < 0 || page > totalPages) page = 1;
 
+            results = results.Skip((page.Value - 1) * 5).Take(5).ToList();
+
+            var articles = db.Articles.Where(x => results.Any(y => y == x.ID)).ToList().OrderBy(x => results.IndexOf(x.ID));
+
             return View(new SearchViewModel
             {
                 Query = query,
-                Articles = articles.Skip((page.Value - 1) * 5).Take(5),
+                Articles = articles,
                 Page = page.Value,
                 PageCount = totalPages
             });
