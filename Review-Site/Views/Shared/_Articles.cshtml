@@ -29,7 +29,7 @@
 }
             </div>
 </div>
-
+@if (Model.PageCount != 1){
 <div class="pagination pagination-centered">
     <ul>
         @if (Model.Page == 1)
@@ -50,3 +50,4 @@
         }
     </ul>
 </div>
+}

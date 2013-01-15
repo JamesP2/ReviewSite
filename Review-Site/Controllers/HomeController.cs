@@ -17,8 +17,13 @@ namespace Review_Site.Controllers
         {
             if (!User.Identity.IsAuthenticated) return RedirectToAction("LandingPage");
 
-            Category cat = db.Categories.Single(x => x.ID == new Guid("a323a95c-b475-4886-9f8d-006c2cc84c64"));
-            return View("Index", cat);
+            Category category = db.Categories.Single(x => x.ID == new Guid("a323a95c-b475-4886-9f8d-006c2cc84c64"));
+            ViewBag.NoHeader = false;
+            return View("GetCategory", new CategoryViewModel
+            {
+                Category = category,
+                Articles = category.Articles.OrderByDescending(x => x.Created).Take(5),
+            });
         }
         public ActionResult LandingPage()
         {
