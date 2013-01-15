@@ -126,6 +126,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Core\ActionFilters.cs" />
     <Compile Include="Core\LuceneSearch.cs" />
+    <Compile Include="Core\PageHits.cs" />
     <Compile Include="Core\PermissionManager.cs" />
     <Compile Include="Core\SiteAuthentication.cs" />
     <Compile Include="Core\SiteMembershipProvider.cs" />
@@ -179,12 +180,17 @@
     <Compile Include="Migrations\201301141705587_Fix-Color.Designer.cs">
       <DependentUpon>201301141705587_Fix-Color.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201301152350336_PageHits.cs" />
+    <Compile Include="Migrations\201301152350336_PageHits.Designer.cs">
+      <DependentUpon>201301152350336_PageHits.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
     <Compile Include="Models\Color.cs" />
+    <Compile Include="Models\PageHit.cs" />
     <Compile Include="Models\SearchViewModel.cs" />
     <Compile Include="Models\PagedArticleList.cs" />
     <Compile Include="Models\Permission.cs" />
@@ -698,6 +704,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201301141705587_Fix-Color.resx">
       <DependentUpon>201301141705587_Fix-Color.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201301152350336_PageHits.resx">
+      <DependentUpon>201301152350336_PageHits.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

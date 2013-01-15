@@ -78,6 +78,7 @@ namespace Review_Site.Controllers
             //get the article and present it!
             if (!db.Articles.Any(x => x.ID == id)) throw new HttpException(404, "That article does not exist");
             Article article = db.Articles.Single(x => x.ID == id);
+            PageHits.RegisterHit(article.ID);
             return View(article);
         }
 
