@@ -16,7 +16,7 @@ namespace Review_Site.Controllers
         public ActionResult Index()
         {
             if (!User.Identity.IsAuthenticated) return RedirectToAction("LandingPage");
-            
+
             Category cat = db.Categories.Single(x => x.ID == new Guid("a323a95c-b475-4886-9f8d-006c2cc84c64"));
             return View("Index", cat);
         }
@@ -25,14 +25,23 @@ namespace Review_Site.Controllers
             return View();
         }
 
-        public ActionResult Search(string query)
+        public ActionResult Search(string query, int? page = 1)
         {
             var results = LuceneSearch.SearchDefault(query).Select(x => x.ID).ToList();
             var articles = db.Articles.Where(x => results.Any(y => y == x.ID));
 
-            return View(articles);
+            var totalPages = (int)Math.Ceiling(results.Count() / 5d);
+            if (!page.HasValue || page < 0 || page > totalPages) page = 1;
+
+            return View(new SearchViewModel
+            {
+                Query = query,
+                Articles = articles.Skip((page.Value - 1) * 5).Take(5),
+                Page = page.Value,
+                PageCount = totalPages
+            });
         }
-        
+
         public ActionResult GetResource(Guid id)
         {
             //get the resource.
@@ -73,22 +82,27 @@ namespace Review_Site.Controllers
             Category category;
             if (Guid.TryParse(id, out categoryguid))
             {
-                if (!db.Categories.Any(x => x.ID == categoryguid)) throw new HttpException(404, "That category does not exist");
-                category = db.Categories.Single(x => x.ID == categoryguid);
+                category = db.Categories.SingleOrDefault(x => x.ID == categoryguid);
             }
             else
             {
                 //Try and match to category name instead.
                 string name = id.Replace('-', ' ').ToLower();
-                if (!db.Categories.Any(x => x.Title.ToLower() == name)) throw new HttpException(404, "That category does not exist");
-                category = db.Categories.Single(x => x.Title.ToLower() == name);
+                category = db.Categories.SingleOrDefault(x => x.Title.ToLower() == name);
             }
-            int totalPages = (int)Math.Ceiling((double)category.Articles.Count() / 5);
+
+            if (category == null) return HttpNotFound("That category does not exist");
+
+            int totalPages = (int)Math.Ceiling(category.Articles.Count() / 5d);
             if (!page.HasValue || page < 0 || page > totalPages) page = 1;
-            category.Articles = category.Articles.Skip((page.Value - 1) * 5).Take(5).ToList();
-            ViewBag.TotalPages = totalPages;
-            ViewBag.CurrentPage = page;
-            return View(category);
+
+            return View(new CategoryViewModel
+                            {
+                                Category = category,
+                                Articles = category.Articles.OrderByDescending(x => x.Created).Skip((page.Value - 1) * 5).Take(5),
+                                Page = page.Value,
+                                PageCount = totalPages
+                            });
         }
 
         public ActionResult GetGrid(string id)
