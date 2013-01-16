@@ -58,10 +58,29 @@ namespace Review_Site.Areas.Admin.Controllers
 
         [HttpPost]
         [Restrict(Identifier = "Admin.Article.Create")]
-        public ActionResult Create(Article article)
+        public ActionResult Create(Article article, string tagList)
         {
             if (ModelState.IsValid)
             {
+                List<String> tagNameList = tagList.Split(',').ToList();
+                foreach (String s in tagNameList)
+                {
+                    if (String.IsNullOrEmpty(s)) continue;
+                    if (db.Tags.Where(x => x.Name.ToLower() == s.ToLower()).Count() == 1)
+                    {
+                        article.Tags.Add(db.Tags.Single(x => x.Name.ToLower() == s.ToLower()));
+                    }
+                    else
+                    {
+                        Tag tag = new Tag
+                        {
+                            ID = Guid.NewGuid(),
+                            Name = s
+                        };
+                        db.Tags.Add(tag);
+                        article.Tags.Add(tag);
+                    }
+                }
                 article.ID = Guid.NewGuid();
                 DateTime currentTime = DateTime.Now;
                 article.LastModified = currentTime;
@@ -98,12 +117,35 @@ namespace Review_Site.Areas.Admin.Controllers
 
         [HttpPost]
         [Restrict(Identifier = "Admin.Article.Edit")]
-        public ActionResult Edit(Article article)
+        public ActionResult Edit(Article article, string tagList)
         {
             if (ModelState.IsValid)
             {
-                article.LastModified = DateTime.Now;
+                Article oldArticle = db.Articles.Single(x => x.ID == article.ID);
+                oldArticle.Tags.Clear();
+                List<String> tagNameList = tagList.Split(',').ToList();
+                foreach (String s in tagNameList)
+                {
+                    if (String.IsNullOrEmpty(s)) continue;
+                    if (db.Tags.Any(x => x.Name.ToLower() == s.ToLower()))
+                    {
+                        oldArticle.Tags.Add(db.Tags.Single(x => x.Name.ToLower() == s.ToLower()));
+                    }
+                    else
+                    {
+                        Tag tag = new Tag
+                        {
+                            ID = Guid.NewGuid(),
+                            Name = s
+                        };
+                        oldArticle.Tags.Add(tag);
+                    }
+                }
+                db.Entry(oldArticle).State = EntityState.Modified;
+                db.SaveChanges();
+                db.Entry(oldArticle).State = EntityState.Detached;
                 db.Articles.Attach(article);
+                article.LastModified = DateTime.Now;
                 db.Entry(article).State = EntityState.Modified;
                 db.SaveChanges();
 

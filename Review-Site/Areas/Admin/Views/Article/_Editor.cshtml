@@ -3,19 +3,23 @@
             @Html.Hidden("tagList")
             <script type="text/javascript">
                 var tagArray = @Html.Raw(Json.Encode(@ViewBag.TagList));
-                var usedTags = @Html.Raw(Json.Encode(Model.Tags.Select(x => x.ID).ToList()));
+                var usedTags = @Html.Raw(Json.Encode(Model.Tags.Select(x => x.Name).ToList()));
                 function addTag(){
                     tag = $("#tagInput").val();
-                    if(tag == "") return; //no spaces please!!
+                    if(tag == "") return; //no blanks please!!
                     if($.inArray(tag, usedTags) == -1){
                         usedTags.push(tag);
-                        $("#tagField").append('<span class="label tagLabel" id="'+tag+'Label">'+tag+'<a class="close tagClose" onclick="removeTag(\''+tag+'\')">&times;</a></span>');
+                        tagLabel = tag.replace(/ /g, "_");
+                        $("#tagField").append('<span class="label tagLabel" id="'+tagLabel+'Label">'+tag+'<a class="close tagClose" onclick="removeTag(\''+tag+'\')">&times;</a></span>');
                         refreshTagField();
+                        //clear the tag input.
+                        $("#tagInput").val("");
                     }
                 }
                 function removeTag(tag){
                     usedTags.splice(usedTags.indexOf(tag), 1);
-                    $("#"+tag+"Label").remove();
+                    tagLabel = tag.replace(/ /g, "_");
+                    $("#"+tagLabel+"Label").remove();
                     refreshTagField();
                 }
                 function refreshTagField(){
@@ -23,15 +27,20 @@
                 }
                 $(document).ready(function(){
                     for(var i in usedTags){
-                        addTag(i);
+                        tag = usedTags[i];
+                        tagLabel = tag.replace(/ /g, "_");
+                        $("#tagField").append('<span class="label tagLabel" id="'+tagLabel+'Label">'+tag+'<a class="close tagClose" onclick="removeTag(\''+tag+'\')">&times;</a></span>');
                     }
+                    refreshTagField();
+                    var autocomplete = $('#tagInput').typeahead();
+                    autocomplete.data('typeahead').source = tagArray; 
                 });
             </script>
             <div class="row-fluid">
                 <div class="span6">
                     <h5>Add Tag</h5>
                     <div class="input-append">
-                      <input class="span2" id="tagInput" type="text" data-provide="typeahead" data-source="tagArray">
+                      <input class="span2" id="tagInput" type="text">
                       <button class="btn" type="button" onclick="addTag()">Add Tag</button>
                     </div>
                 </div>

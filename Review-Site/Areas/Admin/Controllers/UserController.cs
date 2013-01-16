@@ -125,7 +125,7 @@ namespace Review_Site.Areas.Admin.Controllers
 
         private User formToUser(UserForm form)
         {
-            ICollection<Role> roleList = new List<Role>();
+            IList<Role> roleList = new List<Role>();
             foreach (Guid g in form.SelectedRoleIds)
             {
                 roleList.Add(db.Roles.Single(x => x.ID == g));
@@ -145,7 +145,7 @@ namespace Review_Site.Areas.Admin.Controllers
 
         private UserForm userToForm(User user)
         {
-            ICollection<Guid> roleGuids = new List<Guid>();
+            IList<Guid> roleGuids = new List<Guid>();
             foreach (Role r in user.Roles)
             {
                 roleGuids.Add(r.ID);
