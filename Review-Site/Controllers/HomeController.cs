@@ -52,9 +52,10 @@ namespace Review_Site.Controllers
 
         public ActionResult GetResource(Guid id)
         {
+            if (!db.Resources.Any(r => r.ID == id)) throw new HttpException(404, "That resource cannot be found.");
             //get the resource.
             Resource res = db.Resources.Single(r => r.ID == id);
-            if (res == null) throw new HttpException(404, "That resource cannot be found.");
+            
 
             string path = Path.Combine(Server.MapPath("~/ResourceUploads"), id.ToString());
             FileStream stream = new FileStream(path, FileMode.Open);
@@ -91,16 +92,16 @@ namespace Review_Site.Controllers
             Category category;
             if (Guid.TryParse(id, out categoryguid))
             {
+                if (!db.Categories.Any(x => x.ID == categoryguid)) return HttpNotFound("That category does not exist");
                 category = db.Categories.SingleOrDefault(x => x.ID == categoryguid);
             }
             else
             {
                 //Try and match to category name instead.
                 string name = id.Replace('-', ' ').ToLower();
+                if (!db.Categories.Any(x => x.Title.ToLower() == name)) return HttpNotFound("That category does not exist");
                 category = db.Categories.SingleOrDefault(x => x.Title.ToLower() == name);
             }
-
-            if (category == null) return HttpNotFound("That category does not exist");
 
             int totalPages = (int)Math.Ceiling(category.Articles.Count() / 5d);
             if (!page.HasValue || page < 0 || page > totalPages) page = 1;
@@ -139,6 +140,10 @@ namespace Review_Site.Controllers
 
         public ActionResult Error(Exception e)
         {
+            if (e.GetType() == typeof(HttpException))
+            {
+                return View("HttpError", e);
+            }
             return Content(e.ToString());
         }
     }

@@ -224,6 +224,7 @@
     <Content Include="Views\Shared\_AnalyticsJS.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Shared\_Articles.cshtml" />
+    <Content Include="Views\Shared\HttpError.cshtml" />
     <None Include="Web.MonoRelease.config">
       <SubType>Designer</SubType>
     </None>

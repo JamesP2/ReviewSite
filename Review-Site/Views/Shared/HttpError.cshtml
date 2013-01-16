@@ -1,0 +1,26 @@
+﻿@model System.Web.HttpException
+@{
+    ViewBag.Title = "HttpError";
+    Layout = "_CentreBoxLayout.cshtml";
+}
+<div class="centrebox">
+    <div class="review-heading">
+        <h1>
+            <span style="color: #C4BC96;">the</span>REVIEW</h1>
+    </div>
+@switch (Model.GetHttpCode())
+{
+    case 404:
+        <h5>Something is missing...</h5>
+        break;
+    case 403:
+        <h5>You can't be here!</h5>
+        break;
+    case 500:
+        <h5>Something's wrong!</h5>
+        break;
+}
+<p>@Model.Message</p>
+<p><a href="@Url.Action("Index", "Home", new{area=""})">Site Home</a></p>
+
+</div>
