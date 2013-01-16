@@ -69,28 +69,6 @@ namespace Review_Site
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-
-            SiteContext db = new SiteContext();
-
-
-
-
-            if (!db.Categories.Any(x => x.Title == "Home"))
-            {
-                //Add a system category to serve as the base for the homepage
-                db.Categories.Add(new Category
-                {
-                    ID = Guid.NewGuid(),
-                    Title = "Home",
-                    IsSystemCategory = true,
-                    Color = db.Colors.Single(x => x.Name == "Grey"),
-                    Created = DateTime.Now
-                }
-                );
-
-                db.SaveChanges();
-
-            }
         }
 
         protected void Application_Error()
