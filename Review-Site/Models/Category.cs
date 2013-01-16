@@ -19,12 +19,17 @@ namespace Review_Site.Models
         public virtual string Title { get; set; }
         public virtual bool IsSystemCategory { get; set; }
 
-        public virtual ICollection<Article> Articles { get; set; }
+        public virtual IList<Article> Articles { get; set; }
         public virtual Grid Grid { get; set; }
         public virtual Color Color { get; set; }
 
         public virtual DateTime Created { get; set; }
         public virtual DateTime? LastModified { get; set; }
+
+        public Category()
+        {
+            Articles = new List<Article>();
+        }
     }
 
     public class CategoryConfiguration : EntityTypeConfiguration<Category>

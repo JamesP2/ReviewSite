@@ -17,5 +17,10 @@ namespace Review_Site.Models
 
 
         public virtual IList<Role> Roles { get; set; }
+
+        public Permission()
+        {
+            Roles = new List<Role>();
+        }
     }
 }

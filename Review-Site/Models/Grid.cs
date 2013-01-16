@@ -25,6 +25,11 @@ namespace Review_Site.Models
 
         public virtual DateTime Created { get; set; }
         public virtual DateTime? LastModified { get; set; }
+
+        public Grid()
+        {
+            GridElements = new List<GridElement>();
+        }
     }
 
     public class GridConfiguration : EntityTypeConfiguration<Grid>

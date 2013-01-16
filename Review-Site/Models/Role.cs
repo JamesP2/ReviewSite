@@ -16,6 +16,12 @@ namespace Review_Site.Models
 
         public virtual IList<Permission> Permissions { get; set; }
         public virtual IList<User> AssignedUsers { get; set; }
+
+        public Role()
+        {
+            Permissions = new List<Permission>();
+            AssignedUsers = new List<User>();
+        }
     }
 
     public class RoleConfiguration : EntityTypeConfiguration<Role>

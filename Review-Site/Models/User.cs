@@ -21,9 +21,9 @@ namespace Review_Site.Models
 
         public virtual bool AuthWithAD { get; set; }
 
-        public virtual ICollection<Article> Articles { get; set; }
-        public virtual ICollection<Resource> Resources { get; set; }
-        public virtual ICollection<Role> Roles { get; set; }
+        public virtual IList<Article> Articles { get; set; }
+        public virtual IList<Resource> Resources { get; set; }
+        public virtual IList<Role> Roles { get; set; }
 
         public virtual DateTime Created { get; set; }
         public virtual DateTime? LastModified { get; set; }
@@ -33,6 +33,13 @@ namespace Review_Site.Models
             get{
                 return FirstName + " " + LastName;
             }
+        }
+
+        public User()
+        {
+            Articles = new List<Article>();
+            Resources = new List<Resource>();
+            Roles = new List<Role>();
         }
     }
 

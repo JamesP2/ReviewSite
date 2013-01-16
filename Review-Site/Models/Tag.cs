@@ -13,6 +13,11 @@ namespace Review_Site.Models
 
         public virtual String Name { get; set; }
 
-        public virtual ICollection<Article> Articles { get; set; }
+        public virtual IList<Article> Articles { get; set; }
+
+        public Tag()
+        {
+            Articles = new List<Article>();
+        }
     }
 }
