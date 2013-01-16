@@ -39,19 +39,21 @@ namespace Review_Site.Migrations
 
             context.SaveChanges();
 
-            context.Categories.AddOrUpdate(new Category
-                {
-                    ID = Guid.Parse("a323a95c-b475-4886-9f8d-006c2cc84c64"),
-                    Title = "Home",
-                    IsSystemCategory = true,
-                    ColorID = context.Colors.Single(x => x.Name == "Grey").ID,
-                    Created = DateTime.Now,
-                    LastModified = DateTime.Now
-                }
-                );
+            if (!context.Categories.Any(x => x.ID == new Guid("a323a95c-b475-4886-9f8d-006c2cc84c64")))
+            {
+                context.Categories.Add(new Category
+                    {
+                        ID = Guid.Parse("a323a95c-b475-4886-9f8d-006c2cc84c64"),
+                        Title = "Home",
+                        IsSystemCategory = true,
+                        ColorID = context.Colors.Single(x => x.Name == "Grey").ID,
+                        Created = DateTime.Now,
+                        LastModified = DateTime.Now
+                    }
+                    );
 
-            context.SaveChanges();
-
+                context.SaveChanges();
+            }
             context.Permissions.AddOrUpdate(new Permission[]{
                 new Permission{
                     ID = Guid.Parse("b7c48bc8-7674-4cae-b96e-327e9c50d920"),
@@ -207,19 +209,22 @@ namespace Review_Site.Migrations
             context.Roles.AddOrUpdate(contentEditor);
             context.SaveChanges();
 
-            context.Users.AddOrUpdate(new User
+            if (!context.Users.Any(x => x.ID == new Guid("4dd27ddf-995c-43cf-9867-43e4f9bee080")))
             {
-                ID = Guid.Parse("4dd27ddf-995c-43cf-9867-43e4f9bee080"),
-                Username = "admin",
-                Password = PasswordHashing.GetHash("password"),
-                FirstName = "System",
-                LastName = "Administrator",
-                Roles = new Role[]{
+                context.Users.Add(new User
+                {
+                    ID = Guid.Parse("4dd27ddf-995c-43cf-9867-43e4f9bee080"),
+                    Username = "admin",
+                    Password = PasswordHashing.GetHash("password"),
+                    FirstName = "System",
+                    LastName = "Administrator",
+                    Roles = new Role[]{
                     context.Roles.Single(x => x.Name == "Global Administrator")
                 },
-                Created = DateTime.Now,
-                LastModified = DateTime.Now
-            });
+                    Created = DateTime.Now,
+                    LastModified = DateTime.Now
+                });
+            }
 
         }
 
