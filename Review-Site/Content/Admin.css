@@ -24,6 +24,17 @@
     font-weight: bold;
 }
 
+.tagClose{
+    margin-top: -2px;
+    margin-left: 4px;
+}
+
+.tagLabel {
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
 /* jquery.Jcrop.min.css v0.9.10 (build:20120429) */
 .jcrop-holder{direction:ltr;text-align:left;}
 .jcrop-vline,.jcrop-hline{background:#FFF url(Jcrop.gif) top left repeat;font-size:0;position:absolute;}

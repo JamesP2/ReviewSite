@@ -184,6 +184,10 @@
     <Compile Include="Migrations\201301152350336_PageHits.Designer.cs">
       <DependentUpon>201301152350336_PageHits.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201301161821539_Tags.cs" />
+    <Compile Include="Migrations\201301161821539_Tags.Designer.cs">
+      <DependentUpon>201301161821539_Tags.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Article.cs" />
@@ -199,8 +203,10 @@
     <Compile Include="Models\Resource.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\SiteContext.cs" />
+    <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Areas\Admin\Views\Article\_Editor.cshtml" />
     <None Include="Properties\PublishProfiles\CentOS VM Ftp.pubxml" />
     <Content Include="Content\Favicon.ico" />
     <Content Include="Scripts\ckeditor\.git" />
@@ -707,6 +713,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201301152350336_PageHits.resx">
       <DependentUpon>201301152350336_PageHits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201301161821539_Tags.resx">
+      <DependentUpon>201301161821539_Tags.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

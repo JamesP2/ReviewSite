@@ -49,6 +49,7 @@ namespace Review_Site.Areas.Admin.Controllers
         public ActionResult Create()
         {
             ViewBag.CategoryID = new SelectList(db.Categories, "ID", "Title");
+            ViewBag.TagList = db.Tags.Select(x => x.Name).ToList();
             return View();
         }
 
@@ -75,6 +76,7 @@ namespace Review_Site.Areas.Admin.Controllers
             }
 
             ViewBag.CategoryID = new SelectList(db.Categories, "ID", "Title", article.CategoryID);
+            ViewBag.TagList = db.Tags.Select(x => x.Name).ToList();
             return View(article);
         }
 
@@ -87,6 +89,7 @@ namespace Review_Site.Areas.Admin.Controllers
             Article article = db.Articles.Single(a => a.ID == id);
             ViewBag.CategoryID = new SelectList(db.Categories, "ID", "Title", article.CategoryID);
             ViewBag.AuthorID = new SelectList(db.Users, "ID", "FullName", article.AuthorID);
+            ViewBag.TagList = db.Tags.Select(x => x.Name).ToList();
             return View(article);
         }
 
@@ -110,6 +113,7 @@ namespace Review_Site.Areas.Admin.Controllers
             }
             ViewBag.CategoryID = new SelectList(db.Categories, "ID", "Title", article.CategoryID);
             ViewBag.AuthorID = new SelectList(db.Users, "ID", "FullName", article.AuthorID);
+            ViewBag.TagList = db.Tags.Select(x => x.Name).ToList();
             return View(article);
         }
 

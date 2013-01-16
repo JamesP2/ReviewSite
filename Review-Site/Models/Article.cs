@@ -30,6 +30,7 @@ namespace Review_Site.Models
 
         public virtual User Author { get; set; }
         public virtual Category Category { get; set; }
+        public virtual ICollection<Tag> Tags { get; set; }
     }
 
     public class ArticleConfiguration : EntityTypeConfiguration<Article>
@@ -40,6 +41,7 @@ namespace Review_Site.Models
                 .HasForeignKey(x => x.CategoryID);
             HasRequired(x => x.Author).WithMany(x => x.Articles)
                 .HasForeignKey(x => x.AuthorID);
+            HasMany(x => x.Tags).WithMany(x => x.Articles);
         }
     }
 }

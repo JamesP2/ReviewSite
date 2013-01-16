@@ -1,0 +1,59 @@
+﻿@model Review_Site.Models.Article
+        <div class="editor-field">
+            @Html.Hidden("tagList")
+            <script type="text/javascript">
+                var tagArray = @Html.Raw(Json.Encode(@ViewBag.TagList));
+                var usedTags = @Html.Raw(Json.Encode(Model.Tags.Select(x => x.ID).ToList()));
+                function addTag(){
+                    tag = $("#tagInput").val();
+                    if(tag == "") return; //no spaces please!!
+                    if($.inArray(tag, usedTags) == -1){
+                        usedTags.push(tag);
+                        $("#tagField").append('<span class="label tagLabel" id="'+tag+'Label">'+tag+'<a class="close tagClose" onclick="removeTag(\''+tag+'\')">&times;</a></span>');
+                        refreshTagField();
+                    }
+                }
+                function removeTag(tag){
+                    usedTags.splice(usedTags.indexOf(tag), 1);
+                    $("#"+tag+"Label").remove();
+                    refreshTagField();
+                }
+                function refreshTagField(){
+                    $('[name="tagList"]').val(usedTags.join()); //defaults to comma.
+                }
+                $(document).ready(function(){
+                    for(var i in usedTags){
+                        addTag(i);
+                    }
+                });
+            </script>
+            <div class="row-fluid">
+                <div class="span6">
+                    <h5>Add Tag</h5>
+                    <div class="input-append">
+                      <input class="span2" id="tagInput" type="text" data-provide="typeahead" data-source="tagArray">
+                      <button class="btn" type="button" onclick="addTag()">Add Tag</button>
+                    </div>
+                </div>
+                <div class="span6">
+                    <h5>Tags associated with this Article</h5>
+                    <span id="tagField"></span>
+                </div>
+            </div>
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ShortDescription, "Short Description of Article (no more than 150 characters!)")
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.ShortDescription, new { maxlength = "150", rows="3", cols="60" })
+            @Html.ValidationMessageFor(model => model.ShortDescription)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Text, "Article Contents:")
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Text, new { @class = "adminEditor" })
+            @Html.ValidationMessageFor(model => model.Text)
+        </div>
+        <p>&nbsp;</p>

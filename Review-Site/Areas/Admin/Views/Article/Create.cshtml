@@ -29,21 +29,7 @@
             @Html.ValidationMessageFor(model => model.Title)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ShortDescription, "Short Description of Article (no more than 150 characters!)")
-        </div>
-        <div class="editor-field">
-            @Html.TextAreaFor(model => model.ShortDescription, new { maxlength = "150", rows="3", cols="60" })
-            @Html.ValidationMessageFor(model => model.ShortDescription)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Text, "Enter the Content of your Article below:")
-        </div>
-        <div class="editor-field">
-            @Html.TextAreaFor(model => model.Text, new { @class="adminEditor"})
-            @Html.ValidationMessageFor(model => model.Text)
-        </div>
+        @Html.Partial("_Editor")
         <p>
             <input type="submit" class="btn btn-primary" value="Create" />
         </p>
