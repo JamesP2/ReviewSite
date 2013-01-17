@@ -48,7 +48,7 @@
             <option value="reg12" data-height="regular" data-width="12">12 Wide Regular Gridsquare</option>
             <option value="small12" data-height="small" data-width="12">12 Wide Small Gridsquare</option>
         </select>
-        <p>&nbsp;</p>
+        <p>To stop using presets and go back to normal, select Custom to disable Aspect Ratio Locking.</p>
         <img id="cropTarget" src="@Url.Action("GetResource", new { Controller = "Home", Area = "", id = Model.ResourceID })" alt="Image" width="@(Model.OrigWidth)" height="@(Model.OrigHeight)"/>
 
         
@@ -81,6 +81,12 @@
         var el = $(this).find(':selected');
         if (el.attr('data-width') != null) {
             setCropper(el.attr('data-width'), el.attr('data-height'));
+        }
+        if(el.val() == "custom"){
+            //Disable Aspect.
+            jcropInstance.setOptions({
+                aspectRatio: 0
+            });
         }
     });
 
@@ -124,6 +130,10 @@
             $('#presets').val("custom");
         } else {
             jcropInstance.animateTo(bounds);
+            //set aspect for resize.
+            jcropInstance.setOptions({
+                aspectRatio: width / height
+            });
         }
     }
 </script>
