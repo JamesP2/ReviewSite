@@ -60,27 +60,27 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.Article.Create")]
         public ActionResult Create(Article article, string tagList)
         {
+            var tagNameList = (tagList ?? "").Split(',').ToList();
+            foreach (var s in tagNameList.Where(s => !String.IsNullOrEmpty(s)))
+            {
+                if (db.Tags.Any(x => x.Name.ToLower() == s.ToLower()))
+                {
+                    article.Tags.Add(db.Tags.Single(x => x.Name.ToLower() == s.ToLower()));
+                }
+                else
+                {
+                    var tag = new Tag
+                                  {
+                                      ID = Guid.NewGuid(),
+                                      Name = s
+                                  };
+                    db.Tags.Add(tag);
+                    article.Tags.Add(tag);
+                }
+            }
+
             if (ModelState.IsValid)
             {
-                List<String> tagNameList = tagList.Split(',').ToList();
-                foreach (String s in tagNameList)
-                {
-                    if (String.IsNullOrEmpty(s)) continue;
-                    if (db.Tags.Where(x => x.Name.ToLower() == s.ToLower()).Count() == 1)
-                    {
-                        article.Tags.Add(db.Tags.Single(x => x.Name.ToLower() == s.ToLower()));
-                    }
-                    else
-                    {
-                        Tag tag = new Tag
-                        {
-                            ID = Guid.NewGuid(),
-                            Name = s
-                        };
-                        db.Tags.Add(tag);
-                        article.Tags.Add(tag);
-                    }
-                }
                 article.ID = Guid.NewGuid();
                 DateTime currentTime = DateTime.Now;
                 article.LastModified = currentTime;
