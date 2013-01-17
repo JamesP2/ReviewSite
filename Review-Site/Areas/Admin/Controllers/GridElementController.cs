@@ -50,8 +50,8 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.GridElement.Create")]
         public ActionResult Create()
         {
-            ViewBag.BorderColorID = new SelectList(db.Colors, "ID", "Name");
-            ViewBag.GridID = new SelectList(db.Grids, "ID", "Name");
+            ViewBag.BorderColorIDs = new SelectList(db.Colors, "ID", "Name");
+            ViewBag.GridIDs = new SelectList(db.Grids, "ID", "Name");
             populateFormViewBag();
             return View();
         } 
@@ -72,8 +72,8 @@ namespace Review_Site.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.BorderColorID = new SelectList(db.Colors, "ID", "Name", gridelement.BorderColorID);
-            ViewBag.GridID = new SelectList(db.Grids, "ID", "Name", gridelement.GridID);
+            ViewBag.BorderColorIDs = new SelectList(db.Colors, "ID", "Name", gridelement.BorderColorID);
+            ViewBag.GridIDs = new SelectList(db.Grids, "ID", "Name", gridelement.GridID);
             populateFormViewBag(gridelement);
             if(gridelement.ImageID != Guid.Empty) gridelement.Image = db.Resources.Single(x => x.ID == gridelement.ImageID);
             return View(gridelement);
@@ -86,8 +86,8 @@ namespace Review_Site.Areas.Admin.Controllers
         public ActionResult Edit(Guid id)
         {
             GridElement gridelement = db.GridElements.Single(g => g.ID == id);
-            ViewBag.BorderColorID = new SelectList(db.Colors, "ID", "Name", gridelement.BorderColorID);
-            ViewBag.GridID = new SelectList(db.Grids, "ID", "Name", gridelement.GridID);
+            ViewBag.BorderColorIDs = new SelectList(db.Colors, "ID", "Name", gridelement.BorderColorID);
+            ViewBag.GridIDs = new SelectList(db.Grids, "ID", "Name", gridelement.GridID);
             populateFormViewBag(gridelement);
             return View(gridelement);
         }
@@ -107,8 +107,8 @@ namespace Review_Site.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.BorderColorID = new SelectList(db.Colors, "ID", "Name", gridelement.BorderColorID);
-            ViewBag.GridID = new SelectList(db.Grids, "ID", "Name", gridelement.GridID);
+            ViewBag.BorderColorIDs = new SelectList(db.Colors, "ID", "Name", gridelement.BorderColorID);
+            ViewBag.GridIDs = new SelectList(db.Grids, "ID", "Name", gridelement.GridID);
             populateFormViewBag(gridelement);
             return View(gridelement);
         }
@@ -121,23 +121,23 @@ namespace Review_Site.Areas.Admin.Controllers
         private void populateFormViewBag(GridElement Model)
         {
 
-            SelectList width = new SelectList(new List<int> { 4, 6, 8, 12 }, ((Model != null) ? Model.Width.ToString() : "4"));
-            SelectList sizeClass = new SelectList(new Dictionary<String, String> 
+            SelectList widths = new SelectList(new List<int> { 4, 6, 8, 12 }, ((Model != null) ? Model.Width.ToString() : "4"));
+            SelectList sizeClasses = new SelectList(new Dictionary<String, String> 
             { 
                 {"Tall", "tall"},
                 {"Regular", "regular"},
                 {"Small", "small"},
             }, "Value", "Key", ((Model != null) ? Model.SizeClass : "tall"));
-            SelectList headingClass = new SelectList(new Dictionary<String, String>
+            SelectList headingClasses = new SelectList(new Dictionary<String, String>
             {
                 {"Very Top", "anchorVeryTop"},
                 {"Top Middle", "anchorTopMiddle"},
                 {"Bottom Middle", "anchorBottomMiddle"},
                 {"Very Bottom", "anchorVeryBottom"},
             }, "Value", "Key", ((Model != null) ? Model.HeadingClass : "anchorVeryTop"));
-            ViewBag.Width = width;
-            ViewBag.SizeClass = sizeClass;
-            ViewBag.HeadingClass = headingClass;
+            ViewBag.Widths = widths;
+            ViewBag.SizeClasses = sizeClasses;
+            ViewBag.HeadingClasses = headingClasses;
         }
 
         //

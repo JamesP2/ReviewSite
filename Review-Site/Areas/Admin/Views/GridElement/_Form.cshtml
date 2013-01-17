@@ -23,7 +23,7 @@
                     @Html.LabelFor(model => model.GridID, "Parent Grid")
                 </div>
                 <div class="editor-field">
-                    @Html.DropDownList("GridID", String.Empty)
+                    @Html.DropDownList("GridID", (SelectList)ViewBag.GridIDs, String.Empty)
                     @Html.ValidationMessageFor(model => model.GridID)
                 </div>
                 <div class="editor-label">
@@ -40,7 +40,7 @@
                     @Html.LabelFor(model => model.BorderColorID, "Border Colour")
                 </div>
                 <div class="editor-field">
-                    @Html.DropDownList("BorderColorID")
+                    @Html.DropDownList("BorderColorID", (SelectList)ViewBag.BorderColorIDs)
                     @Html.ValidationMessageFor(model => model.BorderColorID)
                 </div>
                 <div class="editor-label">
@@ -55,7 +55,7 @@
                     @Html.LabelFor(model => model.HeadingClass, "Heading Position")
                 </div>
                 <div class="editor-field">
-                    @Html.DropDownListFor(model => model.HeadingClass, (SelectList)ViewBag.HeadingClass)
+                    @Html.DropDownListFor(model => model.HeadingClass, (SelectList)ViewBag.HeadingClasses)
                     @Html.ValidationMessageFor(model => model.HeadingClass)
                 </div>
 
@@ -72,14 +72,14 @@
                     @Html.LabelFor(model => model.SizeClass, "Height")
                 </div>
                 <div class="editor-field">
-                    @Html.DropDownListFor(model => model.SizeClass, (SelectList)ViewBag.SizeClass)
+                    @Html.DropDownListFor(model => model.SizeClass, (SelectList)ViewBag.SizeClasses)
                     @Html.ValidationMessageFor(model => model.SizeClass)
                 </div>
                 <div class="editor-label">
                     @Html.LabelFor(model => model.Width)
                 </div>
                 <div class="editor-field">
-                    @Html.DropDownListFor(model => model.Width, (SelectList)ViewBag.Width)
+                    @Html.DropDownListFor(model => model.Width, (SelectList)ViewBag.Widths)
                     @Html.ValidationMessageFor(model => model.Width)
                 </div>
             </div>
