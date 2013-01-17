@@ -10,7 +10,7 @@
         <h1 class="article-title">@Model.Title</h1>
         <div class="article">
             <p class="article-info">
-                Written by @Model.Author.FullName on the @Model.Created.ToShortDateString()
+                Written by @Model.Author.FullName on the @Model.Created.ToString("DD/MM/YYYY")
                 at @Model.Created.ToShortTimeString()</p>
             @{
                 if (Model.LastModified.Value != Model.Created)
