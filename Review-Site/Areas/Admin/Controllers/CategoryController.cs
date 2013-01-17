@@ -41,6 +41,13 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (db.Categories.Any(x => x.Title == category.Title))
+                {
+                    ModelState.AddModelError("Title", "A Category with that Title already exists.");
+                    ViewBag.Colors = new SelectList(db.Colors, "ID", "Name");
+                    ViewBag.Grids = new SelectList(GetGrids(), "Value", "Text");
+                    return View(category);
+                }
                 category.ID = Guid.NewGuid();
                 category.Created = DateTime.Now;
                 category.LastModified = DateTime.Now;
@@ -74,6 +81,13 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (db.Categories.Any(x => x.Title == category.Title && x.ID != category.ID))
+                {
+                    ModelState.AddModelError("Title", "A Category with that Title already exists.");
+                    ViewBag.Colors = new SelectList(db.Colors, "ID", "Name");
+                    ViewBag.Grids = new SelectList(GetGrids(), "Value", "Text");
+                    return View(category);
+                }
                 category.LastModified = DateTime.Now;
                 db.Categories.Attach(category);
                 db.Entry(category).State = EntityState.Modified;

@@ -48,6 +48,11 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (db.Grids.Any(x => x.Name == grid.Name))
+                {
+                    ModelState.AddModelError("Name", "A Grid with that Name already exists.");
+                    return View(grid);
+                }
                 grid.Created = DateTime.Now;
                 grid.LastModified = DateTime.Now;
                 grid.ID = Guid.NewGuid();
@@ -78,6 +83,11 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (db.Grids.Any(x => x.Name == grid.Name && x.ID != grid.ID))
+                {
+                    ModelState.AddModelError("Name", "A Grid with that Name already exists.");
+                    return View(grid);
+                }
                 grid.LastModified = DateTime.Now;
                 db.Grids.Attach(grid);
                 db.Entry(grid).State = EntityState.Modified;

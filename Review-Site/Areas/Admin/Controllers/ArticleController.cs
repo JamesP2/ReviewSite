@@ -81,6 +81,13 @@ namespace Review_Site.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
+                if (db.Articles.Any(x => x.Title == article.Title))
+                {
+                    ModelState.AddModelError("Title", "An Article already exists with that title.");
+                    ViewBag.CategoryID = new SelectList(db.Categories, "ID", "Title", article.CategoryID);
+                    ViewBag.TagList = db.Tags.Select(x => x.Name).ToList();
+                    return View(article);
+                }
                 article.ID = Guid.NewGuid();
                 DateTime currentTime = DateTime.Now;
                 article.LastModified = currentTime;
@@ -121,6 +128,14 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (db.Articles.Any(x => x.Title == article.Title && x.ID != article.ID))
+                {
+                    ModelState.AddModelError("Title", "Another Article exists with that title.");
+                    ViewBag.CategoryID = new SelectList(db.Categories, "ID", "Title", article.CategoryID);
+                    ViewBag.AuthorID = new SelectList(db.Users, "ID", "FullName", article.AuthorID);
+                    ViewBag.TagList = db.Tags.Select(x => x.Name).ToList();
+                    return View(article);
+                }
                 Article oldArticle = db.Articles.Single(x => x.ID == article.ID);
                 oldArticle.Tags.Clear();
                 List<String> tagNameList = tagList.Split(',').ToList();

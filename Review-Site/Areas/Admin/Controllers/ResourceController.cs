@@ -54,6 +54,11 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             resource.ID = Guid.NewGuid();
             string fileName = "";
+            if (db.Resources.Any(x => x.Title == resource.Title))
+            {
+                ModelState.AddModelError("Title", "A Resource with that Title already exists.");
+                return View(resource);
+            }
             if (file != null && file.ContentLength > 0)
             {
                 resource.Type = file.ContentType;
@@ -100,6 +105,12 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (db.Resources.Any(x => x.Title == resource.Title && x.ID != resource.ID))
+                {
+                    ModelState.AddModelError("Title", "A Resource with that Title already exists.");
+                    ViewBag.SourceTextColorID = new SelectList(db.Colors, "ID", "Name", resource.SourceTextColorID);
+                    return View(resource);
+                }
                 resource.LastModified = DateTime.Now;
                 db.Resources.Attach(resource);
                 db.Entry(resource).State = EntityState.Modified;
@@ -222,6 +233,12 @@ namespace Review_Site.Areas.Admin.Controllers
             if (form.x <= 0 && form.y <= 0 && form.x2 <= 0 && form.y2 <= 0)
             {
                 ModelState.AddModelError("", "You must provide a selection!");
+                return View(form);
+            }
+
+            if (db.Resources.Any(x => x.Title == form.Title))
+            {
+                ModelState.AddModelError("Title", "Another Resource has this Title.");
                 return View(form);
             }
 
