@@ -76,10 +76,23 @@ namespace Review_Site
             RegisterRoutes(RouteTable.Routes);
         }
 
+        protected void Application_EndRequest()
+        {
+            if (Context.Response.StatusCode == 404)
+            {
+                Application_Error(new HttpException(404, Context.Response.StatusDescription));
+            }
+        }
+
         protected void Application_Error()
         {
-            HomeController controller = new HomeController();
-            var view = controller.Error(Server.GetLastError());
+            Application_Error(Server.GetLastError());
+
+        }
+        protected void Application_Error(Exception ex)
+        {
+            var controller = new HomeController();
+            var view = controller.Error(ex);
 
             var httpContext = new HttpContextWrapper(HttpContext.Current);
             var route = RouteTable.Routes.GetRouteData(httpContext);
