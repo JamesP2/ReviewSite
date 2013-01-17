@@ -77,6 +77,8 @@ namespace Review_Site.Controllers
                 outputStream = new MemoryStream(image.GetBytes());
             }
 
+            stream.Close();
+
             return File(outputStream, res.Type);
         }
         public ActionResult GetArticle(Guid id)
