@@ -48,6 +48,11 @@ namespace Review_Site
                 "Category/{*id}",
                 new { controller = "Home", action = "GetCategory" }
             );
+            routes.MapRoute(
+                "GetTag",
+                "Tag/{*id}",
+                new { controller = "Home", action = "GetTag" }
+            );
 
             routes.MapRoute(
                 "About",

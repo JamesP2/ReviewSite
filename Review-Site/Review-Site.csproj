@@ -204,6 +204,7 @@
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\SiteContext.cs" />
     <Compile Include="Models\Tag.cs" />
+    <Compile Include="Models\TagViewModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Areas\Admin\Views\Article\_Editor.cshtml" />
@@ -225,6 +226,7 @@
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Shared\_Articles.cshtml" />
     <Content Include="Views\Shared\HttpError.cshtml" />
+    <Content Include="Views\Home\GetTag.cshtml" />
     <None Include="Web.MonoRelease.config">
       <SubType>Designer</SubType>
     </None>

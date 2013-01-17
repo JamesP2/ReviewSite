@@ -115,6 +115,35 @@ namespace Review_Site.Controllers
                             });
         }
 
+        public ActionResult GetTag(string id, int? page)
+        {
+            Guid tagguid;
+            Tag tag;
+            if (Guid.TryParse(id, out tagguid))
+            {
+                if (!db.Tags.Any(x => x.ID == tagguid)) return HttpNotFound("That category does not exist");
+                tag = db.Tags.SingleOrDefault(x => x.ID == tagguid);
+            }
+            else
+            {
+                //Try and match to category name instead.
+                string name = id.Replace('-', ' ').ToLower();
+                if (!db.Tags.Any(x => x.Name.ToLower() == name)) return HttpNotFound("That category does not exist");
+                tag = db.Tags.SingleOrDefault(x => x.Name.ToLower() == name);
+            }
+
+            var totalPages = (int)Math.Ceiling(tag.Articles.Count() / 5d);
+            if (!page.HasValue || page < 0 || page > totalPages) page = 1;
+
+            return View(new TagViewModel
+            {
+                Tag = tag,
+                Articles = tag.Articles.OrderByDescending(x => x.Created).Skip((page.Value - 1) * 5).Take(5),
+                Page = page.Value,
+                PageCount = totalPages
+            });
+        }
+
         public ActionResult GetGrid(string id)
         {
             Guid gridguid;

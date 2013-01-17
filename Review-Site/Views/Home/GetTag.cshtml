@@ -1,0 +1,11 @@
+﻿@model Review_Site.Models.TagViewModel
+@{
+    ViewBag.Title = Model.Tag.Name;
+}
+
+@if (ViewBag.NoHeader == null || ViewBag.NoHeader != false)
+{
+    <h2>Articles tagged with <em>@Model.Tag.Name</em></h2>
+}
+
+@Html.Partial("_Articles", Model)
