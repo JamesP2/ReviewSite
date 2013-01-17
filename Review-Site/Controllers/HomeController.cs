@@ -15,7 +15,7 @@ namespace Review_Site.Controllers
 
         public ActionResult Index()
         {
-            if (!User.Identity.IsAuthenticated) return RedirectToAction("LandingPage");
+            //if (!User.Identity.IsAuthenticated) return RedirectToAction("LandingPage");
 
             ViewBag.NoHeader = false;
 
