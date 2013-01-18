@@ -179,13 +179,21 @@ namespace Review_Site.Migrations
 
             context.SaveChanges();
 
-            Role globalAdmin = (db.Roles.Where(x => x.ID == new Guid("eae9a548-8930-485d-b37c-10587492a216")).Count() > 0)
+            Role globalAdmin = (db.Roles.Any(x => x.ID == new Guid("eae9a548-8930-485d-b37c-10587492a216")))
                 ? db.Roles.Single(x => x.ID == new Guid("eae9a548-8930-485d-b37c-10587492a216"))
-                : new Role();
+                : new Role
+                {
+                    ID = new Guid("eae9a548-8930-485d-b37c-10587492a216"),
+                    Name = "Global Administrator"
+                };
 
-            Role contentEditor = (db.Roles.Where(x => x.ID == new Guid("e736f81e-4d2d-4135-9b49-93134a614580")).Count() > 0)
+            Role contentEditor = (db.Roles.Any(x => x.ID == new Guid("e736f81e-4d2d-4135-9b49-93134a614580")))
                 ? db.Roles.Single(x => x.ID == new Guid("e736f81e-4d2d-4135-9b49-93134a614580"))
-                : new Role();
+                : new Role
+                {
+                    ID = new Guid("e736f81e-4d2d-4135-9b49-93134a614580"),
+                    Name = "Content Editor"
+                };
 
             foreach (Permission permission in GetPermissionCollection("Admin"))
             {
