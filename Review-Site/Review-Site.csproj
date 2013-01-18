@@ -208,6 +208,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Areas\Admin\Views\Article\_Editor.cshtml" />
+    <Content Include="ConnectionStrings.config" />
     <None Include="Properties\PublishProfiles\CentOS VM Ftp.pubxml" />
     <Content Include="Content\Favicon.ico" />
     <Content Include="Scripts\ckeditor\.git" />
@@ -227,9 +228,6 @@
     <Content Include="Views\Shared\_Articles.cshtml" />
     <Content Include="Views\Shared\HttpError.cshtml" />
     <Content Include="Views\Home\GetTag.cshtml" />
-    <None Include="Web.MonoRelease.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Admin.css" />
