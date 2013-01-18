@@ -53,7 +53,7 @@ namespace Review_Site.Controllers
             });
         }
 
-        public ActionResult GetResource(Guid id)
+        public ActionResult GetResource(Guid id, int? width, int? height)
         {
             //get the resource.
             var res = db.Resources.SingleOrDefault(r => r.ID == id);
@@ -68,6 +68,12 @@ namespace Review_Site.Controllers
             if (res.Type.StartsWith("image"))
             {
                 var image = new WebImage(stream);
+
+                if (width.HasValue && height.HasValue)
+                {
+                    //Resize!
+                    image.Resize(width.Value, 0, true, true);
+                }
 
                 if (!string.IsNullOrWhiteSpace(res.Source))
                 {

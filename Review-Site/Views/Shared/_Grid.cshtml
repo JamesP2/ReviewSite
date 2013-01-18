@@ -9,6 +9,21 @@
     int curused = 0;
     <div class="row">
     @foreach(var square in Model.GridElements.OrderBy(x => x.Created)){
+        int height = 0;
+        var width = (square.Width * 70) + (square.Width * 5);
+
+        switch (square.SizeClass)
+        {
+            case "tall":
+                height = 500;
+                break;
+            case "regular":
+                height = 300;
+                break;
+            case "small":
+                height = 200;
+                break;
+        }
         if(curused == 12 || (curused + square.Width) > 12){
             //Start a new row!
             @:</div>
@@ -22,7 +37,7 @@
                 @:</a>
             @:</div>
             @:<a href="@Url.Action("GetArticle", new { controller="Home", area="", id=square.ArticleID })">
-                @:<img alt="Grid Image @square.Image.Title" src="@Url.Action("GetResource", new { controller="Home", area="", id=square.ImageID })"/>
+                @:<img alt="Grid Image @square.Image.Title" src="@Url.Action("GetResource", new { controller="Home", area="", id=square.ImageID, width = width, height = height })"/>
             @:</a>
         @:</div>
         //Append this square's width to the currently used up width of this row.
