@@ -150,7 +150,7 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             List<Resource> result;
             if (!String.IsNullOrEmpty(filter)) result = db.Resources.Where(x => x.Type.StartsWith(filter)).ToList();
-            else result = db.Resources.ToList();
+            else result = db.Resources.OrderBy(x => x.Title).ToList();
 
             return View(result);
         }
