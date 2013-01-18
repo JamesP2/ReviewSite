@@ -72,7 +72,7 @@ namespace Review_Site.Controllers
                 if (width.HasValue && height.HasValue)
                 {
                     //Resize!
-                    image.Resize(width.Value, 0, true, true);
+                    image.Resize(width.Value, height.Value, true, true);
                 }
 
                 if (!string.IsNullOrWhiteSpace(res.Source))
