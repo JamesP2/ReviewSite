@@ -59,8 +59,10 @@
 {
     border: 6px solid #CCC;
     box-sizing: border-box;
-    /* FireFox Fix! */
+    /* FireFox Fix */
     -moz-box-sizing: border-box;
+    /* Safari Fix */
+    -webkit-box-sizing: border-box;
     overflow: hidden;
     position: relative;
     height: 300px;
