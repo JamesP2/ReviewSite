@@ -10,7 +10,7 @@
     <div class="row">
     @foreach(var square in Model.GridElements.OrderBy(x => x.Created)){
         int height = 0;
-        var width = (square.Width * 70) + (square.Width * 5);
+        var width = (80 * square.Width) - 32;
 
         switch (square.SizeClass)
         {
