@@ -53,7 +53,7 @@ namespace Review_Site.Controllers
             });
         }
 
-        public ActionResult GetResource(Guid id, int? width, int? height)
+        public ActionResult GetResource(Guid id, int? width, int? height, bool? noSource)
         {
             //get the resource.
             var res = db.Resources.SingleOrDefault(r => r.ID == id);
@@ -75,7 +75,7 @@ namespace Review_Site.Controllers
                     image.Resize(width.Value, height.Value, true, true);
                 }
 
-                if (!string.IsNullOrWhiteSpace(res.Source))
+                if (!string.IsNullOrWhiteSpace(res.Source) && noSource != true)
                 {
                     image.AddTextWatermark(res.Source, "#" + ((res.SourceTextColor == null) ? "FFFFFF" : res.SourceTextColor.Value));
                 }
