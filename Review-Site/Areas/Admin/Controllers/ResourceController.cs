@@ -250,7 +250,7 @@ namespace Review_Site.Areas.Admin.Controllers
             int width = image.Width;
             int height = image.Height;
 
-            image.Crop((int)form.y, (int)form.x, height - (int)form.y2, width - (int)form.x2);
+            image.Crop((int)Math.Ceiling(form.y), (int)Math.Ceiling(form.x), height - (int)Math.Ceiling(form.y2), width - (int)Math.Ceiling(form.x2));
             //image.Crop((int)form.y, (int)form.x, (int)form.y2, (int)form.x2);
 
             Resource newResource = new Resource
