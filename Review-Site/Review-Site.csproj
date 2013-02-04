@@ -119,8 +119,10 @@
     <Compile Include="Areas\Admin\Controllers\GridController.cs" />
     <Compile Include="Areas\Admin\Controllers\GridElementController.cs" />
     <Compile Include="Areas\Admin\Controllers\ResourceController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Models\CropForm.cs" />
+    <Compile Include="Areas\Admin\Models\RoleForm.cs" />
     <Compile Include="Areas\Admin\Models\RoleListModel.cs" />
     <Compile Include="Areas\Admin\Models\UserForm.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -209,6 +211,8 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Areas\Admin\Views\Article\_Editor.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\Edit.cshtml" />
     <None Include="ConnectionStrings.config" />
     <None Include="Properties\PublishProfiles\CentOS VM Ftp.pubxml" />
     <Content Include="Content\Favicon.ico" />
