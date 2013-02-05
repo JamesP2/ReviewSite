@@ -174,6 +174,26 @@ namespace Review_Site.Migrations
                     ID = Guid.Parse("d4872022-4d74-43de-936e-19051a6e9360"),
                     Identifier = "Admin.Resource.Crop",
                     Name = "Crop Image Resources"
+                },
+                new Permission{
+                    ID = Guid.Parse("596c6e3f-6858-4d9e-98f2-d8d074d2f90f"),
+                    Identifier = "Admin.Role.Index",
+                    Name = "View Role Admin"
+                },
+                new Permission{
+                    ID = Guid.Parse("68e8da4d-e853-4f93-a3f2-a709e4ea6180"),
+                    Identifier = "Admin.Role.Create",
+                    Name = "Create Roles"
+                },
+                new Permission{
+                    ID = Guid.Parse("955b38fa-084d-497c-a729-062866ed18eb"),
+                    Identifier = "Admin.Role.Edit",
+                    Name = "Edit Roles"
+                },
+                new Permission{
+                    ID = Guid.Parse("f58e7a72-fa1b-4e4d-b322-bd59b81ad9c3"),
+                    Identifier = "Admin.Role.Delete",
+                    Name = "Delete Roles"
                 }
             });
 

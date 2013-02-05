@@ -126,6 +126,7 @@
     <Compile Include="Areas\Admin\Models\RoleListModel.cs" />
     <Compile Include="Areas\Admin\Models\UserForm.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FeedController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Core\ActionFilters.cs" />
     <Compile Include="Core\LuceneSearch.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
     <Compile Include="Models\Color.cs" />
+    <Compile Include="Models\Feed\FeedItem.cs" />
     <Compile Include="Models\PageHit.cs" />
     <Compile Include="Models\SearchViewModel.cs" />
     <Compile Include="Models\PagedArticleList.cs" />
@@ -213,7 +215,9 @@
     <Content Include="Areas\Admin\Views\Article\_Editor.cshtml" />
     <Content Include="Areas\Admin\Views\Role\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Role\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\Index.cshtml" />
     <None Include="ConnectionStrings.config" />
+    <Compile Include="Models\Feed\Feed.cs" />
     <None Include="Properties\PublishProfiles\CentOS VM Ftp.pubxml" />
     <Content Include="Content\Favicon.ico" />
     <Content Include="Scripts\ckeditor\.git" />

@@ -27,7 +27,7 @@
             @Html.LabelFor(model => model.SelectedPermissionIds)
         </div>
         <div class="editor-field">
-            @Html.ListBoxFor(model => model.SelectedPermissionIds, new SelectList(ViewBag.PermissionList, "Value", "Text"))
+            @Html.ListBoxFor(model => model.SelectedPermissionIds, new SelectList(ViewBag.PermissionList, "Value", "Text"), new { @class = "input-xxlarge", style = "height: 200px;"})
             @Html.ValidationMessageFor(model => model.SelectedPermissionIds)
         </div>
 
