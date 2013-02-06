@@ -11,9 +11,17 @@ namespace Review_Site.Models.Feed
         public string Description { get; set; }
         public string Link { get; set; }
 
-        public DateTime lastBuildDate { get; set; }
-        public DateTime pubDate { get; set; }
+        public DateTime LastBuildDate { get; set; }
+        public DateTime PubDate { get; set; }
 
-        public int ttl { get; set; }
+        public int TTL { get; set; }
+
+        public IList<FeedItem> FeedItems { get; set; }
+
+        public Feed()
+        {
+            FeedItems = new List<FeedItem>();
+            TTL = 1800;
+        }
 	}
 }
