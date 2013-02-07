@@ -4,7 +4,7 @@
         <li class="nav-header">Latest Articles By @Model.Author.FullName</li>
         @foreach (var authorArticle in Model.Author.Articles.OrderByDescending(x => x.Created).Take(3))
         {
-            <li>@Html.ActionLink(authorArticle.Title, "GetArticle", new { id = authorArticle.ID, controller = "Home" })</li>
+            <li>@Html.ActionLink(authorArticle.Title, "GetArticle", new { id = authorArticle.ID, controller = "Core" })</li>
         }
     </ul>
 </div>
@@ -15,7 +15,7 @@
             <li class="nav-header">Latest Articles in @Model.Category.Title</li>
             @foreach (var latestArticle in Model.Category.Articles.OrderByDescending(x => x.Created).Take(3))
             {
-                <li>@Html.ActionLink(latestArticle.Title, "GetArticle", new { id = latestArticle.ID, controller = "Home" })</li>
+                <li>@Html.ActionLink(latestArticle.Title, "GetArticle", new { id = latestArticle.ID, controller = "Core" })</li>
             }
         </ul>
     </div>
@@ -30,7 +30,7 @@
                 {
                     var tag = Model.Tags[index];
                     if (index > 0)
-                    {<text>, </text>}@Html.ActionLink(tag.Name, "GetTag", new { id = (tag.Name.Contains("-") ? tag.ID.ToString() : tag.Name), controller = "Home" }, new { style = "display: inline; margin:0; padding:0;" })
+                    {<text>, </text>}@Html.ActionLink(tag.Name, "GetTag", new { id = (tag.Name.Contains("-") ? tag.ID.ToString() : tag.Name), controller = "Core" }, new { style = "display: inline; margin:0; padding:0;" })
                 }
             </li>
         </ul>

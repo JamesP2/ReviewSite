@@ -49,7 +49,7 @@
             <option value="small12" data-height="small" data-width="12">12 Wide Small Gridsquare</option>
         </select>
         <p>To stop using presets and go back to normal, select Custom to disable Aspect Ratio Locking.</p>
-        <img id="cropTarget" src="@Url.Action("GetResource", new { Controller = "Home", Area = "", id = Model.ResourceID })" alt="Image" width="@(Model.OrigWidth)" height="@(Model.OrigHeight)"/>
+        <img id="cropTarget" src="@Url.Action("GetResource", new { Controller = "Core", Area = "", id = Model.ResourceID })" alt="Image" width="@(Model.OrigWidth)" height="@(Model.OrigHeight)"/>
 
         
         <p>&nbsp;</p>

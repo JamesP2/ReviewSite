@@ -43,7 +43,7 @@ namespace Review_Site.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Core");
                     }
                 }
                 else
@@ -63,7 +63,7 @@ namespace Review_Site.Controllers
         {
             FormsAuthentication.SignOut();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Core");
         }
 
     }

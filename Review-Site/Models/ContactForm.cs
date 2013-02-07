@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace Review_Site.Models
+{
+    public class ContactForm
+    {
+        [Required(ErrorMessage = "Please enter your name.")]
+        public virtual string Name { get; set; }
+
+        [Required(ErrorMessage = "Please enter your Email Address.")]
+        public virtual string Email { get; set; }
+
+        [Required(ErrorMessage = "Please enter a message to send to us!")]
+        public virtual string Message { get; set; }
+    }
+}

@@ -42,7 +42,7 @@
         </td>
         <td>
             <a href="#" onclick="sendBack('@item.ID.ToString()', '@item.Title')">Select</a> |
-            @Html.ActionLink("View", "GetArticle", new { controller = "Home", area = "", id = item.ID }, new { target = "_blank" })
+            @Html.ActionLink("View", "GetArticle", new { controller = "Core", area = "", id = item.ID }, new { target = "_blank" })
         </td>
     </tr>
 }

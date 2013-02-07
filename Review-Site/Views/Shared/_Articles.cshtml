@@ -9,7 +9,7 @@
                     <h2>@article.Created.ToString("MMM").ToUpper()</h2>
                 </div>
                 <div class="media-body">
-                    <a href="@Url.Action("GetArticle", "Home", new { area = "", id = article.ID })">
+                    <a href="@Url.Action("GetArticle", "Core", new { area = "", id = article.ID })">
                         <h4 class="media-heading">@article.Title</h4>
                     </a>
                     <p class="pull-right" style="font-style: italic;">@article.Author.FullName</p>
@@ -17,7 +17,7 @@
                     @if (string.IsNullOrEmpty(article.ShortDescription))
                     {
                         <p>
-                            <a href="@Url.Action("GetArticle", "Home", new { area = "", id = article.ID })">Read more...</a>
+                            <a href="@Url.Action("GetArticle", "Core", new { area = "", id = article.ID })">Read more...</a>
                         </p>
             }
                     else

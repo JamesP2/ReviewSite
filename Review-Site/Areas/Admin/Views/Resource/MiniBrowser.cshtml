@@ -37,7 +37,7 @@
         </td>
         <td>
             <a href="#" onclick="setUploadAndClose('@item.ID.ToString()', '@item.Title')">Select</a> |
-            @Html.ActionLink("View", "GetResource", new { controller = "Home", area = "", id = item.ID }, new { target = "_blank" })
+            @Html.ActionLink("View", "GetResource", new { controller = "Core", area = "", id = item.ID }, new { target = "_blank" })
         </td>
     </tr>
 }
@@ -64,7 +64,7 @@
     function setUploadAndClose(id, title) {
         @{
             if(ViewBag.CKEditor == true){
-            @:window.opener.CKEDITOR.tools.callFunction(funcNum, '@Url.Action("GetResource", new { controller = "Home", area = "" })/' + id);
+            @:window.opener.CKEDITOR.tools.callFunction(funcNum, '@Url.Action("GetResource", new { controller = "Core", area = "" })/' + id);
             }
             else{
             @:window.opener.setResource(id, title);

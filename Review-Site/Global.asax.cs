@@ -28,42 +28,47 @@ namespace Review_Site
             routes.MapRoute(
                 "GetResource",
                 "Resource/{id}",
-                new { controller = "Home", action = "GetResource" }
+                new { controller = "Core", action = "GetResource" }
             );
 
             routes.MapRoute(
                 "GetArticle",
                 "Article/{id}",
-                new { controller = "Home", action = "GetArticle" }
+                new { controller = "Core", action = "GetArticle" }
             );
 
             routes.MapRoute(
                 "GetGrid",
                 "Grid/{id}",
-                new { controller = "Home", action = "GetGrid" }
+                new { controller = "Core", action = "GetGrid" }
             );
 
             routes.MapRoute(
                 "GetCategory",
                 "Category/{*id}",
-                new { controller = "Home", action = "GetCategory" }
+                new { controller = "Core", action = "GetCategory" }
             );
             routes.MapRoute(
                 "GetTag",
                 "Tag/{*id}",
-                new { controller = "Home", action = "GetTag" }
+                new { controller = "Core", action = "GetTag" }
+            );
+            routes.MapRoute(
+                "Contact",
+                "Contact/",
+                new { controller = "Core", action = "Contact" }
             );
 
             routes.MapRoute(
                 "About",
                 "About/",
-                new { controller = "Home", action = "About" }
+                new { controller = "Core", action = "About" }
             );
 
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+                new { controller = "Core", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
 
         }
@@ -91,7 +96,7 @@ namespace Review_Site
         }
         protected void Application_Error(Exception ex)
         {
-            var controller = new HomeController();
+            var controller = new CoreController();
             var view = controller.Error(ex);
 
             var httpContext = new HttpContextWrapper(HttpContext.Current);
