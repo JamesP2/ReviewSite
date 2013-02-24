@@ -85,6 +85,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="Mvc.Mailer">
+      <HintPath>..\packages\MvcMailer.4.0\lib\40\Mvc.Mailer.dll</HintPath>
+    </Reference>
     <Reference Include="NuGet.Core, Version=1.6.30117.9648, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Nuget.Core.1.6.2\lib\net40\NuGet.Core.dll</HintPath>
@@ -164,6 +167,7 @@
     <Compile Include="Controllers\FeedController.cs" />
     <Compile Include="Controllers\CoreController.cs" />
     <Compile Include="Core\ActionFilters.cs" />
+    <Compile Include="Core\DataAnnotations.cs" />
     <Compile Include="Core\LuceneSearch.cs" />
     <Compile Include="Core\PageHits.cs" />
     <Compile Include="Core\PermissionManager.cs" />
@@ -175,6 +179,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Mailers\ContactUsMailer.cs" />
+    <Compile Include="Mailers\IContactUsMailer.cs" />
     <Compile Include="Migrations\201211110034349_InitialCreate.cs" />
     <Compile Include="Migrations\201211110034349_InitialCreate.Designer.cs">
       <DependentUpon>201211110034349_InitialCreate.cs</DependentUpon>
@@ -273,6 +279,10 @@
     <Content Include="Views\Shared\_Articles.cshtml" />
     <Content Include="Views\Shared\HttpError.cshtml" />
     <Content Include="Views\Core\GetTag.cshtml" />
+    <Content Include="Views\Core\ContactThanks.cshtml" />
+    <Content Include="Views\ContactUsMailer\_Layout.cshtml" />
+    <Content Include="Views\ContactUsMailer\ThankYou.cshtml" />
+    <Content Include="Views\ContactUsMailer\UserContact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Admin.css" />

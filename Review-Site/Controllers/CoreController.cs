@@ -6,6 +6,8 @@ using Review_Site.Models;
 using System.IO;
 using System.Web.Helpers;
 using Review_Site.Core;
+using Microsoft.Web.Helpers;
+using Review_Site.Mailers;
 
 namespace Review_Site.Controllers
 {
@@ -205,7 +207,31 @@ namespace Review_Site.Controllers
         [HttpPost]
         public ActionResult Contact(ContactForm form)
         {
-            throw new NotImplementedException();
+
+            //From Stack Overflow 9726576
+            // Look for a proxy address first
+            form.ClientAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+
+            // If there is no proxy, get the standard remote address
+            if (form.ClientAddress == null || form.ClientAddress.ToLower() == "unknown")
+                form.ClientAddress = Request.ServerVariables["REMOTE_ADDR"];
+
+            if (!ReCaptcha.Validate(privateKey: "KEYHERE"))
+            {
+                ModelState.AddModelError("", "One or more words entered in the Captcha Challenge were incorrect.");
+            }
+
+            if (!ModelState.IsValid) return View(form);
+
+            IContactUsMailer mailer = new ContactUsMailer();
+
+            //Email them with thanks
+            mailer.ThankYou(form);
+
+            //Send to the site team
+            mailer.UserContact(form);
+
+            return View("ContactThanks");
         }
     }
 }
