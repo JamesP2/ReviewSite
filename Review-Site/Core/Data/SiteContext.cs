@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using Review_Site.Models;
 
-namespace Review_Site.Models
+namespace Review_Site.Core.Data
 {
     public class SiteContext : DbContext
     {

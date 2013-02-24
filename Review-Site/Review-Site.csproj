@@ -249,7 +249,7 @@
     <Compile Include="Models\GridElement.cs" />
     <Compile Include="Models\Resource.cs" />
     <Compile Include="Models\Role.cs" />
-    <Compile Include="Models\SiteContext.cs" />
+    <Compile Include="Core\Data\SiteContext.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TagViewModel.cs" />
     <Compile Include="Models\User.cs" />

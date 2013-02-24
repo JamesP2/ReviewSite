@@ -6,9 +6,10 @@ namespace Review_Site.Migrations
     using System.Linq;
     using Review_Site.Models;
     using Review_Site.Core;
+    using Review_Site.Core.Data;
     using System.Collections.Generic;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Review_Site.Models.SiteContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<SiteContext>
     {
 
         private SiteContext db;
@@ -20,7 +21,7 @@ namespace Review_Site.Migrations
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Review_Site.Models.SiteContext context)
+        protected override void Seed(SiteContext context)
         {
 
             db = context;

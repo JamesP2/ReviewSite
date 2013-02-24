@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Review_Site.Models;
 using Review_Site.Core;
+using Review_Site.Core.Data;
 
 namespace Review_Site.Areas.Admin.Controllers
 { 

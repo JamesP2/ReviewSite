@@ -6,6 +6,7 @@ using Review_Site.Models;
 using System.IO;
 using System.Web.Helpers;
 using Review_Site.Core;
+using Review_Site.Core.Data;
 using Microsoft.Web.Helpers;
 using Review_Site.Mailers;
 
