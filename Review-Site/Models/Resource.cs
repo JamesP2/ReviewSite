@@ -4,10 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity.ModelConfiguration;
 using System.ComponentModel.DataAnnotations;
+using Review_Site.Core.Data;
 
 namespace Review_Site.Models
 {
-    public class Resource
+    public class Resource : IEntity
     {
         [Key]
         public virtual Guid ID { get; set; }

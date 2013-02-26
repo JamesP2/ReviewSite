@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Review_Site.Core.Data;
 
 namespace Review_Site.Models
 {
-    public class Tag
+    public class Tag : IEntity
     {
         [Key]
         public virtual Guid ID { get; set; }

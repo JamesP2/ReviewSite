@@ -4,10 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity.ModelConfiguration;
 using System.ComponentModel.DataAnnotations;
+using Review_Site.Core.Data;
 
 namespace Review_Site.Models
 {
-    public class Grid
+    public class Grid : IEntity
     {
         [Key]
         public Guid ID { get; set; }

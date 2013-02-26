@@ -5,10 +5,11 @@ using System.Web;
 using System.Data.Entity.ModelConfiguration;
 using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
+using Review_Site.Core.Data;
 
 namespace Review_Site.Models
 {
-    public class Article
+    public class Article : IEntity
     {
         [Key]
         public virtual Guid ID { get; set; }

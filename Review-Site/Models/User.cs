@@ -5,10 +5,11 @@ using System.Web;
 using System.Data.Entity.ModelConfiguration;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Review_Site.Core.Data;
 
 namespace Review_Site.Models
 {
-    public class User
+    public class User : IEntity
     {
         [Key]
         public virtual Guid ID { get; set; }
