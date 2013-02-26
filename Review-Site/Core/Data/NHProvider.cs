@@ -7,6 +7,8 @@ using FluentNHibernate.Cfg;
 using FluentNHibernate.Automapping;
 using Review_Site.Models;
 using FluentNHibernate.Cfg.Db;
+using NHibernate.Tool.hbm2ddl;
+using FluentNHibernate.Conventions.Helpers;
 
 namespace Review_Site.Core.Data
 {
@@ -23,10 +25,17 @@ namespace Review_Site.Core.Data
                         .Database(MySQLConfiguration.Standard.ConnectionString(
                                 x => x.FromConnectionStringWithKey("NHibernateConnection")       
                             )
-                        )
-                        .Mappings(x =>
-                            x.AutoMappings
-                                .Add(AutoMap.AssemblyOf<Article>));
+                        );
+
+                    config.Mappings(x =>
+                        x.AutoMappings.Add(AutoMap.AssemblyOf<Article>()
+                            .Where(e => e.Namespace == "Review_Site.Models" && e.GetInterfaces().Contains(typeof(IEntity)))
+                            .Conventions.Add(DefaultCascade.All())
+                            )
+                        );
+
+                    config.ExposeConfiguration(x => new SchemaExport(x).Execute(false, true, false));
+                    config.BuildConfiguration();
 
                     _sessionFactory = config.BuildSessionFactory();
                 }

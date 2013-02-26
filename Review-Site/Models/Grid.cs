@@ -11,16 +11,16 @@ namespace Review_Site.Models
     public class Grid : IEntity
     {
         [Key]
-        public Guid ID { get; set; }
+        public virtual Guid ID { get; set; }
 
         [Required(ErrorMessage="You must provide a name.")]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
         [Required(ErrorMessage = "You must provide an alias.")]
         [RegularExpression(@"(\S)+", ErrorMessage = "Spaces cannot be used in an alias.")]
-        public string Alias { get; set; }
+        public virtual string Alias { get; set; }
 
-        public string Description { get; set; }
+        public virtual string Description { get; set; }
 
         public virtual IList<GridElement> GridElements { get; set; }
 

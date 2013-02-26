@@ -234,5 +234,11 @@ namespace Review_Site.Controllers
 
             return View("ContactThanks");
         }
+
+        public ActionResult test()
+        {
+            Review_Site.Core.Data.NHProvider.OpenSession();
+            return Content("Yay...?");
+        }
     }
 }
