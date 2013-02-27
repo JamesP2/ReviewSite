@@ -256,6 +256,12 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
     <Compile Include="Models\Color.cs" />
+    <Compile Include="Models\Configurations\EF\CategoryConfiguration.cs" />
+    <Compile Include="Models\Configurations\EF\ArticleConfiguration.cs" />
+    <Compile Include="Models\Configurations\EF\GridElementConfiguration.cs" />
+    <Compile Include="Models\Configurations\EF\ResourceConfiguration.cs" />
+    <Compile Include="Models\Configurations\EF\RoleConfiguration.cs" />
+    <Compile Include="Models\Configurations\EF\UserConfiguration.cs" />
     <Compile Include="Models\ContactForm.cs" />
     <Compile Include="Models\Feed\FeedItem.cs" />
     <Compile Include="Models\PageHit.cs" />

@@ -41,15 +41,4 @@ namespace Review_Site.Models
         public virtual Grid Grid { get; set; }
         public virtual Resource Image { get; set; }
     }
-
-    public class GridElementConfiguration : EntityTypeConfiguration<GridElement>
-    {
-        public GridElementConfiguration()
-        {
-            HasRequired(x => x.BorderColor).WithMany().HasForeignKey(x => x.BorderColorID);
-            HasRequired(x => x.Article).WithMany().HasForeignKey(x => x.ArticleID).WillCascadeOnDelete(false);
-            HasRequired(x => x.Grid).WithMany(x => x.GridElements).HasForeignKey(x => x.GridID);
-            HasRequired(x => x.Image).WithMany().HasForeignKey(x => x.ImageID);
-        }
-    }
 }

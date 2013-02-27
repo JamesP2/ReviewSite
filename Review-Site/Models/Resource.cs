@@ -30,13 +30,4 @@ namespace Review_Site.Models
         [Display(Name="Source Text Colour")]
         public virtual Color SourceTextColor { get; set; }
     }
-
-    public class ResourceConfiguration : EntityTypeConfiguration<Resource>
-    {
-        public ResourceConfiguration()
-        {
-            HasRequired(x => x.Creator).WithMany(x => x.Resources).HasForeignKey(x => x.CreatorID);
-            HasOptional(x => x.SourceTextColor).WithMany().HasForeignKey(x => x.SourceTextColorID);
-        }
-    }
 }

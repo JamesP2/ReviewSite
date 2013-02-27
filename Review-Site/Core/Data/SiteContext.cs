@@ -4,9 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using Review_Site.Models;
+using Review_Site.Models.Configurations.EF;
 
 namespace Review_Site.Core.Data
 {
+    /// <summary>
+    /// The soon-to-be legacy method of accessing the database. Being phased out in favour of an NH Repository approach
+    /// </summary>
     public class SiteContext : DbContext
     {
 
@@ -27,7 +31,6 @@ namespace Review_Site.Core.Data
             //Map all relationships from each models configuration.
             modelBuilder.Configurations.Add(new ArticleConfiguration());
             modelBuilder.Configurations.Add(new ResourceConfiguration());
-            modelBuilder.Configurations.Add(new GridConfiguration());
             modelBuilder.Configurations.Add(new GridElementConfiguration());
             modelBuilder.Configurations.Add(new CategoryConfiguration());
             modelBuilder.Configurations.Add(new UserConfiguration());

@@ -38,16 +38,4 @@ namespace Review_Site.Models
             Tags = new List<Tag>();
         }
     }
-
-    public class ArticleConfiguration : EntityTypeConfiguration<Article>
-    {
-        public ArticleConfiguration()
-        {
-            HasRequired(x => x.Category).WithMany(x => x.Articles)
-                .HasForeignKey(x => x.CategoryID);
-            HasRequired(x => x.Author).WithMany(x => x.Articles)
-                .HasForeignKey(x => x.AuthorID);
-            HasMany(x => x.Tags).WithMany(x => x.Articles);
-        }
-    }
 }

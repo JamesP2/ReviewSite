@@ -32,12 +32,4 @@ namespace Review_Site.Models
             GridElements = new List<GridElement>();
         }
     }
-
-    public class GridConfiguration : EntityTypeConfiguration<Grid>
-    {
-        public GridConfiguration()
-        {
-            
-        }
-    }
 }

@@ -43,13 +43,4 @@ namespace Review_Site.Models
             Roles = new List<Role>();
         }
     }
-
-    public class UserConfiguration : EntityTypeConfiguration<User>
-    {
-        public UserConfiguration()
-        {
-            HasMany(x => x.Articles).WithRequired(x => x.Author).HasForeignKey(x => x.AuthorID);
-            HasMany(x => x.Roles).WithMany(x => x.AssignedUsers);
-        }
-    }
 }

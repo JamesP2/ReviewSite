@@ -24,12 +24,4 @@ namespace Review_Site.Models
             AssignedUsers = new List<User>();
         }
     }
-
-    public class RoleConfiguration : EntityTypeConfiguration<Role>
-    {
-        public RoleConfiguration()
-        {
-            HasMany(x => x.Permissions).WithMany(x => x.Roles);
-        }
-    }
 }

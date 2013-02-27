@@ -32,13 +32,4 @@ namespace Review_Site.Models
             Articles = new List<Article>();
         }
     }
-
-    public class CategoryConfiguration : EntityTypeConfiguration<Category>
-    {
-        public CategoryConfiguration()
-        {
-            HasRequired(x => x.Color).WithMany().HasForeignKey(x => x.ColorID);
-            HasOptional(x => x.Grid).WithMany().HasForeignKey(x => x.GridID);
-        }
-    }
 }
