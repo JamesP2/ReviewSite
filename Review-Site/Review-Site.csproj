@@ -262,6 +262,17 @@
     <Compile Include="Models\Configurations\EF\ResourceConfiguration.cs" />
     <Compile Include="Models\Configurations\EF\RoleConfiguration.cs" />
     <Compile Include="Models\Configurations\EF\UserConfiguration.cs" />
+    <Compile Include="Models\Configurations\NH\ArticleMap.cs" />
+    <Compile Include="Models\Configurations\NH\ColorMap.cs" />
+    <Compile Include="Models\Configurations\NH\CategoryMap.cs" />
+    <Compile Include="Models\Configurations\NH\TagMap.cs" />
+    <Compile Include="Models\Configurations\NH\GridMap.cs" />
+    <Compile Include="Models\Configurations\NH\PageHitMap.cs" />
+    <Compile Include="Models\Configurations\NH\GridElementMap.cs" />
+    <Compile Include="Models\Configurations\NH\PermissionMap.cs" />
+    <Compile Include="Models\Configurations\NH\ResourceMap.cs" />
+    <Compile Include="Models\Configurations\NH\RoleMap.cs" />
+    <Compile Include="Models\Configurations\NH\UserMap.cs" />
     <Compile Include="Models\ContactForm.cs" />
     <Compile Include="Models\Feed\FeedItem.cs" />
     <Compile Include="Models\PageHit.cs" />

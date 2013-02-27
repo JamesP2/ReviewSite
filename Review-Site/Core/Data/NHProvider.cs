@@ -9,6 +9,8 @@ using Review_Site.Models;
 using FluentNHibernate.Cfg.Db;
 using NHibernate.Tool.hbm2ddl;
 using FluentNHibernate.Conventions.Helpers;
+using System.Reflection;
+using Review_Site.Models.Configurations.NH;
 
 namespace Review_Site.Core.Data
 {
@@ -26,15 +28,9 @@ namespace Review_Site.Core.Data
                                 x => x.FromConnectionStringWithKey("NHibernateConnection")       
                             )
                         );
+                    config.Mappings(x => x.FluentMappings.AddFromAssemblyOf<ArticleMap>());
 
-                    config.Mappings(x =>
-                        x.AutoMappings.Add(AutoMap.AssemblyOf<Article>()
-                            .Where(e => e.Namespace == "Review_Site.Models" && e.GetInterfaces().Contains(typeof(IEntity)))
-                            .Conventions.Add(DefaultCascade.All())
-                            )
-                        );
-
-                    config.ExposeConfiguration(x => new SchemaExport(x).Execute(false, true, false));
+                    config.ExposeConfiguration(x => new SchemaExport(x).Execute(true, true, false));
                     config.BuildConfiguration();
 
                     _sessionFactory = config.BuildSessionFactory();
