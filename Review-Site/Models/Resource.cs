@@ -5,6 +5,7 @@ using System.Web;
 using System.Data.Entity.ModelConfiguration;
 using System.ComponentModel.DataAnnotations;
 using Review_Site.Core.Data;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Review_Site.Models
 {
@@ -23,7 +24,22 @@ namespace Review_Site.Models
         [Display(Name="Source Text")]
         public virtual string Source { get; set; }
 
-        public virtual DateTime DateAdded { get; set; }
+        /// <summary>
+        /// To remove in favour of Created as this fits the rest of the database.
+        /// </summary>
+        [NotMapped]
+        public virtual DateTime DateAdded
+        {
+            get
+            {
+                return Created;
+            }
+            set
+            {
+                Created = value;
+            }
+        }
+        public virtual DateTime Created { get; set; }
         public virtual DateTime? LastModified { get; set; }
 
         public virtual User Creator { get; set; }

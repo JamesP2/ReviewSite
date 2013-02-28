@@ -17,7 +17,7 @@ namespace Review_Site.Models.Configurations.NH
             Map(x => x.Type)
                 .Not.Nullable();
 
-            Map(x => x.DateAdded)
+            Map(x => x.Created)
                 .Not.Nullable();
             Map(x => x.LastModified);
 

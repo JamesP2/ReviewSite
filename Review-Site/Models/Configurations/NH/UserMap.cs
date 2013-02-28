@@ -29,8 +29,8 @@ namespace Review_Site.Models.Configurations.NH
                 .Not.Nullable();
             Map(x => x.LastModified);
 
-            HasMany(x => x.Articles);
-            HasMany(x => x.Resources);
+            HasMany(x => x.Articles).KeyColumn("Author_id");
+            HasMany(x => x.Resources).KeyColumn("Creator_id");
             HasManyToMany(x => x.Roles);
         }
     }

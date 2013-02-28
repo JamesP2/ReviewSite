@@ -32,3 +32,4 @@ Backup/*
 Review-Site/Web.*
 Review-Site/lucene_index/*
 ConnectionStrings.config
+packages/
