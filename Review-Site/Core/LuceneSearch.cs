@@ -9,8 +9,8 @@ using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
-using Review_Site.Models;
-using Review_Site.Core.Data;
+using Review_Site.Data.Models;
+using Review_Site.Data;
 using Version = Lucene.Net.Util.Version;
 
 namespace Review_Site.Core

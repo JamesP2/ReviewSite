@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Review_Site.Models;
+using Review_Site.Data.Models;
 using Review_Site.Core;
 using System.Net;
 using Review_Site.Controllers;

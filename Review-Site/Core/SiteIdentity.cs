@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Security.Principal;
-using Review_Site.Models;
+using Review_Site.Data.Models;
 
 namespace Review_Site.Core
 {

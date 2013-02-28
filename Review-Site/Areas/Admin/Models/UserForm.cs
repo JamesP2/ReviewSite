@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
-using Review_Site.Models;
+using Review_Site.Data.Models;
 using System.Web.Mvc;
 
 namespace Review_Site.Areas.Admin.Models

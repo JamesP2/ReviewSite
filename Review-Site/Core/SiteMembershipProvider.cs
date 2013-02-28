@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Review_Site.Models;
+using Review_Site.Data.Models;
 using System.Web.Security;
-using Review_Site.Core.Data;
+using Review_Site.Data;
+using Review_Site.Data.Utility;
 
 namespace Review_Site.Core
 {

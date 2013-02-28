@@ -4,11 +4,11 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Review_Site.Models;
+using Review_Site.Data.Models;
 using System.IO;
 using Review_Site.Core;
 using Review_Site.Areas.Admin.Models;
-using Review_Site.Core.Data;
+using Review_Site.Data;
 using System.Web.Helpers;
 
 namespace Review_Site.Areas.Admin.Controllers

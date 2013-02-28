@@ -4,10 +4,11 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Review_Site.Models;
+using Review_Site.Data.Models;
 using Review_Site.Areas.Admin.Models;
 using Review_Site.Core;
-using Review_Site.Core.Data;
+using Review_Site.Data;
+using Review_Site.Data.Utility;
 
 namespace Review_Site.Areas.Admin.Controllers
 { 
@@ -137,7 +138,7 @@ namespace Review_Site.Areas.Admin.Controllers
                 FirstName = form.FirstName,
                 LastName = form.LastName,
                 Username = form.Username,
-                Password = Core.PasswordHashing.GetHash(form.Password),
+                Password = Data.Utility.PasswordHashing.GetHash(form.Password),
                 Roles = roleList,
                 Created = form.Created,
                 LastModified = form.LastModified
@@ -179,7 +180,7 @@ namespace Review_Site.Areas.Admin.Controllers
                 {
                     if (form.ConfirmedPassword.Equals(form.Password))
                     {
-                        user.Password = Core.PasswordHashing.GetHash(form.Password);
+                        user.Password = PasswordHashing.GetHash(form.Password);
                     }
                     else
                     {

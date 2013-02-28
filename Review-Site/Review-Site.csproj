@@ -26,6 +26,8 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -71,17 +73,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.0.0-alpha2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="FluentMigrator">
-      <HintPath>..\packages\FluentMigrator.1.0.6.0\lib\40\FluentMigrator.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentNHibernate">
-      <HintPath>..\packages\FluentNHibernate.1.3.0.733\lib\FluentNHibernate.dll</HintPath>
-    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
-    <Reference Include="Iesi.Collections">
-      <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="Lucene.Net">
       <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
@@ -96,12 +89,6 @@
     </Reference>
     <Reference Include="Mvc.Mailer">
       <HintPath>..\packages\MvcMailer.4.0\lib\40\Mvc.Mailer.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate">
-      <HintPath>..\packages\NHibernate.3.3.2.4000\lib\Net35\NHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate.Linq">
-      <HintPath>..\packages\NHibernate.Linq.1.0\lib\NHibernate.Linq.dll</HintPath>
     </Reference>
     <Reference Include="NuGet.Core, Version=1.6.30117.9648, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -182,126 +169,23 @@
     <Compile Include="Controllers\FeedController.cs" />
     <Compile Include="Controllers\CoreController.cs" />
     <Compile Include="Core\ActionFilters.cs" />
-    <Compile Include="Core\DataAnnotations.cs" />
-    <Compile Include="Core\Data\DataContext.cs" />
-    <Compile Include="Core\Data\IEntity.cs" />
-    <Compile Include="Core\Data\IRepository.cs" />
-    <Compile Include="Core\Data\NHProvider.cs" />
-    <Compile Include="Core\Data\NHRepository.cs" />
     <Compile Include="Core\LuceneSearch.cs" />
     <Compile Include="Core\PageHits.cs" />
-    <Compile Include="Core\PermissionManager.cs" />
     <Compile Include="Core\SiteAuthentication.cs" />
-    <Compile Include="Core\SiteMembershipProvider.cs" />
-    <Compile Include="Core\PasswordHashing.cs" />
     <Compile Include="Core\SiteIdentity.cs" />
+    <Compile Include="Core\SiteMembershipProvider.cs" />
     <Compile Include="Core\SitePrincipal.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Mailers\ContactUsMailer.cs" />
     <Compile Include="Mailers\IContactUsMailer.cs" />
-    <Compile Include="Migrations\201211110034349_InitialCreate.cs" />
-    <Compile Include="Migrations\201211110034349_InitialCreate.Designer.cs">
-      <DependentUpon>201211110034349_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201211110039561_Initial.cs" />
-    <Compile Include="Migrations\201211110039561_Initial.Designer.cs">
-      <DependentUpon>201211110039561_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201211111224429_ArticleNullableDateTime.cs" />
-    <Compile Include="Migrations\201211111224429_ArticleNullableDateTime.Designer.cs">
-      <DependentUpon>201211111224429_ArticleNullableDateTime.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201211122055052_HeadingTextNotRequired.cs" />
-    <Compile Include="Migrations\201211122055052_HeadingTextNotRequired.Designer.cs">
-      <DependentUpon>201211122055052_HeadingTextNotRequired.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201211171913250_ResourceSource.cs" />
-    <Compile Include="Migrations\201211171913250_ResourceSource.Designer.cs">
-      <DependentUpon>201211171913250_ResourceSource.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201211292113261_ResourceSourceColour.cs" />
-    <Compile Include="Migrations\201211292113261_ResourceSourceColour.Designer.cs">
-      <DependentUpon>201211292113261_ResourceSourceColour.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201212010123318_RolesAndPermissions.cs" />
-    <Compile Include="Migrations\201212010123318_RolesAndPermissions.Designer.cs">
-      <DependentUpon>201212010123318_RolesAndPermissions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201301132002554_OptionalDates.cs" />
-    <Compile Include="Migrations\201301132002554_OptionalDates.Designer.cs">
-      <DependentUpon>201301132002554_OptionalDates.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201301132205077_FixArticleDateTime.cs" />
-    <Compile Include="Migrations\201301132205077_FixArticleDateTime.Designer.cs">
-      <DependentUpon>201301132205077_FixArticleDateTime.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201301141623511_NonNullableCreated.cs" />
-    <Compile Include="Migrations\201301141623511_NonNullableCreated.Designer.cs">
-      <DependentUpon>201301141623511_NonNullableCreated.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201301141705587_Fix-Color.cs" />
-    <Compile Include="Migrations\201301141705587_Fix-Color.Designer.cs">
-      <DependentUpon>201301141705587_Fix-Color.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201301152350336_PageHits.cs" />
-    <Compile Include="Migrations\201301152350336_PageHits.Designer.cs">
-      <DependentUpon>201301152350336_PageHits.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201301161821539_Tags.cs" />
-    <Compile Include="Migrations\201301161821539_Tags.Designer.cs">
-      <DependentUpon>201301161821539_Tags.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201302282131295_ResourceDateAddedChange.cs" />
-    <Compile Include="Migrations\201302282131295_ResourceDateAddedChange.Designer.cs">
-      <DependentUpon>201302282131295_ResourceDateAddedChange.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Migrations\NH\InitialDB.cs" />
-    <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\Article.cs" />
-    <Compile Include="Models\Category.cs" />
-    <Compile Include="Models\CategoryViewModel.cs" />
-    <Compile Include="Models\Color.cs" />
-    <Compile Include="Models\Configurations\EF\CategoryConfiguration.cs" />
-    <Compile Include="Models\Configurations\EF\ArticleConfiguration.cs" />
-    <Compile Include="Models\Configurations\EF\GridElementConfiguration.cs" />
-    <Compile Include="Models\Configurations\EF\ResourceConfiguration.cs" />
-    <Compile Include="Models\Configurations\EF\RoleConfiguration.cs" />
-    <Compile Include="Models\Configurations\EF\UserConfiguration.cs" />
-    <Compile Include="Models\Configurations\NH\ArticleMap.cs" />
-    <Compile Include="Models\Configurations\NH\ColorMap.cs" />
-    <Compile Include="Models\Configurations\NH\CategoryMap.cs" />
-    <Compile Include="Models\Configurations\NH\TagMap.cs" />
-    <Compile Include="Models\Configurations\NH\GridMap.cs" />
-    <Compile Include="Models\Configurations\NH\PageHitMap.cs" />
-    <Compile Include="Models\Configurations\NH\GridElementMap.cs" />
-    <Compile Include="Models\Configurations\NH\PermissionMap.cs" />
-    <Compile Include="Models\Configurations\NH\ResourceMap.cs" />
-    <Compile Include="Models\Configurations\NH\RoleMap.cs" />
-    <Compile Include="Models\Configurations\NH\UserMap.cs" />
-    <Compile Include="Models\ContactForm.cs" />
-    <Compile Include="Models\Feed\FeedItem.cs" />
-    <Compile Include="Models\PageHit.cs" />
-    <Compile Include="Models\SearchViewModel.cs" />
-    <Compile Include="Models\PagedArticleList.cs" />
-    <Compile Include="Models\Permission.cs" />
-    <Compile Include="Models\Grid.cs" />
-    <Compile Include="Models\GridElement.cs" />
-    <Compile Include="Models\Resource.cs" />
-    <Compile Include="Models\Role.cs" />
-    <Compile Include="Core\Data\SiteContext.cs" />
-    <Compile Include="Models\Tag.cs" />
-    <Compile Include="Models\TagViewModel.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Areas\Admin\Views\Article\_Editor.cshtml" />
     <Content Include="Areas\Admin\Views\Role\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Role\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Role\Index.cshtml" />
     <None Include="ConnectionStrings.config" />
-    <Compile Include="Models\Feed\Feed.cs" />
     <None Include="Properties\PublishProfiles\CentOS VM Ftp.pubxml" />
     <Content Include="Content\Favicon.ico" />
     <Content Include="Scripts\ckeditor\.git" />
@@ -755,50 +639,6 @@
     <Content Include="Views\Shared\_Sidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201211110034349_InitialCreate.resx">
-      <DependentUpon>201211110034349_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201211110039561_Initial.resx">
-      <DependentUpon>201211110039561_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201211111224429_ArticleNullableDateTime.resx">
-      <DependentUpon>201211111224429_ArticleNullableDateTime.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201211122055052_HeadingTextNotRequired.resx">
-      <DependentUpon>201211122055052_HeadingTextNotRequired.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201211171913250_ResourceSource.resx">
-      <DependentUpon>201211171913250_ResourceSource.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201211292113261_ResourceSourceColour.resx">
-      <DependentUpon>201211292113261_ResourceSourceColour.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212010123318_RolesAndPermissions.resx">
-      <DependentUpon>201212010123318_RolesAndPermissions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201301132002554_OptionalDates.resx">
-      <DependentUpon>201301132002554_OptionalDates.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201301132205077_FixArticleDateTime.resx">
-      <DependentUpon>201301132205077_FixArticleDateTime.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201301141623511_NonNullableCreated.resx">
-      <DependentUpon>201301141623511_NonNullableCreated.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201301141705587_Fix-Color.resx">
-      <DependentUpon>201301141705587_Fix-Color.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201301152350336_PageHits.resx">
-      <DependentUpon>201301152350336_PageHits.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201301161821539_Tags.resx">
-      <DependentUpon>201301161821539_Tags.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201302282131295_ResourceDateAddedChange.resx">
-      <DependentUpon>201302282131295_ResourceDateAddedChange.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Areas\Admin\Views\Article\_ContentEditorJs.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -818,6 +658,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\JPONE.pubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Review-Site.Data\Review-Site.Data.csproj">
+      <Project>{f676efdd-ee0b-4af3-8e17-0e2a13d7bbeb}</Project>
+      <Name>Review-Site.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -863,4 +709,5 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
 </Project>

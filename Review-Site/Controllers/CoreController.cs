@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Review_Site.Models;
+using Review_Site.Data.Models;
 using System.IO;
 using System.Web.Helpers;
 using Review_Site.Core;
-using Review_Site.Core.Data;
+using Review_Site.Data;
 using Microsoft.Web.Helpers;
 using Review_Site.Mailers;
 
@@ -237,7 +237,7 @@ namespace Review_Site.Controllers
 
         public ActionResult test()
         {
-            Review_Site.Core.Data.NHProvider.OpenSession();
+            //Review_Site.Data.NHProvider.OpenSession();
             return Content("Yay...?");
         }
     }

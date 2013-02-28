@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web;
-using Review_Site.Models;
-using Review_Site.Core.Data;
+using Review_Site.Data.Models;
+using Review_Site.Data;
 
 namespace Review_Site.Core
 {

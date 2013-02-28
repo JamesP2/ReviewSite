@@ -1,5 +1,5 @@
 using Mvc.Mailer;
-using Review_Site.Models;
+using Review_Site.Data.Models;
 
 namespace Review_Site.Mailers
 { 
