@@ -5,7 +5,13 @@
 
 @if (ViewBag.NoHeader == null || ViewBag.NoHeader != false)
 {
-    <h2>Articles tagged with <em>@Model.Tag.Name</em></h2>
+    <div class="row">
+        <h2 class="large-12 columns">@Model.Tag.Name</h2>
+    </div>
+}
+else
+{
+    <div class="padtop">&nbsp;</div>
 }
 
 @Html.Partial("_Articles", Model)

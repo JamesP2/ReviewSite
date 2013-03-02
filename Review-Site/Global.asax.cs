@@ -36,6 +36,11 @@ namespace Review_Site
                 "Article/{id}",
                 new { controller = "Core", action = "GetArticle" }
             );
+            routes.MapRoute(
+                "Search",
+                "Search/",
+                new { controller = "Core", action = "Search" }
+            );
 
             routes.MapRoute(
                 "GetGrid",

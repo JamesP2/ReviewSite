@@ -1,38 +1,33 @@
 ﻿@model Review_Site.Data.Models.Article
-<div class="well well-small">
-    <ul class="nav nav-list">
-        <li class="nav-header">Latest Articles By @Model.Author.FullName</li>
-        @foreach (var authorArticle in Model.Author.Articles.OrderByDescending(x => x.Created).Take(3))
+<ul class="side-nav">
+    <li class="divider"></li>
+    <li class="nav-header">Latest Articles by <em>@Model.Author.FullName</em></li>
+    @foreach (var authorArticle in Model.Author.Articles.OrderByDescending(x => x.Created).Take(3))
+    {
+        <li>@Html.ActionLink(authorArticle.Title, "GetArticle", new { id = authorArticle.ID, controller = "Core" })</li>
+    }
+
+    @if (Model.Category != null)
+    {
+        <li class="divider"></li>
+        <li class="nav-header">Latest Articles in <em>@Model.Category.Title</em></li>
+        foreach (var latestArticle in Model.Category.Articles.OrderByDescending(x => x.Created).Take(3))
         {
-            <li>@Html.ActionLink(authorArticle.Title, "GetArticle", new { id = authorArticle.ID, controller = "Core" })</li>
+            <li>@Html.ActionLink(latestArticle.Title, "GetArticle", new { id = latestArticle.ID, controller = "Core" })</li>
         }
-    </ul>
-</div>
-@if (Model.Category != null)
-{
-    <div class="well well-small">
-        <ul class="nav nav-list">
-            <li class="nav-header">Latest Articles in @Model.Category.Title</li>
-            @foreach (var latestArticle in Model.Category.Articles.OrderByDescending(x => x.Created).Take(3))
+    }
+    @if (Model.Tags != null && Model.Tags.Any())
+    {
+        <li class="divider"></li>
+        <li class="nav-header">Tags</li>
+        <li>
+            @for (var index = 0; index < Model.Tags.Count; index++)
             {
-                <li>@Html.ActionLink(latestArticle.Title, "GetArticle", new { id = latestArticle.ID, controller = "Core" })</li>
+                var tag = Model.Tags[index];
+                if (index > 0) {<text>, </text>}
+                @Html.ActionLink(tag.Name, "GetTag", new { id = (tag.Name.Contains("-") ? tag.ID.ToString() : tag.Name), controller = "Core" }, new { style = "display: inline; margin:0; padding:0;" })
             }
-        </ul>
-    </div>
-}
-@if (Model.Tags != null && Model.Tags.Any())
-{
-    <div class="well well-small">
-        <ul class="nav nav-list">
-            <li class="nav-header">Tags</li>
-            <li>
-                @for (var index = 0; index < Model.Tags.Count; index++)
-                {
-                    var tag = Model.Tags[index];
-                    if (index > 0)
-                    {<text>, </text>}@Html.ActionLink(tag.Name, "GetTag", new { id = (tag.Name.Contains("-") ? tag.ID.ToString() : tag.Name), controller = "Core" }, new { style = "display: inline; margin:0; padding:0;" })
-                }
-            </li>
-        </ul>
-    </div>
-}
+        </li>
+    }
+    <li class="divider"></li>
+</ul>

@@ -18,8 +18,6 @@ namespace Review_Site.Controllers
 
         public ActionResult Index()
         {
-            //if (!User.Identity.IsAuthenticated) return RedirectToAction("LandingPage");
-
             ViewBag.NoHeader = false;
 
             var category = db.Categories.Single(x => x.ID == new Guid("a323a95c-b475-4886-9f8d-006c2cc84c64"));
@@ -36,9 +34,9 @@ namespace Review_Site.Controllers
             return View();
         }
 
-        public ActionResult Search(string query, int? page = 1)
+        public ActionResult Search(string q, int? page = 1)
         {
-            var results = LuceneSearch.SearchDefault(query).Select(x => x.ID).ToList();
+            var results = LuceneSearch.SearchDefault(q).Select(x => x.ID).ToList();
 
             var totalPages = (int)Math.Ceiling(results.Count() / 5d);
             if (!page.HasValue || page < 0 || page > totalPages) page = 1;
@@ -49,7 +47,7 @@ namespace Review_Site.Controllers
 
             return View(new SearchViewModel
             {
-                Query = query,
+                Query = q,
                 Articles = articles,
                 Page = page.Value,
                 PageCount = totalPages
