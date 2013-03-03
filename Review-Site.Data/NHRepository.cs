@@ -13,8 +13,9 @@ namespace Review_Site.Data
         protected ISession session = null;
         protected ITransaction transaction = null;
         
-        public NHRepository(){
-            session = NHProvider.OpenSession();
+        public NHRepository()
+        {
+            session = NHSession.OpenSession();
         }
 
         public NHRepository(ISession existingSession)
@@ -22,9 +23,15 @@ namespace Review_Site.Data
             session = existingSession;
         }
 
+        public bool Any(Expression<Func<T, bool>> predicate)
+        {
+            if (Get(predicate).Count() > 0) return true;
+            return false;
+        }
+
         public IQueryable<T> Get()
         {
-            return session.Linq<T>();
+            return session.Query<T>();
         }
 
         public IQueryable<T> Get(Expression<Func<T, bool>> predicate)
@@ -35,6 +42,11 @@ namespace Review_Site.Data
         public T Get(Guid id)
         {
             return session.Get<T>(id);
+        }
+
+        public T Single(Expression<Func<T, bool>> predicate)
+        {
+            return session.Query<T>().Single(predicate);
         }
 
         public void SaveOrUpdate(params T[] entities)

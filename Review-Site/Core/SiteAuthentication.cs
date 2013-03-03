@@ -26,11 +26,10 @@ namespace Review_Site.Core
             if (encCookie != null)
             {
                 FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(encCookie.Value);
-                SiteContext db = new SiteContext();
+                DataContext db = new DataContext();
 
                 User user = db.Users.Single(x => x.ID == new Guid(ticket.UserData));
 
-                db.Entry(user).State = EntityState.Modified;
                 return user;
             }
 

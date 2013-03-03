@@ -34,7 +34,7 @@ namespace Review_Site.Controllers
             {
                 if (membership.ValidateUser(model.UserName, model.Password))
                 {
-                    SiteContext db = new SiteContext();
+                    DataContext db = new DataContext();
                     User u = db.Users.Single(x => x.Username.ToLower() == model.UserName.ToLower());
                     SiteAuthentication.SetAuthCookie(u, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")

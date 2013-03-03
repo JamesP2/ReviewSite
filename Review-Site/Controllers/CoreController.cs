@@ -14,7 +14,7 @@ namespace Review_Site.Controllers
 {
     public class CoreController : Controller
     {
-        private readonly SiteContext db = new SiteContext();
+        private readonly DataContext db = new DataContext();
 
         public ActionResult Index()
         {
@@ -45,7 +45,7 @@ namespace Review_Site.Controllers
 
             results = results.Skip((page.Value - 1) * 5).Take(5).ToList();
 
-            var articles = db.Articles.Where(x => results.Any(y => y == x.ID)).ToList().OrderBy(x => results.IndexOf(x.ID));
+            var articles = db.Articles.Get().Where(x => results.Any(y => y == x.ID)).ToList().OrderBy(x => results.IndexOf(x.ID));
 
             return View(new SearchViewModel
             {
@@ -59,7 +59,7 @@ namespace Review_Site.Controllers
         public ActionResult GetResource(Guid id, int? width, int? height, bool? noSource)
         {
             //get the resource.
-            var res = db.Resources.SingleOrDefault(r => r.ID == id);
+            var res = db.Resources.Get(id);
             if (res == null) return HttpNotFound("That resource cannot be found.");
 
             var path = Path.Combine(Server.MapPath("~/ResourceUploads"), id.ToString());
@@ -93,7 +93,7 @@ namespace Review_Site.Controllers
         public ActionResult GetArticle(Guid id)
         {
             //get the article and present it!
-            Article article = db.Articles.SingleOrDefault(x => x.ID == id);
+            Article article = db.Articles.Get(id);
             if (article == null) return HttpNotFound("That article does not exist");
 
             PageHits.RegisterHit(article.ID);
@@ -107,13 +107,13 @@ namespace Review_Site.Controllers
             Guid categoryguid;
             if (Guid.TryParse(id, out categoryguid))
             {
-                category = db.Categories.SingleOrDefault(x => x.ID == categoryguid);
+                category = db.Categories.Get(categoryguid);
             }
             else
             {
                 //Try and match to category name instead.
                 var name = id.Replace('-', ' ').ToLower();
-                category = db.Categories.SingleOrDefault(x => x.Title.ToLower() == name);
+                category = db.Categories.Single(x => x.Title.ToLower() == name);
             }
 
             if (category == null) return HttpNotFound("That category does not exist");
@@ -138,13 +138,13 @@ namespace Review_Site.Controllers
             Guid tagguid;
             if (Guid.TryParse(id, out tagguid))
             {
-                tag = db.Tags.SingleOrDefault(x => x.ID == tagguid);
+                tag = db.Tags.Get(tagguid);
             }
             else
             {
                 //Try and match to tag name instead.
                 var name = id.Replace('-', ' ').ToLower();
-                tag = db.Tags.SingleOrDefault(x => x.Name.ToLower() == name);
+                tag = db.Tags.Single(x => x.Name.ToLower() == name);
             }
 
             if (tag == null) return HttpNotFound("That tag does not exist");
@@ -170,12 +170,12 @@ namespace Review_Site.Controllers
             Guid gridguid;
             if (Guid.TryParse(id, out gridguid))
             {
-                grid = db.Grids.SingleOrDefault(x => x.ID == gridguid);
+                grid = db.Grids.Get(gridguid);
             }
             else
             {
                 var alias = id.ToLower();
-                grid = db.Grids.SingleOrDefault(x => x.Alias.ToLower() == alias);
+                grid = db.Grids.Single(x => x.Alias.ToLower() == alias);
 
             }
 

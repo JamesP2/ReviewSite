@@ -14,13 +14,13 @@ namespace Review_Site.Areas.Admin.Controllers
 { 
     public class UserController : Controller
     {
-        private SiteContext db = new SiteContext();
+        private DataContext db = new DataContext();
 
 
         private List<SelectListItem> GetRoleList()
         {
             List<SelectListItem> list = new List<SelectListItem>();
-            foreach (Role r in db.Roles)
+            foreach (Role r in db.Roles.Get())
             {
                 list.Add(new SelectListItem
                 {
@@ -36,7 +36,7 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.User.Index")]
         public ViewResult Index()
         {
-            return View(db.Users.OrderBy(x => x.Username).ToList());
+            return View(db.Users.Get().OrderBy(x => x.Username).ToList());
         }
 
         //
@@ -84,7 +84,7 @@ namespace Review_Site.Areas.Admin.Controllers
                     return View(form);
                 }
 
-                if (db.Users.Where(x => x.Username == form.Username.ToLower()).Count() != 0)
+                if (db.Users.Get().Where(x => x.Username == form.Username.ToLower()).Count() != 0)
                 {
                     ModelState.AddModelError("Username", "Username taken!");
                     ViewBag.RoleList = GetRoleList();
@@ -98,8 +98,7 @@ namespace Review_Site.Areas.Admin.Controllers
                     User user = formToUser(form);
                     user.Created = DateTime.Now;
                     user.LastModified = DateTime.Now;
-                    db.Users.Add(user);
-                    db.SaveChanges();
+                    db.Users.SaveOrUpdate(user);
                 }
                 else
                 {
@@ -210,8 +209,7 @@ namespace Review_Site.Areas.Admin.Controllers
                 }
 
                 user.LastModified = DateTime.Now;
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
+                db.Users.SaveOrUpdate(user);
                 return RedirectToAction("Index");
             }
             ViewBag.RoleList = GetRoleList(); 

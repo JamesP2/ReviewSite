@@ -13,7 +13,7 @@ namespace Review_Site.Areas.Admin.Controllers
 {
     public class RoleController : Controller
     {
-        private SiteContext db = new SiteContext();
+        private DataContext db = new DataContext();
 
 
         //
@@ -22,7 +22,7 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.Role.Index")]
         public ActionResult Index()
         {
-            return View(db.Roles);
+            return View(db.Roles.Get());
         }
 
         //
@@ -53,8 +53,7 @@ namespace Review_Site.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 role.ID = Guid.NewGuid();
-                db.Roles.Add(role);
-                db.SaveChanges();
+                db.Roles.SaveOrUpdate(role);
                 return RedirectToAction("Edit", new { id = role.ID });
             }
             return View(role);
@@ -86,14 +85,14 @@ namespace Review_Site.Areas.Admin.Controllers
                 role.Permissions.Add(db.Permissions.Single(x => x.ID == permissionId));
             }
             role.Name = form.Name;
-            db.SaveChanges();
+            db.Roles.SaveOrUpdate(role);
             return RedirectToAction("Index");
         }
 
         private List<SelectListItem> GetPermissionList()
         {
             List<SelectListItem> list = new List<SelectListItem>();
-            foreach (Permission p in db.Permissions)
+            foreach (Permission p in db.Permissions.Get())
             {
                 list.Add(new SelectListItem
                 {

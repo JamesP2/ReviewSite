@@ -12,14 +12,14 @@ namespace Review_Site.Areas.Admin.Controllers
 { 
     public class GridController : Controller
     {
-        private SiteContext db = new SiteContext();
+        private DataContext db = new DataContext();
 
         //
         // GET: /Admin/Grid/
         [Restrict(Identifier = "Admin.Grid.Index")]
         public ViewResult Index()
         {
-            return View(db.Grids.OrderBy(x => x.Name).ToList());
+            return View(db.Grids.Get().OrderBy(x => x.Name).ToList());
         }
 
         //
@@ -28,7 +28,7 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.Grid.Index")]
         public ViewResult Details(Guid id)
         {
-            Grid grid = db.Grids.Single(g => g.ID == id);
+            Grid grid = db.Grids.Get(id);
             return View(grid);
         }
 
@@ -57,8 +57,7 @@ namespace Review_Site.Areas.Admin.Controllers
                 grid.Created = DateTime.Now;
                 grid.LastModified = DateTime.Now;
                 grid.ID = Guid.NewGuid();
-                db.Grids.Add(grid);
-                db.SaveChanges();
+                db.Grids.SaveOrUpdate(grid);
                 return RedirectToAction("Index");  
             }
 
@@ -90,9 +89,7 @@ namespace Review_Site.Areas.Admin.Controllers
                     return View(grid);
                 }
                 grid.LastModified = DateTime.Now;
-                db.Grids.Attach(grid);
-                db.Entry(grid).State = EntityState.Modified;
-                db.SaveChanges();
+                db.Grids.SaveOrUpdate(grid);
                 return RedirectToAction("Index");
             }
             return View(grid);
@@ -119,10 +116,9 @@ namespace Review_Site.Areas.Admin.Controllers
             List<GridElement> elements = grid.GridElements.ToList();
             foreach (GridElement element in elements)
             {
-                db.GridElements.Remove(element);
+                db.GridElements.Delete(element);
             }
-            db.Grids.Remove(grid);
-            db.SaveChanges();
+            db.Grids.Delete(grid);
             return RedirectToAction("Index");
         }
 

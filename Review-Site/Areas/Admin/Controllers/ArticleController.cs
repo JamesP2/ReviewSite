@@ -14,7 +14,7 @@ namespace Review_Site.Areas.Admin.Controllers
     [Authorize]
     public class ArticleController : Controller
     {
-        private SiteContext db = new SiteContext();
+        private DataContext db = new DataContext();
 
         //
         // GET: /Admin/Article/
@@ -22,7 +22,7 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.Article.Index")]
         public ViewResult Index()
         {
-            var articles = db.Articles.Include("Category").Include("Author");
+            var articles = db.Articles.Get();
             return View(articles.OrderBy(x => x.Title).ToList());
         }
 
@@ -32,7 +32,7 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.Article.Index")]
         public ActionResult MiniBrowser()
         {
-            return View(db.Articles.ToList());
+            return View(db.Articles.Get().ToList());
         }
 
         //
@@ -40,7 +40,7 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.Article.Index")]
         public ViewResult Details(Guid id)
         {
-            Article article = db.Articles.Single(a => a.ID == id);
+            Article article = db.Articles.Get(id);
             return View(article);
         }
 
@@ -49,8 +49,8 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.Article.Create")]
         public ActionResult Create()
         {
-            ViewBag.CategoryID = new SelectList(db.Categories, "ID", "Title");
-            ViewBag.TagList = db.Tags.Select(x => x.Name).ToList();
+            ViewBag.CategoryID = new SelectList(db.Categories.Get(), "ID", "Title");
+            ViewBag.TagList = db.Tags.Get().Select(x => x.Name).ToList();
             return View();
         }
 
@@ -75,7 +75,7 @@ namespace Review_Site.Areas.Admin.Controllers
                                       ID = Guid.NewGuid(),
                                       Name = s
                                   };
-                    db.Tags.Add(tag);
+                    db.Tags.SaveOrUpdate(tag);
                     article.Tags.Add(tag);
                 }
             }
@@ -85,8 +85,8 @@ namespace Review_Site.Areas.Admin.Controllers
                 if (db.Articles.Any(x => x.Title == article.Title))
                 {
                     ModelState.AddModelError("Title", "An Article already exists with that title.");
-                    ViewBag.CategoryID = new SelectList(db.Categories, "ID", "Title", article.CategoryID);
-                    ViewBag.TagList = db.Tags.Select(x => x.Name).ToList();
+                    ViewBag.CategoryID = new SelectList(db.Categories.Get(), "ID", "Title", article.CategoryID);
+                    ViewBag.TagList = db.Tags.Get().Select(x => x.Name).ToList();
                     return View(article);
                 }
                 article.ID = Guid.NewGuid();
@@ -94,16 +94,15 @@ namespace Review_Site.Areas.Admin.Controllers
                 article.LastModified = currentTime;
                 article.Created = currentTime;
                 article.AuthorID = SiteAuthentication.GetUserCookie().ID;
-                db.Articles.Add(article);
-                db.SaveChanges();
+                db.Articles.SaveOrUpdate(article);
 
                 LuceneSearch.AddUpdate(article);
 
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CategoryID = new SelectList(db.Categories, "ID", "Title", article.CategoryID);
-            ViewBag.TagList = db.Tags.Select(x => x.Name).ToList();
+            ViewBag.CategoryID = new SelectList(db.Categories.Get(), "ID", "Title", article.CategoryID);
+            ViewBag.TagList = db.Tags.Get().Select(x => x.Name).ToList();
             return View(article);
         }
 
@@ -114,9 +113,9 @@ namespace Review_Site.Areas.Admin.Controllers
         public ActionResult Edit(Guid id)
         {
             Article article = db.Articles.Single(a => a.ID == id);
-            ViewBag.CategoryID = new SelectList(db.Categories, "ID", "Title", article.CategoryID);
-            ViewBag.AuthorID = new SelectList(db.Users, "ID", "FullName", article.AuthorID);
-            ViewBag.TagList = db.Tags.Select(x => x.Name).ToList();
+            ViewBag.CategoryID = new SelectList(db.Categories.Get(), "ID", "Title", article.CategoryID);
+            ViewBag.AuthorID = new SelectList(db.Users.Get(), "ID", "FullName", article.AuthorID);
+            ViewBag.TagList = db.Tags.Get().Select(x => x.Name).ToList();
             return View(article);
         }
 
@@ -132,20 +131,19 @@ namespace Review_Site.Areas.Admin.Controllers
                 if (db.Articles.Any(x => x.Title == article.Title && x.ID != article.ID))
                 {
                     ModelState.AddModelError("Title", "Another Article exists with that title.");
-                    ViewBag.CategoryID = new SelectList(db.Categories, "ID", "Title", article.CategoryID);
-                    ViewBag.AuthorID = new SelectList(db.Users, "ID", "FullName", article.AuthorID);
-                    ViewBag.TagList = db.Tags.Select(x => x.Name).ToList();
+                    ViewBag.CategoryID = new SelectList(db.Categories.Get(), "ID", "Title", article.CategoryID);
+                    ViewBag.AuthorID = new SelectList(db.Users.Get(), "ID", "FullName", article.AuthorID);
+                    ViewBag.TagList = db.Tags.Get().Select(x => x.Name).ToList();
                     return View(article);
                 }
-                Article oldArticle = db.Articles.Single(x => x.ID == article.ID);
-                oldArticle.Tags.Clear();
+                article.Tags.Clear();
                 List<String> tagNameList = tagList.Split(',').ToList();
                 foreach (String s in tagNameList)
                 {
                     if (String.IsNullOrEmpty(s)) continue;
                     if (db.Tags.Any(x => x.Name.ToLower() == s.ToLower()))
                     {
-                        oldArticle.Tags.Add(db.Tags.Single(x => x.Name.ToLower() == s.ToLower()));
+                        article.Tags.Add(db.Tags.Single(x => x.Name.ToLower() == s.ToLower()));
                     }
                     else
                     {
@@ -154,24 +152,18 @@ namespace Review_Site.Areas.Admin.Controllers
                             ID = Guid.NewGuid(),
                             Name = s
                         };
-                        oldArticle.Tags.Add(tag);
+                        article.Tags.Add(tag);
                     }
                 }
-                db.Entry(oldArticle).State = EntityState.Modified;
-                db.SaveChanges();
-                db.Entry(oldArticle).State = EntityState.Detached;
-                db.Articles.Attach(article);
                 article.LastModified = DateTime.Now;
-                db.Entry(article).State = EntityState.Modified;
-                db.SaveChanges();
-
+                db.Articles.SaveOrUpdate(article);
                 LuceneSearch.AddUpdate(article);
 
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryID = new SelectList(db.Categories, "ID", "Title", article.CategoryID);
-            ViewBag.AuthorID = new SelectList(db.Users, "ID", "FullName", article.AuthorID);
-            ViewBag.TagList = db.Tags.Select(x => x.Name).ToList();
+            ViewBag.CategoryID = new SelectList(db.Categories.Get(), "ID", "Title", article.CategoryID);
+            ViewBag.AuthorID = new SelectList(db.Users.Get(), "ID", "FullName", article.AuthorID);
+            ViewBag.TagList = db.Tags.Get().Select(x => x.Name).ToList();
             return View(article);
         }
 
@@ -192,8 +184,7 @@ namespace Review_Site.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(Guid id)
         {
             Article article = db.Articles.Single(a => a.ID == id);
-            db.Articles.Remove(article);
-            db.SaveChanges();
+            db.Articles.Delete(article);
 
             LuceneSearch.Remove(id);
 

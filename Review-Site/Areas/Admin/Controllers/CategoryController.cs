@@ -13,14 +13,14 @@ namespace Review_Site.Areas.Admin.Controllers
     [Authorize]
     public class CategoryController : Controller
     {
-        private SiteContext db = new SiteContext();
+        private DataContext db = new DataContext();
 
         //
         // GET: /Admin/Category/
         [Restrict(Identifier = "Admin.Category.Index")]
         public ViewResult Index()
         {
-            return View(db.Categories.OrderBy(x => x.Title).ToList());
+            return View(db.Categories.Get().OrderBy(x => x.Title).ToList());
         }
 
         //
@@ -28,7 +28,7 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.Category.Create")]
         public ActionResult Create()
         {
-            ViewBag.Colors = new SelectList(db.Colors, "ID", "Name");
+            ViewBag.Colors = new SelectList(db.Colors.Get(), "ID", "Name");
             ViewBag.Grids = new SelectList(GetGrids(), "Value", "Text");
             return View();
         }
@@ -45,18 +45,17 @@ namespace Review_Site.Areas.Admin.Controllers
                 if (db.Categories.Any(x => x.Title == category.Title))
                 {
                     ModelState.AddModelError("Title", "A Category with that Title already exists.");
-                    ViewBag.Colors = new SelectList(db.Colors, "ID", "Name");
+                    ViewBag.Colors = new SelectList(db.Colors.Get(), "ID", "Name");
                     ViewBag.Grids = new SelectList(GetGrids(), "Value", "Text");
                     return View(category);
                 }
                 category.ID = Guid.NewGuid();
                 category.Created = DateTime.Now;
                 category.LastModified = DateTime.Now;
-                db.Categories.Add(category);
-                db.SaveChanges();
+                db.Categories.SaveOrUpdate(category);
                 return RedirectToAction("Index");
             }
-            ViewBag.Colors = new SelectList(db.Colors, "ID", "Name");
+            ViewBag.Colors = new SelectList(db.Colors.Get(), "ID", "Name");
             ViewBag.Grids = new SelectList(GetGrids(), "Value", "Text");
             return View(category);
         }
@@ -68,7 +67,7 @@ namespace Review_Site.Areas.Admin.Controllers
         public ActionResult Edit(Guid id)
         {
             Category category = db.Categories.Single(c => c.ID == id);
-            ViewBag.Colors = new SelectList(db.Colors, "ID", "Name", category.ColorID);
+            ViewBag.Colors = new SelectList(db.Colors.Get(), "ID", "Name", category.ColorID);
             ViewBag.Grids = new SelectList(GetGrids(), "Value", "Text", category.GridID);
             return View(category);
         }
@@ -85,17 +84,15 @@ namespace Review_Site.Areas.Admin.Controllers
                 if (db.Categories.Any(x => x.Title == category.Title && x.ID != category.ID))
                 {
                     ModelState.AddModelError("Title", "A Category with that Title already exists.");
-                    ViewBag.Colors = new SelectList(db.Colors, "ID", "Name");
+                    ViewBag.Colors = new SelectList(db.Colors.Get(), "ID", "Name");
                     ViewBag.Grids = new SelectList(GetGrids(), "Value", "Text");
                     return View(category);
                 }
                 category.LastModified = DateTime.Now;
-                db.Categories.Attach(category);
-                db.Entry(category).State = EntityState.Modified;
-                db.SaveChanges();
+                db.Categories.SaveOrUpdate(category);
                 return RedirectToAction("Index");
             }
-            ViewBag.Colors = new SelectList(db.Colors, "ID", "Name", category.ColorID);
+            ViewBag.Colors = new SelectList(db.Colors.Get(), "ID", "Name", category.ColorID);
             ViewBag.Grids = new SelectList(GetGrids(), "Value", "Text", category.GridID);
             return View(category);
         }
@@ -109,8 +106,7 @@ namespace Review_Site.Areas.Admin.Controllers
             Category category = db.Categories.Single(c => c.ID == id);
             if (!category.IsSystemCategory)
             {
-                db.Categories.Remove(category);
-                db.SaveChanges();
+                db.Categories.Delete(category);
             }
             else ModelState.AddModelError("", "That category belongs to the system. It cannot be deleted.");
             return RedirectToAction("Index");
@@ -120,7 +116,7 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             return
                 new List<SelectListItem> { new SelectListItem { Text = " -- None --", Value = null } }.Concat(
-                    db.Grids.ToList().Select(x => new SelectListItem { Text = x.Name, Value = x.ID.ToString() }));
+                    db.Grids.Get().ToList().Select(x => new SelectListItem { Text = x.Name, Value = x.ID.ToString() }));
         }
 
         protected override void Dispose(bool disposing)

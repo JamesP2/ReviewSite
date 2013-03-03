@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Review_Site.Data.Models;
+using Autofac;
 
 namespace Review_Site.Data
 {
@@ -23,7 +24,16 @@ namespace Review_Site.Data
 
         private IRepository<T> getRepository<T>() where T : IEntity
         {
-            return DependencyResolver.Current.GetService<IRepository<T>>();
+            using (var scope = DataCore.Container.BeginLifetimeScope())
+            {
+                return scope.Resolve<IRepository<T>>();
+            }
+        }
+
+        public bool Dispose()
+        {
+            //Do something?
+            return true;
         }
     }
 }

@@ -8,6 +8,8 @@ using Review_Site.Data.Models;
 using Review_Site.Core;
 using System.Net;
 using Review_Site.Controllers;
+using System.Configuration;
+using Review_Site.Data;
 
 namespace Review_Site
 {
@@ -75,6 +77,8 @@ namespace Review_Site
 
         protected void Application_Start()
         {
+            DataCore.MigrateDBToLatest(ConfigurationManager.ConnectionStrings["NHibernateConnection"].ConnectionString);
+            DataCore.SeedBaseData();
             AreaRegistration.RegisterAllAreas();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);

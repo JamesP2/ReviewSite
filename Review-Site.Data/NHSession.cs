@@ -14,7 +14,7 @@ using Review_Site.Data.Models.Configurations.NH;
 
 namespace Review_Site.Data
 {
-    public static class NHProvider
+    public static class NHSession
     {
         private static ISessionFactory _sessionFactory;
         private static ISessionFactory sessionFactory
@@ -29,8 +29,8 @@ namespace Review_Site.Data
                             )
                         );
                     config.Mappings(x => x.FluentMappings.AddFromAssemblyOf<ArticleMap>());
-
-                    config.ExposeConfiguration(x => new SchemaExport(x).Execute(true, true, false));
+                    
+                    //config.ExposeConfiguration(x => new SchemaExport(x).Execute(true, true, false));
                     config.BuildConfiguration();
 
                     _sessionFactory = config.BuildSessionFactory();

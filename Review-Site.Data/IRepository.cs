@@ -8,12 +8,17 @@ namespace Review_Site.Data
 {
     public interface IRepository<T> : IRepository
     {
+        bool Any(Expression<Func<T, bool>> predicate);
+
+        void Delete(T entity);
+
         IQueryable<T> Get();
         IQueryable<T> Get(Expression<Func<T, bool>> predicate);
         T Get(Guid id);
+        T Single(Expression<Func<T, bool>> predicate);
+
         void SaveOrUpdate(params T[] entities);
         void SaveOrUpdate(T entity);
-        void Delete(T entity);
     }
     public interface IRepository
     {

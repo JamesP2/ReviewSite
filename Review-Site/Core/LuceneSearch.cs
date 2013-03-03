@@ -35,10 +35,10 @@ namespace Review_Site.Core
 
         public static void Rebuild()
         {
-            var db = new SiteContext();
+            var db = new DataContext();
 
             RemoveAll();
-            AddUpdate(db.Articles);
+            AddUpdate(db.Articles.Get());
             Optimize();
         }
         public static void Optimize()

@@ -26,6 +26,11 @@ namespace Review_Site.Data
         public DbSet<PageHit> PageHits { get; set; }
         public DbSet<Tag> Tags { get; set; }
 
+        public SiteContext()
+        {
+            Database.SetInitializer<SiteContext>(null);
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //Map all relationships from each models configuration.

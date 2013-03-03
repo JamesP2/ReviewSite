@@ -16,7 +16,7 @@ namespace Review_Site.Areas.Admin.Controllers
     [Authorize]
     public class ResourceController : Controller
     {
-        private SiteContext db = new SiteContext();
+        private DataContext db = new DataContext();
 
         //
         // GET: /Admin/Resource/
@@ -24,7 +24,7 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.Resource.Index")]
         public ViewResult Index()
         {
-            return View(db.Resources.OrderBy(x => x.Title).ToList());
+            return View(db.Resources.Get().OrderBy(x => x.Title).ToList());
         }
 
         //
@@ -32,7 +32,7 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.Resource.Index")]
         public ViewResult Details(Guid id)
         {
-            Resource resource = db.Resources.Single(r => r.ID == id);
+            Resource resource = db.Resources.Get(id);
             return View(resource);
         }
 
@@ -42,7 +42,7 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.Resource.Upload")]
         public ActionResult Upload()
         {
-            ViewBag.SourceTextColorID = new SelectList(db.Colors, "ID", "Name");
+            ViewBag.SourceTextColorID = new SelectList(db.Colors.Get(), "ID", "Name");
             return View();
         } 
 
@@ -77,12 +77,11 @@ namespace Review_Site.Areas.Admin.Controllers
             {
                 var path = Path.Combine(Server.MapPath("~/ResourceUploads"), fileName);
                 file.SaveAs(path);
-                db.Resources.Add(resource);
-                db.SaveChanges();
+                db.Resources.SaveOrUpdate(resource);
                 return RedirectToAction("Index");  
             }
 
-            ViewBag.SourceTextColorID = new SelectList(db.Colors, "ID", "Name");
+            ViewBag.SourceTextColorID = new SelectList(db.Colors.Get(), "ID", "Name");
             return View(resource);
         }
         
@@ -93,7 +92,7 @@ namespace Review_Site.Areas.Admin.Controllers
         public ActionResult Edit(Guid id)
         {
             Resource resource = db.Resources.Single(r => r.ID == id);
-            ViewBag.SourceTextColorID = new SelectList(db.Colors, "ID", "Name", resource.SourceTextColorID);
+            ViewBag.SourceTextColorID = new SelectList(db.Colors.Get(), "ID", "Name", resource.SourceTextColorID);
             return View(resource);
         }
 
@@ -109,16 +108,14 @@ namespace Review_Site.Areas.Admin.Controllers
                 if (db.Resources.Any(x => x.Title == resource.Title && x.ID != resource.ID))
                 {
                     ModelState.AddModelError("Title", "A Resource with that Title already exists.");
-                    ViewBag.SourceTextColorID = new SelectList(db.Colors, "ID", "Name", resource.SourceTextColorID);
+                    ViewBag.SourceTextColorID = new SelectList(db.Colors.Get(), "ID", "Name", resource.SourceTextColorID);
                     return View(resource);
                 }
                 resource.LastModified = DateTime.Now;
-                db.Resources.Attach(resource);
-                db.Entry(resource).State = EntityState.Modified;
-                db.SaveChanges();
+                db.Resources.SaveOrUpdate(resource);
                 return RedirectToAction("Index");
             }
-            ViewBag.SourceTextColorID = new SelectList(db.Colors, "ID", "Name", resource.SourceTextColorID);
+            ViewBag.SourceTextColorID = new SelectList(db.Colors.Get(), "ID", "Name", resource.SourceTextColorID);
             return View(resource);
         }
 
@@ -132,8 +129,7 @@ namespace Review_Site.Areas.Admin.Controllers
             Resource resource = db.Resources.Single(r => r.ID == id);
             var path = Path.Combine(Server.MapPath("~/ResourceUploads"), resource.ID.ToString());
             if(System.IO.File.Exists(path)) System.IO.File.Delete(path);
-            db.Resources.Remove(resource);
-            db.SaveChanges();
+            db.Resources.Delete(resource);
             return RedirectToAction("Index");
         }
 
@@ -150,8 +146,8 @@ namespace Review_Site.Areas.Admin.Controllers
         public ActionResult MiniBrowser(string filter)
         {
             List<Resource> result;
-            if (!String.IsNullOrEmpty(filter)) result = db.Resources.Where(x => x.Type.StartsWith(filter)).ToList();
-            else result = db.Resources.OrderBy(x => x.Title).ToList();
+            if (!String.IsNullOrEmpty(filter)) result = db.Resources.Get().Where(x => x.Type.StartsWith(filter)).ToList();
+            else result = db.Resources.Get().OrderBy(x => x.Title).ToList();
 
             return View(result);
         }
@@ -160,7 +156,7 @@ namespace Review_Site.Areas.Admin.Controllers
         public ActionResult CKEditorBrowser()
         {
             ViewBag.CKEditor = true;
-            return View("MiniBrowser", db.Resources.ToList());
+            return View("MiniBrowser", db.Resources.Get().ToList());
         }
 
         // MiniUpload
@@ -192,8 +188,7 @@ namespace Review_Site.Areas.Admin.Controllers
             {
                 var path = Path.Combine(Server.MapPath("~/ResourceUploads"), fileName);
                 file.SaveAs(path);
-                db.Resources.Add(resource);
-                db.SaveChanges();
+                db.Resources.SaveOrUpdate(resource);
                 return RedirectToAction("MiniBrowser");
             }
 
@@ -267,12 +262,8 @@ namespace Review_Site.Areas.Admin.Controllers
 
             string newImagePath = Path.Combine(Server.MapPath("~/ResourceUploads"), newResource.ID.ToString());
 
-            db.Resources.Add(newResource);
-
             image.Save(newImagePath, null, false);
-            
-            db.SaveChanges();
-
+            db.Resources.SaveOrUpdate(newResource);
             return View("_CloseAndRefreshParent");
         }
     }

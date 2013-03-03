@@ -11,10 +11,10 @@ namespace Review_Site.Core
 {
     public class SiteMembershipProvider : MembershipProvider
     {
-        private SiteContext db = new SiteContext();
+        private DataContext db = new DataContext();
         public override bool ValidateUser(string username, string password)
         {
-            User u = db.Users.Where(x => x.Username == username.ToLower()).SingleOrDefault();
+            User u = db.Users.Single(x => x.Username == username.ToLower());
             if (u == null) return false;
             if(PasswordHashing.HashesMatch(PasswordHashing.GetHash(password), u.Password)) return true;
             return false;

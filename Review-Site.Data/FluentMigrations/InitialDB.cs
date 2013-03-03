@@ -4,8 +4,12 @@ using System.Linq;
 using System.Web;
 using FluentMigrator;
 
-namespace Review_Site.Data.Migrations.NH
+namespace Review_Site.Data.FluentMigrations
 {
+    /// <summary>
+    /// Initial Database Creation Migration
+    /// </summary>
+    [Migration(0)]
     public class InitialDB : AutoReversingMigration
     {
         public override void Up()
