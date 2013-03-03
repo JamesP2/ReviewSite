@@ -6,9 +6,9 @@
  *@
 
 @{
-    int curused = 0;
     <div class="row">
-    @foreach(var square in Model.GridElements.OrderBy(x => x.Created)){
+    @foreach (var square in Model.GridElements.OrderBy(x => x.Created))
+    {
         int height = 0;
         var width = (80 * square.Width) - 32;
 
@@ -24,24 +24,19 @@
                 height = 200;
                 break;
         }
-        if(curused == 12 || (curused + square.Width) > 12){
-            //Start a new row!
-            @:</div>
-            @:<div class="row padtop">
-            curused = 0;
-        }
-        @:<div class="gridsquare @square.SizeClass span@(square.Width)" style="border-color: #@(String.IsNullOrEmpty(square.BorderColor.Value) ? "CCCCCC" : square.BorderColor.Value)">
-            @:<div class="overlay @square.HeadingClass @(square.InverseHeading ? "inverse" : "")">
-                @:<a href="@Url.Action("GetArticle", new { controller="Core", area="", id=square.ArticleID })">
-                    @:<h1>@(square.UseHeadingText ? square.HeadingText : square.Article.Title)</h1>
-                @:</a>
-            @:</div>
-            @:<a href="@Url.Action("GetArticle", new { controller="Core", area="", id=square.ArticleID })">
-                @:<img alt="Grid Image @square.Image.Title" src="@Url.Action("GetResource", new { controller="Core", area="", id=square.ImageID, width = width, height = height, noSource = true })"/>
-            @:</a>
-        @:</div>
-        //Append this square's width to the currently used up width of this row.
-        curused += square.Width; 
+        <div class="padtop gridsquare @square.SizeClass large-@(square.Width) columns">
+            <div style="border-color: #@(String.IsNullOrEmpty(square.BorderColor.Value) ? "CCCCCC" : square.BorderColor.Value)">
+            <div class="overlay @square.HeadingClass @(square.InverseHeading ? "inverse" : "")">
+                <a href="@Url.Action("GetArticle", new { controller = "Core", area = "", id = square.ArticleID })">
+                    <h3>@(square.UseHeadingText ? square.HeadingText : square.Article.Title)</h3>
+                </a>
+            </div>
+                <a href="@Url.Action("GetArticle", new { controller = "Core", area = "", id = square.ArticleID })">
+                    <img alt="Grid Image @square.Image.Title" src="@Url.Action("GetResource", new { controller = "Core", area = "", id = square.ImageID, width = width, height = height, noSource = true })"/>
+                </a>
+
+            </div>
+        </div>
     }
     </div>
 }

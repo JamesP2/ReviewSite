@@ -5,7 +5,13 @@
 
 @if (ViewBag.NoHeader == null || ViewBag.NoHeader != false)
 {
-    <h2>@Model.Category.Title</h2>
+    <div class="row">
+        <h2 class="large-12 columns">@Model.Category.Title</h2>
+    </div>
+}
+else
+{
+    <div class="padtop">&nbsp;</div>
 }
 
 @* If the category has a grid associated with it, render it. *@
@@ -13,7 +19,5 @@
 {
     @Html.Partial("_Grid", Model.Category.Grid)
 }
-
-<p>&nbsp;</p>
 
 @Html.Partial("_Articles", Model)

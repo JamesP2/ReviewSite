@@ -4,6 +4,8 @@
     ViewBag.Title = "Search";
 }
 
-<h2>Search for @Model.Query</h2>
+<div class="row">
+    <h2 class="large-12 columns">Search for @Model.Query</h2>
+</div>
 
 @Html.Partial("_Articles", Model)

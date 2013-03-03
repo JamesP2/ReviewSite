@@ -1,68 +1,79 @@
 ﻿@using System.Configuration
 <!DOCTYPE html>
-<html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
 <head>
-    @{
-        if(ViewBag.Title != null){    
-            <title>theREVIEW &bull; @ViewBag.Title</title>
-        }else{
-            <title>theREVIEW</title>
-        }
-    }
-    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>theREVIEW @if (ViewBag.Title != null)
+                     { <text>&bull;</text> @ViewBag.Title}</title>
+
+    <link href="@Url.Content("~/Content/new/normalize.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/new/foundation.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/new/general_foundicons.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/new/Site.css")" rel="stylesheet" type="text/css" />
+
     <link rel="shortcut icon" href="@Url.Content("~/Content/Favicon.ico")" />
-    @if (ConfigurationManager.AppSettings["meta-keywords"] != null){
+    @if (ConfigurationManager.AppSettings["meta-keywords"] != null)
+    {
         <meta name="keywords" content="@ConfigurationManager.AppSettings["meta-keywords"]" />
     }
-    @if (ConfigurationManager.AppSettings["meta-description"] != null){
+    @if (ConfigurationManager.AppSettings["meta-description"] != null)
+    {
         <meta name="description" content="@ConfigurationManager.AppSettings["meta-description"]" />
     }
     @Html.Partial("_AnalyticsJS")
     <script src="@Url.Content("~/Scripts/jquery-1.8.2.min.js")" type="text/javascript"></script>
-    @if (ViewBag.ImageBorderColor != null)
-    {    
-        <style type="text/css">
-            .article-content img{
-                border: 6px solid #@ViewBag.ImageBorderColor;
-            }
-        </style>
-    }
+    <script src="@Url.Content("~/Scripts/foundation.min.js")" type="text/javascript"></script>
+
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="span12 header"><a href="@Url.Action("Index", "Core", new { area = "" })"><h1><span style="color: #C4BC96;">the</span>REVIEW</h1><h2>| A Sixth Form Publication</h2></a></div>
+    <header class="row">
+        <div class="large-12 columns">
+            <a href="@Url.Action("Index", "Core", new { area = "" })">
+                <h1>
+                    <span style="color: #C4BC96;">the</span>REVIEW 
+                    <small>A Sixth Form Publication  
+                    </small>
+                </h1>
+            </a>
         </div>
-        <div class="row">
-            <div class="span12 menu">
-                <ul>
-                    <li style="color: #948A54;"><a href="@Url.Action("Index", "Core", new { area = "" })">Home</a></li>
-                    <li class="separator">|</li>
-                    <li style="color: #F3B32B;"><a href="@Url.Action("GetCategory", new { Controller="Core", area="", id="World-News" })">World News</a></li>
-                    <li class="separator">|</li>
-                    <li style="color: #DA9349;"><a href="@Url.Action("GetCategory", new { Controller="Core", area="", id="Student-News" })">Student News</a></li>
-                    <li class="separator">|</li>
-                    <li style="color: #8AA359;"><a href="@Url.Action("GetCategory", new { Controller="Core", area="", id="Science/Tech" })">Science/Tech</a></li>
-                    <li class="separator">|</li>
-                    <li style="color: #0B76C2;"><a href="@Url.Action("GetCategory", new { Controller="Core", area="", id="Media" })">Media</a></li>
-                    <li class="separator">|</li>
-                    <li style="color: #FF5250;"><a href="@Url.Action("GetCategory", new { Controller="Core", area="", id="Sport" })">Sport</a></li>
-                    <li class="separator">|</li>
-                    <li style="color: #FF36FF;"><a href="@Url.Action("GetCategory", new { Controller="Core", area="", id="Fashion" })">Fashion</a></li>
-                    <li class="separator">|</li>
-                    <li style="color: #A11CFF;"><a href="@Url.Action("GetCategory", new { Controller="Core", area="", id="Creative" })">Creative</a></li>
-                    <li class="separator">|</li>
-                    <li><a href="@Url.Action("GetCategory", new { Controller="Core", area="", id="Misc" })">Misc</a></li>
-                    <li class="separator">|</li>
-                    <li><a href="@Url.Action("About", new { Controller="Core", area="" })">About Us</a></li>
-                </ul>
-            </div>
+    </header>
+    <hr />
+    <div class="row">
+        <div class="menu">
+            <ul>
+                <li style="color: #948A54;"><a href="@Url.Action("Index", "Core", new { area = "" })">Home</a></li>
+                <li style="color: #F3B32B;"><a href="@Url.Action("GetCategory", new { Controller = "Core", area = "", id = "World-News" })">World News</a></li>
+                <li style="color: #DA9349;"><a href="@Url.Action("GetCategory", new { Controller = "Core", area = "", id = "Student-News" })">Student News</a></li>
+                <li style="color: #8AA359;"><a href="@Url.Action("GetCategory", new { Controller = "Core", area = "", id = "Science/Tech" })">Science/Tech</a></li>
+                <li style="color: #0B76C2;"><a href="@Url.Action("GetCategory", new { Controller = "Core", area = "", id = "Media" })">Media</a></li>
+                <li style="color: #FF5250;"><a href="@Url.Action("GetCategory", new { Controller = "Core", area = "", id = "Sport" })">Sport</a></li>
+                <li style="color: #FF36FF;"><a href="@Url.Action("GetCategory", new { Controller = "Core", area = "", id = "Fashion" })">Fashion</a></li>
+                <li style="color: #A11CFF;"><a href="@Url.Action("GetCategory", new { Controller = "Core", area = "", id = "Creative" })">Creative</a></li>
+                <li><a href="@Url.Action("GetCategory", new { Controller = "Core", area = "", id = "Misc" })">Misc</a></li>
+                <li><a href="@Url.Action("About", new { Controller = "Core", area = "" })">About Us</a></li>
+                <li class="search"><a href="#" onclick="toggleSearch(); return false;"><i class="general foundicon-search"></i></a></li>
+            </ul>
         </div>
-            @RenderBody()
+    </div>
+    <div id="search">
         <hr />
-        <footer>
-            <div class="pull-right footerRightText">
+        <form action="@Url.Action("Search", new { Controller = "Core" })" method="GET" style="margin: 0;">
+            <div class="row">
+                <div class="large-3 small-1 columns">&nbsp;</div>
+                <input class="large-6 small-10 columns" style="margin-top: 1em;" name="q" type="search" autofocus="autofocus" />
+                <div class="large-3 small-1 columns">&nbsp;</div>
+            </div>
+        </form>
+    </div>
+    <hr />
+    @RenderBody()
+    <hr />
+    <footer class="row">
+        <div class="small-4 push-8 columns footerRightText">
             <p><a href="mailto:thewhsreview@gmail.com">Contact Us.</a></p>
             @{
                 if (User.Identity.IsAuthenticated)
@@ -73,22 +84,18 @@
                     </p>
                 }
             }
-            </div>
-@*            <ul>
-                <li class="header">Menu</li>
-                <li><a href="#">Link</a></li>
-                <li><a href="#">Link</a></li>
-                <li><a href="#">Link</a></li>
-            </ul>
-            <ul>
-                <li class="header">Menu</li>
-                <li><a href="#">Link</a></li>
-                <li><a href="#">Link</a></li>
-                <li><a href="#">Link</a></li>
-            </ul>*@
-            <p>This website and the articles published on it are purely the work of theREVIEW,<br />
-                which consists of sixth form students from <a href="http://www.williamhoward.cumbria.sch.uk" target="_blank">William Howard School</a></p>
-        </footer>
-    </div>
+        </div>
+        <p class="small-8 pull-4 columns">
+            This website and the articles published on it are purely the work of theREVIEW,<br />
+            which consists of sixth form students from <a href="http://www.williamhoward.cumbria.sch.uk" target="_blank">William Howard School</a>
+        </p>
+    </footer>
+    <script type="text/javascript">
+        function toggleSearch() {
+            $("#search").slideToggle();
+        }
+
+        $("#search").hide();
+    </script>
 </body>
 </html>

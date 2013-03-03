@@ -1,53 +1,48 @@
 ﻿@model Review_Site.Data.Models.PagedArticleList
-<div class="row padtop">
-    <div class="span8 offset2">
 @foreach (var article in Model.Articles)
 {
-            <div class="media">
-                <div class="dateBlock">
-                    <h1>@article.Created.Day</h1>
-                    <h2>@article.Created.ToString("MMM").ToUpper()</h2>
-                </div>
-                <div class="media-body">
+    <div class="row padtop">
+        <div class="large-1 small-2 columns dateBlock">
+            <h1>@article.Created.Day</h1>
+            <h2>@article.Created.ToString("MMM").ToUpper()</h2>
+        </div>
+        <div class="large-11 small-10 columns">
+            <div>
+                <div>
                     <a href="@Url.Action("GetArticle", "Core", new { area = "", id = article.ID })">
-                        <h4 class="media-heading">@article.Title</h4>
+                        <h4>@article.Title <small>by <em>@article.Author.FullName</em></small></h4>
                     </a>
-                    <p class="pull-right" style="font-style: italic;">@article.Author.FullName</p>
-                    <p>&nbsp;</p>
-                    @if (string.IsNullOrEmpty(article.ShortDescription))
-                    {
-                        <p>
-                            <a href="@Url.Action("GetArticle", "Core", new { area = "", id = article.ID })">Read more...</a>
-                        </p>
-            }
-                    else
-                    {
-                        <p>@article.ShortDescription</p>
-            }
+                    <p>
+                        @article.ShortDescription
+                        <a href="@Url.Action("GetArticle", "Core", new { area = "", id = article.ID })">
+                            Read more
+                        </a>
+                    </p>
                 </div>
             </div>
+        </div>
+    </div>
 }
-            </div>
-</div>
-@if (Model.PageCount > 1){
-<div class="pagination pagination-centered">
-    <ul>
-        @if (Model.Page == 1)
-        {
-            <li class="disabled"><a href="#">Prev</a></li>
-        }
-        else
-        {
-            <li><a href="?page=@(Model.Page - 1)">Prev</a></li>
-        }
-        @if (Model.Page >= Model.PageCount)
-        {
-            <li class="disabled"><a href="#">Next</a></li>
-        }
-        else
-        {
-            <li><a href="?page=@(Model.Page + 1)">Next</a></li>
-        }
-    </ul>
-</div>
+@if (Model.PageCount > 1)
+{
+    <div class="pagination pagination-centered">
+        <ul>
+            @if (Model.Page == 1)
+            {
+                <li class="disabled"><a href="#">Prev</a></li>
+            }
+            else
+            {
+                <li><a href="?page=@(Model.Page - 1)">Prev</a></li>
+            }
+            @if (Model.Page >= Model.PageCount)
+            {
+                <li class="disabled"><a href="#">Next</a></li>
+            }
+            else
+            {
+                <li><a href="?page=@(Model.Page + 1)">Next</a></li>
+            }
+        </ul>
+    </div>
 }

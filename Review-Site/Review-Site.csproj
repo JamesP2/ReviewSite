@@ -188,6 +188,9 @@
     <None Include="ConnectionStrings.config" />
     <None Include="Properties\PublishProfiles\CentOS VM Ftp.pubxml" />
     <Content Include="Content\Favicon.ico" />
+    <Content Include="Content\new\foundation.min.css" />
+    <Content Include="Content\new\normalize.css" />
+    <Content Include="Content\new\Site.css" />
     <Content Include="Scripts\ckeditor\.git" />
     <Content Include="Scripts\ckeditor\CHANGES.md" />
     <Content Include="Scripts\ckeditor\LICENSE.md" />
@@ -200,6 +203,7 @@
     <Content Include="Scripts\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
     <Content Include="Scripts\ckeditor\samples\sample_posteddata.php" />
     <Content Include="Scripts\ckeditor\skins\moono\readme.md" />
+    <Content Include="Scripts\foundation.min.js" />
     <Content Include="Views\Shared\_AnalyticsJS.cshtml" />
     <Content Include="Views\Core\Search.cshtml" />
     <Content Include="Views\Shared\_Articles.cshtml" />
