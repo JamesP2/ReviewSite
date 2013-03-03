@@ -240,8 +240,6 @@ namespace Review_Site.Areas.Admin.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
-            base.Dispose(disposing);
         }
     }
 }

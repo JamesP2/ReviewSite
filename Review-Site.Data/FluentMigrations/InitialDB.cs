@@ -23,8 +23,7 @@ namespace Review_Site.Data.FluentMigrations
                 .WithColumn("Created").AsDateTime().NotNullable()
                 .WithColumn("LastModified").AsDateTime()
                 .WithColumn("Author_id").AsString(40)
-                .WithColumn("Category_id").AsString(40)
-                .WithColumn("Tag_id").AsString(40);
+                .WithColumn("Category_id").AsString(40);
 
             Create.Table("category")
                 .WithColumn("ID").AsString(40).NotNullable().PrimaryKey()
@@ -32,7 +31,7 @@ namespace Review_Site.Data.FluentMigrations
                 .WithColumn("IsSystemCategory").AsBoolean()
                 .WithColumn("Created").AsDateTime().NotNullable()
                 .WithColumn("LastModified").AsDateTime()
-                .WithColumn("Grid_id").AsString(40)
+                .WithColumn("Grid_id").AsString(40).Nullable()
                 .WithColumn("Color_id").AsString(40);
 
             Create.Table("color")
@@ -72,7 +71,7 @@ namespace Review_Site.Data.FluentMigrations
             Create.Table("permission")
                 .WithColumn("ID").AsString(40).NotNullable().PrimaryKey()
                 .WithColumn("Name").AsString().NotNullable()
-                .WithColumn("Identifier").AsDateTime().NotNullable();
+                .WithColumn("Identifier").AsString().NotNullable();
 
             Create.Table("permissionstoroles")
                 .WithColumn("Permission_id").AsString(40).NotNullable()

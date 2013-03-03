@@ -25,7 +25,7 @@ namespace Review_Site.Areas.Admin.Controllers
             {
                 if (!db.Grids.Any(x => x.ID == id)) return HttpNotFound();
                 gridelements = db.GridElements.Get().Where(x => x.GridID == id).Include("Article").Include("BorderColor").Include("Grid").Include("Image");
-                Grid grid = db.Grids.Single(x => x.ID == id);
+                Grid grid = db.Grids.Get(id.Value);
                 ViewBag.GridName = grid.Name;
             }
             else
@@ -162,7 +162,6 @@ namespace Review_Site.Areas.Admin.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
             base.Dispose(disposing);
         }
     }

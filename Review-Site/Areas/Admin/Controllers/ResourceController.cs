@@ -135,7 +135,6 @@ namespace Review_Site.Areas.Admin.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
             base.Dispose(disposing);
         }
 
@@ -198,7 +197,7 @@ namespace Review_Site.Areas.Admin.Controllers
         public ActionResult Crop(Guid id)
         {
             if (!db.Resources.Any(x => x.ID == id)) throw new HttpException(404, "Resource not found.");
-            Resource res = db.Resources.Single(x => x.ID == id);
+            Resource res = db.Resources.Get(id);
             if (!res.Type.StartsWith("image")) return Content("You cannot crop a non-image resource!");
 
             string path = Path.Combine(Server.MapPath("~/ResourceUploads"), id.ToString());

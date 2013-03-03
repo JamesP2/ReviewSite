@@ -10,7 +10,8 @@ namespace Review_Site.Data.Models.Configurations.NH
     {
         public ArticleMap()
         {
-            Id(x => x.ID);
+            Id(x => x.ID)
+                .GeneratedBy.Assigned();
 
             Map(x => x.Issue);
 

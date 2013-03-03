@@ -75,7 +75,7 @@ namespace Review_Site.Data
                         ID = Guid.Parse("a323a95c-b475-4886-9f8d-006c2cc84c64"),
                         Title = "Home",
                         IsSystemCategory = true,
-                        ColorID = db.Colors.Single(x => x.Name == "Grey").ID,
+                        Color = db.Colors.Single(x => x.Name == "Grey"),
                         Created = DateTime.Now,
                         LastModified = DateTime.Now
                     }

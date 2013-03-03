@@ -11,7 +11,6 @@ namespace Review_Site.Data
     public class NHRepository<T> : IRepository<T>
     {
         protected ISession session = null;
-        protected ITransaction transaction = null;
         
         public NHRepository()
         {
@@ -59,12 +58,20 @@ namespace Review_Site.Data
 
         public void SaveOrUpdate(T entity)
         {
-            session.SaveOrUpdate(entity);
+            using (ITransaction t = session.BeginTransaction())
+            {
+                session.SaveOrUpdate(entity);
+                t.Commit();
+            }
         }
 
         public void Delete(T entity)
         {
-            session.Delete(entity);
+            using (ITransaction t = session.BeginTransaction())
+            {
+                session.Delete(entity);
+                t.Commit();
+            }
         }
     }
 }

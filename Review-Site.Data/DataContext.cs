@@ -29,11 +29,5 @@ namespace Review_Site.Data
                 return scope.Resolve<IRepository<T>>();
             }
         }
-
-        public bool Dispose()
-        {
-            //Do something?
-            return true;
-        }
     }
 }

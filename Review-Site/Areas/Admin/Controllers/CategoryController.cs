@@ -103,7 +103,7 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.Category.Delete")]
         public ActionResult Delete(Guid id)
         {
-            Category category = db.Categories.Single(c => c.ID == id);
+            Category category = db.Categories.Get(id);
             if (!category.IsSystemCategory)
             {
                 db.Categories.Delete(category);
@@ -121,7 +121,6 @@ namespace Review_Site.Areas.Admin.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
             base.Dispose(disposing);
         }
     }

@@ -66,7 +66,7 @@ namespace Review_Site.Areas.Admin.Controllers
         public ActionResult Edit(Guid id)
         {
             ViewBag.PermissionList = GetPermissionList();
-            Role role = db.Roles.Single(x => x.ID == id);
+            Role role = db.Roles.Get(id);
             return View(roleToForm(role));
         }
 
