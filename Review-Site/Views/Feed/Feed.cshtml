@@ -12,7 +12,7 @@
         <lastBuildDate>@Model.LastBuildDate</lastBuildDate>
         <pubDate>@Model.PubDate</pubDate>
         <ttl>@Model.TTL</ttl>
-        @foreach(Review_Site.Models.Feed.FeedItem item in Model.FeedItems){
+        @foreach(Review_Site.Data.Models.Feed.FeedItem item in Model.FeedItems){
         <item>
                 <title>@item.Title</title>
                 <description>@item.Description</description>
