@@ -8,7 +8,7 @@ using NHibernate.Linq;
 
 namespace Review_Site.Data
 {
-    public class NHRepository<T> : IRepository<T>
+    public class NHRepository<T> : IRepository<T> where T : class, IEntity
     {
         protected ISession session = null;
         

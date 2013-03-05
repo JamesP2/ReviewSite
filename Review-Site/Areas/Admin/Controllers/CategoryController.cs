@@ -61,8 +61,8 @@ namespace Review_Site.Areas.Admin.Controllers
         public ActionResult Edit(Guid id)
         {
             Category category = db.Categories.Single(c => c.ID == id);
-            ViewBag.Colors = new SelectList(db.Colors.Get(), "ID", "Name", category.ColorID);
-            ViewBag.Grids = new SelectList(GetGrids(), "Value", "Text", category.GridID);
+            ViewBag.Colors = new SelectList(db.Colors.Get(), "ID", "Name", category.Color.ID);
+            ViewBag.Grids = new SelectList(GetGrids(), "Value", "Text", category.Grid == null ? (Guid?)null : category.Grid.ID);
             return View(category);
         }
 
@@ -83,8 +83,8 @@ namespace Review_Site.Areas.Admin.Controllers
                 db.Categories.Update(category);
                 return RedirectToAction("Index");
             }
-            ViewBag.Colors = new SelectList(db.Colors.Get(), "ID", "Name", category.ColorID);
-            ViewBag.Grids = new SelectList(GetGrids(), "Value", "Text", category.GridID);
+            ViewBag.Colors = new SelectList(db.Colors.Get(), "ID", "Name", category.Color.ID);
+            ViewBag.Grids = new SelectList(GetGrids(), "Value", "Text", category.Grid == null ? (Guid?)null : category.Grid.ID);
             return View(category);
         }
         #endregion

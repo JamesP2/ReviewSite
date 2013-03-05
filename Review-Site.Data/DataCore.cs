@@ -14,6 +14,7 @@ using FluentMigrator.Runner.Announcers;
 using FluentMigrator.Runner.Initialization;
 using Review_Site.Data.Models;
 using Review_Site.Data.Utility;
+using Review_Site.Data.ModelBinders;
 
 namespace Review_Site.Data
 {
@@ -28,6 +29,9 @@ namespace Review_Site.Data
                 {
                     var builder = new ContainerBuilder();
                     builder.RegisterGeneric(typeof(NHRepository<>)).As(typeof(IRepository<>));
+                    builder.RegisterType(typeof(DataContext));
+                    builder.RegisterModelBinders(typeof(CategoryModelBinder).Assembly);
+                    builder.RegisterModelBinderProvider();
                     container = builder.Build();
                 }
                 return container;

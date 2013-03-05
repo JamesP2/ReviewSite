@@ -10,6 +10,7 @@ using System.Net;
 using Review_Site.Controllers;
 using System.Configuration;
 using Review_Site.Data;
+using Autofac.Integration.Mvc;
 
 namespace Review_Site
 {
@@ -82,10 +83,13 @@ namespace Review_Site
             AreaRegistration.RegisterAllAreas();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(DataCore.Container));
         }
 
         protected void Application_EndRequest()
         {
+            NHProvider.DisposeSession();
             if (Context.Response.StatusCode == 404)
             {
                 Application_Error(new HttpException(404, Context.Response.StatusDescription));

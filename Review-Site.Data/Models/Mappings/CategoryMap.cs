@@ -22,8 +22,8 @@ namespace Review_Site.Data.Models.Mappings
                 .Not.Nullable();
             Map(x => x.LastModified);
 
-            References(x => x.Grid);
-            References(x => x.Color);
+            References(x => x.Grid).Nullable();
+            References(x => x.Color).Not.Nullable();
             HasMany(x => x.Articles);
         }
     }

@@ -21,7 +21,7 @@ namespace Review_Site.Data
         {
             get
             {
-                if (session == null) session = sessionFactory.OpenSession();
+                if (session == null || !session.IsOpen) session = sessionFactory.OpenSession();
                 return session;
             }
         }
@@ -49,6 +49,12 @@ namespace Review_Site.Data
                 }
                 return _sessionFactory;
             }
+        }
+
+        public static void DisposeSession()
+        {
+            session.Close();
+            session.Dispose();
         }
     }
 }

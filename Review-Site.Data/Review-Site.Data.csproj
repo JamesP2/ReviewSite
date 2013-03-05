@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MigrationProcessorOptions.cs" />
+    <Compile Include="ModelBinders\CategoryModelBinder.cs" />
     <Compile Include="Utility\DataAnnotations.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="DataCore.cs" />

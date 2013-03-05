@@ -210,7 +210,7 @@ namespace Review_Site.Controllers
         {
 
             //From Stack Overflow 9726576
-            // Look for a proxy address first
+            //Look for a proxy address first
             form.ClientAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
 
             // If there is no proxy, get the standard remote address
@@ -233,12 +233,6 @@ namespace Review_Site.Controllers
             mailer.UserContact(form);
 
             return View("ContactThanks");
-        }
-
-        public ActionResult test()
-        {
-            //Review_Site.Data.NHProvider.OpenSession();
-            return Content("Yay...?");
         }
     }
 }
