@@ -58,7 +58,11 @@ namespace Review_Site.Data
 
         public void Add(T entity)
         {
-            session.Save(entity);
+            using (ITransaction t = session.BeginTransaction())
+            {
+                session.Save(entity);
+                t.Commit();
+            }
         }
 
         public void AddOrUpdate(params T[] entities)

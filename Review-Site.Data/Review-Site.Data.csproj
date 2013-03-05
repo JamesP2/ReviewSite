@@ -41,13 +41,6 @@
     <Reference Include="Autofac.Integration.Mvc">
       <HintPath>..\packages\Autofac.Mvc4.3.0.0\lib\net40\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.0.0-alpha2\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.0.0-alpha2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="FluentMigrator">
       <HintPath>..\packages\FluentMigrator.1.0.6.0\lib\40\FluentMigrator.dll</HintPath>
     </Reference>
@@ -111,86 +104,23 @@
     <Compile Include="DataCore.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="IRepository.cs" />
-    <Compile Include="Migrations\201211110034349_InitialCreate.cs" />
-    <Compile Include="Migrations\201211110034349_InitialCreate.Designer.cs">
-      <DependentUpon>201211110034349_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201211110039561_Initial.cs" />
-    <Compile Include="Migrations\201211110039561_Initial.Designer.cs">
-      <DependentUpon>201211110039561_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201211111224429_ArticleNullableDateTime.cs" />
-    <Compile Include="Migrations\201211111224429_ArticleNullableDateTime.Designer.cs">
-      <DependentUpon>201211111224429_ArticleNullableDateTime.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201211122055052_HeadingTextNotRequired.cs" />
-    <Compile Include="Migrations\201211122055052_HeadingTextNotRequired.Designer.cs">
-      <DependentUpon>201211122055052_HeadingTextNotRequired.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201211171913250_ResourceSource.cs" />
-    <Compile Include="Migrations\201211171913250_ResourceSource.Designer.cs">
-      <DependentUpon>201211171913250_ResourceSource.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201211292113261_ResourceSourceColour.cs" />
-    <Compile Include="Migrations\201211292113261_ResourceSourceColour.Designer.cs">
-      <DependentUpon>201211292113261_ResourceSourceColour.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201212010123318_RolesAndPermissions.cs" />
-    <Compile Include="Migrations\201212010123318_RolesAndPermissions.Designer.cs">
-      <DependentUpon>201212010123318_RolesAndPermissions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201301132002554_OptionalDates.cs" />
-    <Compile Include="Migrations\201301132002554_OptionalDates.Designer.cs">
-      <DependentUpon>201301132002554_OptionalDates.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201301132205077_FixArticleDateTime.cs" />
-    <Compile Include="Migrations\201301132205077_FixArticleDateTime.Designer.cs">
-      <DependentUpon>201301132205077_FixArticleDateTime.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201301141623511_NonNullableCreated.cs" />
-    <Compile Include="Migrations\201301141623511_NonNullableCreated.Designer.cs">
-      <DependentUpon>201301141623511_NonNullableCreated.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201301141705587_Fix-Color.cs" />
-    <Compile Include="Migrations\201301141705587_Fix-Color.Designer.cs">
-      <DependentUpon>201301141705587_Fix-Color.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201301152350336_PageHits.cs" />
-    <Compile Include="Migrations\201301152350336_PageHits.Designer.cs">
-      <DependentUpon>201301152350336_PageHits.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201301161821539_Tags.cs" />
-    <Compile Include="Migrations\201301161821539_Tags.Designer.cs">
-      <DependentUpon>201301161821539_Tags.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201302282131295_ResourceDateAddedChange.cs" />
-    <Compile Include="Migrations\201302282131295_ResourceDateAddedChange.Designer.cs">
-      <DependentUpon>201302282131295_ResourceDateAddedChange.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="FluentMigrations\InitialDB.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
     <Compile Include="Models\Color.cs" />
-    <Compile Include="Models\Configurations\EF\ArticleConfiguration.cs" />
-    <Compile Include="Models\Configurations\EF\CategoryConfiguration.cs" />
-    <Compile Include="Models\Configurations\EF\GridElementConfiguration.cs" />
-    <Compile Include="Models\Configurations\EF\ResourceConfiguration.cs" />
-    <Compile Include="Models\Configurations\EF\RoleConfiguration.cs" />
-    <Compile Include="Models\Configurations\EF\UserConfiguration.cs" />
-    <Compile Include="Models\Configurations\NH\ArticleMap.cs" />
-    <Compile Include="Models\Configurations\NH\CategoryMap.cs" />
-    <Compile Include="Models\Configurations\NH\ColorMap.cs" />
-    <Compile Include="Models\Configurations\NH\GridElementMap.cs" />
-    <Compile Include="Models\Configurations\NH\GridMap.cs" />
-    <Compile Include="Models\Configurations\NH\PageHitMap.cs" />
-    <Compile Include="Models\Configurations\NH\PermissionMap.cs" />
-    <Compile Include="Models\Configurations\NH\ResourceMap.cs" />
-    <Compile Include="Models\Configurations\NH\RoleMap.cs" />
-    <Compile Include="Models\Configurations\NH\TagMap.cs" />
-    <Compile Include="Models\Configurations\NH\UserMap.cs" />
+    <Compile Include="Models\Mappings\ArticleMap.cs" />
+    <Compile Include="Models\Mappings\CategoryMap.cs" />
+    <Compile Include="Models\Mappings\ColorMap.cs" />
+    <Compile Include="Models\Mappings\GridElementMap.cs" />
+    <Compile Include="Models\Mappings\GridMap.cs" />
+    <Compile Include="Models\Mappings\PageHitMap.cs" />
+    <Compile Include="Models\Mappings\PermissionMap.cs" />
+    <Compile Include="Models\Mappings\ResourceMap.cs" />
+    <Compile Include="Models\Mappings\RoleMap.cs" />
+    <Compile Include="Models\Mappings\TagMap.cs" />
+    <Compile Include="Models\Mappings\UserMap.cs" />
     <Compile Include="Models\ContactForm.cs" />
     <Compile Include="Models\Feed\Feed.cs" />
     <Compile Include="Models\Feed\FeedItem.cs" />
@@ -208,57 +138,12 @@
     <Compile Include="NHProvider.cs" />
     <Compile Include="NHRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SiteContext.cs" />
     <Compile Include="Utility\PasswordHashing.cs" />
     <Compile Include="Utility\PermissionManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201211110034349_InitialCreate.resx">
-      <DependentUpon>201211110034349_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201211110039561_Initial.resx">
-      <DependentUpon>201211110039561_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201211111224429_ArticleNullableDateTime.resx">
-      <DependentUpon>201211111224429_ArticleNullableDateTime.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201211122055052_HeadingTextNotRequired.resx">
-      <DependentUpon>201211122055052_HeadingTextNotRequired.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201211171913250_ResourceSource.resx">
-      <DependentUpon>201211171913250_ResourceSource.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201211292113261_ResourceSourceColour.resx">
-      <DependentUpon>201211292113261_ResourceSourceColour.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212010123318_RolesAndPermissions.resx">
-      <DependentUpon>201212010123318_RolesAndPermissions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201301132002554_OptionalDates.resx">
-      <DependentUpon>201301132002554_OptionalDates.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201301132205077_FixArticleDateTime.resx">
-      <DependentUpon>201301132205077_FixArticleDateTime.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201301141623511_NonNullableCreated.resx">
-      <DependentUpon>201301141623511_NonNullableCreated.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201301141705587_Fix-Color.resx">
-      <DependentUpon>201301141705587_Fix-Color.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201301152350336_PageHits.resx">
-      <DependentUpon>201301152350336_PageHits.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201301161821539_Tags.resx">
-      <DependentUpon>201301161821539_Tags.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201302282131295_ResourceDateAddedChange.resx">
-      <DependentUpon>201302282131295_ResourceDateAddedChange.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

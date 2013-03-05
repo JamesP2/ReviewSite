@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 using FluentNHibernate.Mapping;
 
-namespace Review_Site.Data.Models.Configurations.NH
+namespace Review_Site.Data.Models.Mappings
 {
-    public class TagMap : ClassMap<Tag>
+    public class ColorMap : ClassMap<Color>
     {
-        public TagMap()
+        public ColorMap()
         {
             Id(x => x.ID)
                 .GeneratedBy.Assigned();
@@ -16,7 +16,8 @@ namespace Review_Site.Data.Models.Configurations.NH
             Map(x => x.Name)
                 .Not.Nullable();
 
-            HasMany(x => x.Articles);
+            Map(x => x.Value)
+                .Not.Nullable();
         }
     }
 }

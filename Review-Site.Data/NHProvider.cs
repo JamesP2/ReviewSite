@@ -10,7 +10,7 @@ using FluentNHibernate.Cfg.Db;
 using NHibernate.Tool.hbm2ddl;
 using FluentNHibernate.Conventions.Helpers;
 using System.Reflection;
-using Review_Site.Data.Models.Configurations.NH;
+using Review_Site.Data.Models.Mappings;
 
 namespace Review_Site.Data
 {
@@ -38,9 +38,11 @@ namespace Review_Site.Data
                                 x => x.FromConnectionStringWithKey("NHibernateConnection")       
                             )
                         );
-                   config.Mappings(x => x.FluentMappings.AddFromAssemblyOf<ArticleMap>());
 
-                    config.ExposeConfiguration(x => new SchemaExport(x).Execute(true, true, false));
+                    config.Mappings(x => x.FluentMappings.AddFromAssemblyOf<ArticleMap>());
+
+                    //config.ExposeConfiguration(x => new SchemaExport(x).Execute(true, true, false));
+
                     config.BuildConfiguration();
 
                     _sessionFactory = config.BuildSessionFactory();

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -81,7 +80,7 @@ namespace Review_Site.Areas.Admin.Controllers
                     return View(category);
                 }
                 category.LastModified = DateTime.Now;
-                db.Categories.Add(category);
+                db.Categories.Update(category);
                 return RedirectToAction("Index");
             }
             ViewBag.Colors = new SelectList(db.Colors.Get(), "ID", "Name", category.ColorID);

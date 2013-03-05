@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -22,13 +21,13 @@ namespace Review_Site.Areas.Admin.Controllers
             if (id != null)
             {
                 if (!db.Grids.Any(x => x.ID == id)) return HttpNotFound();
-                gridelements = db.GridElements.Get().Where(x => x.GridID == id).Include("Article").Include("BorderColor").Include("Grid").Include("Image");
+                gridelements = db.GridElements.Get().Where(x => x.GridID == id);
                 Grid grid = db.Grids.Get(id.Value);
                 ViewBag.GridName = grid.Name;
             }
             else
             {
-                gridelements = db.GridElements.Get().Include("Article").Include("BorderColor").Include("Grid").Include("Image");
+                gridelements = db.GridElements.Get();
             }
             return View(gridelements.OrderBy(x => x.Article.Title).ToList());
         }

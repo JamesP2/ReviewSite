@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using FluentNHibernate.Mapping;
 
-namespace Review_Site.Data.Models.Configurations.NH
+namespace Review_Site.Data.Models.Mappings
 {
     public class RoleMap : ClassMap<Role>
     {

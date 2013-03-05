@@ -4,26 +4,27 @@ using System.Linq;
 using System.Web;
 using FluentNHibernate.Mapping;
 
-namespace Review_Site.Data.Models.Configurations.NH
+namespace Review_Site.Data.Models.Mappings
 {
-    public class ResourceMap : ClassMap<Resource>
+    public class GridMap : ClassMap<Grid>
     {
-        public ResourceMap()
+        public GridMap()
         {
             Id(x => x.ID)
                 .GeneratedBy.Assigned();
 
-            Map(x => x.Title)
+            Map(x => x.Name)
                 .Not.Nullable();
-            Map(x => x.Type)
+            Map(x => x.Alias)
                 .Not.Nullable();
+
+            Map(x => x.Description);
 
             Map(x => x.Created)
                 .Not.Nullable();
             Map(x => x.LastModified);
 
-            References(x => x.Creator);
-            References(x => x.SourceTextColor);
+            HasMany(x => x.GridElements);
         }
     }
 }
