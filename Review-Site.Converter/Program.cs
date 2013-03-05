@@ -51,7 +51,7 @@ namespace Review_Site.Converter
                         Category = article.Category,
                         Tags = article.Tags
                     };
-                    ctx.Articles.SaveOrUpdate(newArticle);
+                    ctx.Articles.AddOrUpdate(newArticle);
                 }
                 foreach (Category cat in efCon.Categories.ToList())
                 {
@@ -67,7 +67,7 @@ namespace Review_Site.Converter
                         Created = cat.Created,
                         LastModified = cat.LastModified
                     };
-                    ctx.Categories.SaveOrUpdate(newCategory);
+                    ctx.Categories.AddOrUpdate(newCategory);
                 }
                 foreach (Color col in efCon.Colors.ToList())
                 {
@@ -78,7 +78,7 @@ namespace Review_Site.Converter
                         Name = col.Name,
                         Value = col.Value
                     };
-                    ctx.Colors.SaveOrUpdate(newColor);
+                    ctx.Colors.AddOrUpdate(newColor);
                 }
                 foreach (Grid grid in efCon.Grids.ToList())
                 {
@@ -93,7 +93,7 @@ namespace Review_Site.Converter
                         Created = grid.Created,
                         LastModified = grid.LastModified
                     };
-                    ctx.Grids.SaveOrUpdate(newGrid);
+                    ctx.Grids.AddOrUpdate(newGrid);
                 }
                 foreach (GridElement gridElement in efCon.GridElements.ToList())
                 {
@@ -112,7 +112,7 @@ namespace Review_Site.Converter
                         Grid = gridElement.Grid,
                         Image = gridElement.Image
                     };
-                    ctx.GridElements.SaveOrUpdate(newGridElement);
+                    ctx.GridElements.AddOrUpdate(newGridElement);
                 }
                 foreach (PageHit hit in efCon.PageHits.ToList())
                 {
@@ -124,7 +124,7 @@ namespace Review_Site.Converter
                         Time = hit.Time,
                         ClientAddress = hit.ClientAddress
                     };
-                    ctx.PageHits.SaveOrUpdate(newPageHit);
+                    ctx.PageHits.AddOrUpdate(newPageHit);
                 }
                 foreach (Permission permission in efCon.Permissions.ToList())
                 {
@@ -136,7 +136,7 @@ namespace Review_Site.Converter
                         Identifier = permission.Identifier,
                         Roles = permission.Roles
                     };
-                    ctx.Permissions.SaveOrUpdate(newPermission);
+                    ctx.Permissions.AddOrUpdate(newPermission);
                 }
                 foreach (Resource resource in efCon.Resources.ToList())
                 {
@@ -152,7 +152,7 @@ namespace Review_Site.Converter
                         Creator = resource.Creator,
                         SourceTextColor = resource.SourceTextColor
                     };
-                    ctx.Resources.SaveOrUpdate(newResource);
+                    ctx.Resources.AddOrUpdate(newResource);
                 }
                 foreach (Role role in efCon.Roles.ToList())
                 {
@@ -164,7 +164,7 @@ namespace Review_Site.Converter
                         AssignedUsers = role.AssignedUsers,
                         Permissions = role.Permissions
                     };
-                    ctx.Roles.SaveOrUpdate(newRole);
+                    ctx.Roles.AddOrUpdate(newRole);
                 }
                 foreach (Tag tag in efCon.Tags.ToList())
                 {
@@ -175,7 +175,7 @@ namespace Review_Site.Converter
                         Name = tag.Name,
                         Articles = tag.Articles
                     };
-                    ctx.Tags.SaveOrUpdate(newTag);
+                    ctx.Tags.AddOrUpdate(newTag);
                 }
                 foreach (User user in efCon.Users.ToList())
                 {
@@ -194,7 +194,7 @@ namespace Review_Site.Converter
                         Created = user.Created,
                         LastModified = user.LastModified
                     };
-                    ctx.Users.SaveOrUpdate(newUser);
+                    ctx.Users.AddOrUpdate(newUser);
                 }
                 Console.WriteLine("Conversion is now complete. Press anything to exit.");
                 Console.ReadKey();

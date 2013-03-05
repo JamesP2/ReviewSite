@@ -16,31 +16,12 @@ namespace Review_Site.Areas.Admin.Controllers
     {
         private DataContext db = new DataContext();
 
-
-        private List<SelectListItem> GetRoleList()
-        {
-            List<SelectListItem> list = new List<SelectListItem>();
-            foreach (Role r in db.Roles.Get())
-            {
-                list.Add(new SelectListItem
-                {
-                    Value = r.ID.ToString(),
-                    Text = r.Name
-                });
-            }
-            return list;
-        }
-
-        //
-        // GET: /Admin/User/
+        #region Browse and Details
         [Restrict(Identifier = "Admin.User.Index")]
         public ViewResult Index()
         {
             return View(db.Users.Get().OrderBy(x => x.Username).ToList());
         }
-
-        //
-        // GET: /Admin/User/Details/5
 
         [Restrict(Identifier = "Admin.User.Index")]
         public ViewResult Details(Guid id)
@@ -48,19 +29,15 @@ namespace Review_Site.Areas.Admin.Controllers
             User user = db.Users.Single(u => u.ID == id);
             return View(user);
         }
+        #endregion
 
-        //
-        // GET: /Admin/User/Create
-
+        #region Create
         [Restrict(Identifier = "Admin.User.Create")]
         public ActionResult Create()
         {
             ViewBag.RoleList = GetRoleList(); 
             return View();
         } 
-
-        //
-        // POST: /Admin/User/Create
 
         [HttpPost]
         [Restrict(Identifier = "Admin.User.Create")]
@@ -98,7 +75,7 @@ namespace Review_Site.Areas.Admin.Controllers
                     User user = formToUser(form);
                     user.Created = DateTime.Now;
                     user.LastModified = DateTime.Now;
-                    db.Users.SaveOrUpdate(user);
+                    db.Users.AddOrUpdate(user);
                 }
                 else
                 {
@@ -112,10 +89,9 @@ namespace Review_Site.Areas.Admin.Controllers
             ViewBag.RoleList = GetRoleList();
             return View(form);
         }
+        #endregion
 
-        //
-        // GET: /Admin/User/Edit/5
-
+        #region Edit
         [Restrict(Identifier = "Admin.User.Edit")]
         public ActionResult Edit(Guid id)
         {
@@ -123,48 +99,6 @@ namespace Review_Site.Areas.Admin.Controllers
             ViewBag.RoleList = GetRoleList();
             return View(userToForm(user));
         }
-
-        private User formToUser(UserForm form)
-        {
-            IList<Role> roleList = new List<Role>();
-            foreach (Guid g in form.SelectedRoleIds)
-            {
-                roleList.Add(db.Roles.Single(x => x.ID == g));
-            }
-            return new User
-            {
-                ID = form.ID,
-                FirstName = form.FirstName,
-                LastName = form.LastName,
-                Username = form.Username,
-                Password = Data.Utility.PasswordHashing.GetHash(form.Password),
-                Roles = roleList,
-                Created = form.Created,
-                LastModified = form.LastModified
-            };
-        }
-
-        private UserForm userToForm(User user)
-        {
-            IList<Guid> roleGuids = new List<Guid>();
-            foreach (Role r in user.Roles)
-            {
-                roleGuids.Add(r.ID);
-            }
-            return new UserForm
-            { 
-                ID = user.ID,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Username = user.Username.ToLower(), //Just in case...
-                SelectedRoleIds = roleGuids,
-                Created = user.Created,
-                LastModified = user.LastModified
-            };
-        }
-
-        //
-        // POST: /Admin/User/Edit/5
 
         [HttpPost]
         [Restrict(Identifier = "Admin.User.Edit")]
@@ -209,37 +143,71 @@ namespace Review_Site.Areas.Admin.Controllers
                 }
 
                 user.LastModified = DateTime.Now;
-                db.Users.SaveOrUpdate(user);
+                db.Users.AddOrUpdate(user);
                 return RedirectToAction("Index");
             }
             ViewBag.RoleList = GetRoleList(); 
             return View(form);
         }
 
-        //
-        // GET: /Admin/User/Delete/5
-        /*
-        public ActionResult Delete(Guid id)
+        #endregion
+
+        private List<SelectListItem> GetRoleList()
         {
-            User user = db.Users.Single(u => u.ID == id);
-            return View(user);
+            List<SelectListItem> list = new List<SelectListItem>();
+            foreach (Role r in db.Roles.Get())
+            {
+                list.Add(new SelectListItem
+                {
+                    Value = r.ID.ToString(),
+                    Text = r.Name
+                });
+            }
+            return list;
         }
 
-        //
-        // POST: /Admin/User/Delete/5
-
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(Guid id)
-        {            
-            User user = db.Users.Single(u => u.ID == id);
-            db.Users.Remove(user);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+        private User formToUser(UserForm form)
+        {
+            IList<Role> roleList = new List<Role>();
+            foreach (Guid g in form.SelectedRoleIds)
+            {
+                roleList.Add(db.Roles.Single(x => x.ID == g));
+            }
+            return new User
+            {
+                ID = form.ID,
+                FirstName = form.FirstName,
+                LastName = form.LastName,
+                Username = form.Username,
+                Password = Data.Utility.PasswordHashing.GetHash(form.Password),
+                Roles = roleList,
+                Created = form.Created,
+                LastModified = form.LastModified
+            };
         }
-         */
+
+        private UserForm userToForm(User user)
+        {
+            IList<Guid> roleGuids = new List<Guid>();
+            foreach (Role r in user.Roles)
+            {
+                roleGuids.Add(r.ID);
+            }
+            return new UserForm
+            {
+                ID = user.ID,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Username = user.Username.ToLower(), //Just in case...
+                SelectedRoleIds = roleGuids,
+                Created = user.Created,
+                LastModified = user.LastModified
+            };
+        }
 
         protected override void Dispose(bool disposing)
         {
+            base.Dispose(true);
         }
     }
 }

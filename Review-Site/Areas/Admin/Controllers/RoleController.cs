@@ -15,36 +15,26 @@ namespace Review_Site.Areas.Admin.Controllers
     {
         private DataContext db = new DataContext();
 
-
-        //
-        // GET: /Admin/Role/
-
+        #region Browse and Details
         [Restrict(Identifier = "Admin.Role.Index")]
         public ActionResult Index()
         {
             return View(db.Roles.Get());
         }
 
-        //
-        // GET: /Admin/Role/Details/5
-
         [Restrict(Identifier = "Admin.Role.Index")]
         public ActionResult Details(int id)
         {
             return View();
         }
+        #endregion
 
-        //
-        // GET: /Admin/Role/Create
-
+        #region Create
         [Restrict(Identifier = "Admin.Role.Create")]
         public ActionResult Create()
         {
             return View();
         } 
-
-        //
-        // POST: /Admin/Role/Create
 
         [Restrict(Identifier = "Admin.Role.Create")]
         [HttpPost]
@@ -53,15 +43,14 @@ namespace Review_Site.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 role.ID = Guid.NewGuid();
-                db.Roles.SaveOrUpdate(role);
+                db.Roles.AddOrUpdate(role);
                 return RedirectToAction("Edit", new { id = role.ID });
             }
             return View(role);
         }
-        
-        //
-        // GET: /Admin/Role/Edit/5
+        #endregion
 
+        #region Edit
         [Restrict(Identifier = "Admin.Role.Edit")]
         public ActionResult Edit(Guid id)
         {
@@ -69,9 +58,6 @@ namespace Review_Site.Areas.Admin.Controllers
             Role role = db.Roles.Get(id);
             return View(roleToForm(role));
         }
-
-        //
-        // POST: /Admin/Role/Edit/5
 
         [Restrict(Identifier = "Admin.Role.Edit")]
         [HttpPost]
@@ -85,10 +71,12 @@ namespace Review_Site.Areas.Admin.Controllers
                 role.Permissions.Add(db.Permissions.Single(x => x.ID == permissionId));
             }
             role.Name = form.Name;
-            db.Roles.SaveOrUpdate(role);
+            db.Roles.AddOrUpdate(role);
             return RedirectToAction("Index");
         }
+        #endregion
 
+        #region Utility
         private List<SelectListItem> GetPermissionList()
         {
             List<SelectListItem> list = new List<SelectListItem>();
@@ -102,6 +90,7 @@ namespace Review_Site.Areas.Admin.Controllers
             }
             return list;
         }
+        #endregion
 
         private RoleForm roleToForm(Role role)
         {
@@ -132,33 +121,5 @@ namespace Review_Site.Areas.Admin.Controllers
                 Name = form.Name
             };
         }
-
-        ////
-        //// GET: /Admin/Role/Delete/5
-        
-        //[Restrict(Identifier = "Admin.Role.Delete")]
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
-
-        ////
-        //// POST: /Admin/Role/Delete/5
-
-        //[Restrict(Identifier = "Admin.Role.Delete")]
-        //[HttpPost]
-        //public ActionResult Delete(int id, FormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add delete logic here
- 
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
     }
 }

@@ -14,9 +14,7 @@ namespace Review_Site.Areas.Admin.Controllers
     {
         private DataContext db = new DataContext();
 
-        //
-        // GET: /Admin/GridElement/
-
+        #region Browse and Details
         [Restrict(Identifier = "Admin.GridElement.Index")]
         public ActionResult Index(Guid? id)
         {
@@ -35,19 +33,15 @@ namespace Review_Site.Areas.Admin.Controllers
             return View(gridelements.OrderBy(x => x.Article.Title).ToList());
         }
 
-        //
-        // GET: /Admin/GridElement/Details/5
-
         [Restrict(Identifier = "Admin.GridElement.Index")]
         public ViewResult Details(Guid id)
         {
             GridElement gridelement = db.GridElements.Single(g => g.ID == id);
             return View(gridelement);
         }
+        #endregion
 
-        //
-        // GET: /Admin/GridElement/Create
-
+        #region Create
         [Restrict(Identifier = "Admin.GridElement.Create")]
         public ActionResult Create()
         {
@@ -56,9 +50,6 @@ namespace Review_Site.Areas.Admin.Controllers
             populateFormViewBag();
             return View();
         } 
-
-        //
-        // POST: /Admin/GridElement/Create
 
         [HttpPost]
         [Restrict(Identifier = "Admin.GridElement.Create")]
@@ -69,7 +60,7 @@ namespace Review_Site.Areas.Admin.Controllers
                 gridelement.ID = Guid.NewGuid();
                 gridelement.LastModified = DateTime.Now;
                 gridelement.Created = DateTime.Now;
-                db.GridElements.SaveOrUpdate(gridelement);
+                db.GridElements.AddOrUpdate(gridelement);
                 return RedirectToAction("Index");
             }
             ViewBag.BorderColorIDs = new SelectList(db.Colors.Get(), "ID", "Name", gridelement.BorderColorID);
@@ -78,10 +69,9 @@ namespace Review_Site.Areas.Admin.Controllers
             if(gridelement.ImageID != Guid.Empty) gridelement.Image = db.Resources.Single(x => x.ID == gridelement.ImageID);
             return View(gridelement);
         }
-        
-        //
-        // GET: /Admin/GridElement/Edit/5
+        #endregion
 
+        #region Edit
         [Restrict(Identifier = "Admin.GridElement.Edit")]
         public ActionResult Edit(Guid id)
         {
@@ -92,9 +82,6 @@ namespace Review_Site.Areas.Admin.Controllers
             return View(gridelement);
         }
 
-        //
-        // POST: /Admin/GridElement/Edit/5
-
         [HttpPost]
         [Restrict(Identifier = "Admin.GridElement.Edit")]
         public ActionResult Edit(GridElement gridelement)
@@ -102,7 +89,7 @@ namespace Review_Site.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 gridelement.LastModified = DateTime.Now;
-                db.GridElements.SaveOrUpdate(gridelement);
+                db.GridElements.AddOrUpdate(gridelement);
                 return RedirectToAction("Index");
             }
             ViewBag.BorderColorIDs = new SelectList(db.Colors.Get(), "ID", "Name", gridelement.BorderColorID);
@@ -110,7 +97,27 @@ namespace Review_Site.Areas.Admin.Controllers
             populateFormViewBag(gridelement);
             return View(gridelement);
         }
+        #endregion
 
+        #region Delete
+        [Restrict(Identifier = "Admin.GridElement.Delete")]
+        public ActionResult Delete(Guid id)
+        {
+            GridElement gridelement = db.GridElements.Single(g => g.ID == id);
+            return View(gridelement);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [Restrict(Identifier = "Admin.GridElement.Delete")]
+        public ActionResult DeleteConfirmed(Guid id)
+        {            
+            GridElement gridelement = db.GridElements.Single(g => g.ID == id);
+            db.GridElements.Delete(gridelement);
+            return RedirectToAction("Index");
+        }
+        #endregion
+
+        #region ViewBag
         private void populateFormViewBag()
         {
             populateFormViewBag(null);
@@ -137,28 +144,7 @@ namespace Review_Site.Areas.Admin.Controllers
             ViewBag.SizeClasses = sizeClasses;
             ViewBag.HeadingClasses = headingClasses;
         }
-
-        //
-        // GET: /Admin/GridElement/Delete/5
-
-        [Restrict(Identifier = "Admin.GridElement.Delete")]
-        public ActionResult Delete(Guid id)
-        {
-            GridElement gridelement = db.GridElements.Single(g => g.ID == id);
-            return View(gridelement);
-        }
-
-        //
-        // POST: /Admin/GridElement/Delete/5
-
-        [HttpPost, ActionName("Delete")]
-        [Restrict(Identifier = "Admin.GridElement.Delete")]
-        public ActionResult DeleteConfirmed(Guid id)
-        {            
-            GridElement gridelement = db.GridElements.Single(g => g.ID == id);
-            db.GridElements.Delete(gridelement);
-            return RedirectToAction("Index");
-        }
+        #endregion
 
         protected override void Dispose(bool disposing)
         {

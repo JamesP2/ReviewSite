@@ -14,8 +14,18 @@ using Review_Site.Data.Models.Configurations.NH;
 
 namespace Review_Site.Data
 {
-    public static class NHSession
+    public static class NHProvider
     {
+        private static ISession session { get; set; }
+        public static ISession Session
+        {
+            get
+            {
+                if (session == null) session = sessionFactory.OpenSession();
+                return session;
+            }
+        }
+
         private static ISessionFactory _sessionFactory;
         private static ISessionFactory sessionFactory
         {
@@ -28,21 +38,15 @@ namespace Review_Site.Data
                                 x => x.FromConnectionStringWithKey("NHibernateConnection")       
                             )
                         );
-                    config.Mappings(x => x.FluentMappings.AddFromAssemblyOf<ArticleMap>());
-                    
-                    //config.ExposeConfiguration(x => new SchemaExport(x).Execute(true, true, false));
+                   config.Mappings(x => x.FluentMappings.AddFromAssemblyOf<ArticleMap>());
+
+                    config.ExposeConfiguration(x => new SchemaExport(x).Execute(true, true, false));
                     config.BuildConfiguration();
 
                     _sessionFactory = config.BuildSessionFactory();
                 }
-
                 return _sessionFactory;
             }
-        }
-
-        public static ISession OpenSession()
-        {
-            return sessionFactory.OpenSession();
         }
     }
 }

@@ -42,7 +42,7 @@
             @Html.LabelFor(model => model.Color.ID, "Colour")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("ColorID", (SelectList)ViewBag.Colors)
+            @Html.DropDownList("Color.ID", (SelectList)ViewBag.Colors)
             @Html.ValidationMessageFor(model => model.Color.ID)
         </div>
 
@@ -50,8 +50,8 @@
             @Html.LabelFor(model => model.Grid.ID, "Grid")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("GridID", (SelectList)ViewBag.Grids)
-            @Html.ValidationMessageFor(model => model.GridID)
+            @Html.DropDownList("Grid.ID", (SelectList)ViewBag.Grids)
+            @Html.ValidationMessageFor(model => model.Grid.ID)
         </div>
 
         <p>

@@ -161,10 +161,10 @@
     <Compile Include="Areas\Admin\Controllers\ResourceController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
-    <Compile Include="Areas\Admin\Models\CropForm.cs" />
-    <Compile Include="Areas\Admin\Models\RoleForm.cs" />
-    <Compile Include="Areas\Admin\Models\RoleListModel.cs" />
-    <Compile Include="Areas\Admin\Models\UserForm.cs" />
+    <Compile Include="Areas\Admin\ViewModels\CropForm.cs" />
+    <Compile Include="Areas\Admin\ViewModels\RoleForm.cs" />
+    <Compile Include="Areas\Admin\ViewModels\RoleListModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\UserForm.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
     <Compile Include="Controllers\CoreController.cs" />

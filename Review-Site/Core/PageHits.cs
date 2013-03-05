@@ -14,7 +14,7 @@ namespace Review_Site.Core
             var ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
             if(ip == null || ip.ToLower() == "unknown") ip = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
 
-            db.PageHits.SaveOrUpdate(new PageHit
+            db.PageHits.AddOrUpdate(new PageHit
             {
                 ID = Guid.NewGuid(),
                 ClientAddress = ip,

@@ -14,7 +14,7 @@ namespace Review_Site.Data
         
         public NHRepository()
         {
-            session = NHSession.OpenSession();
+            session = NHProvider.Session;
         }
 
         public NHRepository(ISession existingSession)
@@ -48,15 +48,28 @@ namespace Review_Site.Data
             return session.Query<T>().Single(predicate);
         }
 
-        public void SaveOrUpdate(params T[] entities)
+        public void Add(params T[] entities)
         {
             foreach (T entity in entities)
             {
-                SaveOrUpdate(entity);
+                Add(entity);
             }
         }
 
-        public void SaveOrUpdate(T entity)
+        public void Add(T entity)
+        {
+            session.Save(entity);
+        }
+
+        public void AddOrUpdate(params T[] entities)
+        {
+            foreach (T entity in entities)
+            {
+                AddOrUpdate(entity);
+            }
+        }
+
+        public void AddOrUpdate(T entity)
         {
             using (ITransaction t = session.BeginTransaction())
             {
@@ -70,6 +83,24 @@ namespace Review_Site.Data
             using (ITransaction t = session.BeginTransaction())
             {
                 session.Delete(entity);
+                t.Commit();
+            }
+        }
+
+
+        public void Update(params T[] entities)
+        {
+            foreach (T entity in entities)
+            {
+                Update(entity);
+            }
+        }
+
+        public void Update(T entity)
+        {
+            using (ITransaction t = session.BeginTransaction())
+            {
+                session.Update(entity);
                 t.Commit();
             }
         }

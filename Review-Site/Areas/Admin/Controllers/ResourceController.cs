@@ -17,37 +17,28 @@ namespace Review_Site.Areas.Admin.Controllers
     public class ResourceController : Controller
     {
         private DataContext db = new DataContext();
-
-        //
-        // GET: /Admin/Resource/
-
+        #region Browse and Details
         [Restrict(Identifier = "Admin.Resource.Index")]
         public ViewResult Index()
         {
             return View(db.Resources.Get().OrderBy(x => x.Title).ToList());
         }
 
-        //
-        // GET: /Admin/Resource/Details/5
         [Restrict(Identifier = "Admin.Resource.Index")]
         public ViewResult Details(Guid id)
         {
             Resource resource = db.Resources.Get(id);
             return View(resource);
         }
+        #endregion
 
-        //
-        // GET: /Admin/Resource/Create
-
+        #region Upload
         [Restrict(Identifier = "Admin.Resource.Upload")]
         public ActionResult Upload()
         {
             ViewBag.SourceTextColorID = new SelectList(db.Colors.Get(), "ID", "Name");
             return View();
-        } 
-
-        //
-        // POST: /Admin/Resource/Create
+        }
 
         [HttpPost]
         [Restrict(Identifier = "Admin.Resource.Upload")]
@@ -77,88 +68,14 @@ namespace Review_Site.Areas.Admin.Controllers
             {
                 var path = Path.Combine(Server.MapPath("~/ResourceUploads"), fileName);
                 file.SaveAs(path);
-                db.Resources.SaveOrUpdate(resource);
+                db.Resources.AddOrUpdate(resource);
                 return RedirectToAction("Index");  
             }
 
             ViewBag.SourceTextColorID = new SelectList(db.Colors.Get(), "ID", "Name");
             return View(resource);
         }
-        
-        //
-        // GET: /Admin/Resource/Edit/5
 
-        [Restrict(Identifier = "Admin.Resource.Edit")]
-        public ActionResult Edit(Guid id)
-        {
-            Resource resource = db.Resources.Single(r => r.ID == id);
-            ViewBag.SourceTextColorID = new SelectList(db.Colors.Get(), "ID", "Name", resource.SourceTextColorID);
-            return View(resource);
-        }
-
-        //
-        // POST: /Admin/Resource/Edit/5
-
-        [HttpPost]
-        [Restrict(Identifier = "Admin.Resource.Edit")]
-        public ActionResult Edit(Resource resource)
-        {
-            if (ModelState.IsValid)
-            {
-                if (db.Resources.Any(x => x.Title == resource.Title && x.ID != resource.ID))
-                {
-                    ModelState.AddModelError("Title", "A Resource with that Title already exists.");
-                    ViewBag.SourceTextColorID = new SelectList(db.Colors.Get(), "ID", "Name", resource.SourceTextColorID);
-                    return View(resource);
-                }
-                resource.LastModified = DateTime.Now;
-                db.Resources.SaveOrUpdate(resource);
-                return RedirectToAction("Index");
-            }
-            ViewBag.SourceTextColorID = new SelectList(db.Colors.Get(), "ID", "Name", resource.SourceTextColorID);
-            return View(resource);
-        }
-
-        //
-        // GET: /Admin/Resource/Delete/5
-        // This is confirmed in a JS modal in the webadmin
-
-        [Restrict(Identifier = "Admin.Resource.Delete")]
-        public ActionResult Delete(Guid id)
-        {
-            Resource resource = db.Resources.Single(r => r.ID == id);
-            var path = Path.Combine(Server.MapPath("~/ResourceUploads"), resource.ID.ToString());
-            if(System.IO.File.Exists(path)) System.IO.File.Delete(path);
-            db.Resources.Delete(resource);
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-        }
-
-        //
-        // GET: /Admin/Resource/MiniBrowser
-
-        [Restrict(Identifier = "Admin.Resource.Index")]
-        public ActionResult MiniBrowser(string filter)
-        {
-            List<Resource> result;
-            if (!String.IsNullOrEmpty(filter)) result = db.Resources.Get().Where(x => x.Type.StartsWith(filter)).ToList();
-            else result = db.Resources.Get().OrderBy(x => x.Title).ToList();
-
-            return View(result);
-        }
-
-        [Restrict(Identifier = "Admin.Resource.Index")]
-        public ActionResult CKEditorBrowser()
-        {
-            ViewBag.CKEditor = true;
-            return View("MiniBrowser", db.Resources.Get().ToList());
-        }
-
-        // MiniUpload
         [Restrict(Identifier = "Admin.Resource.Upload")]
         public ActionResult MiniUpload()
         {
@@ -187,12 +104,85 @@ namespace Review_Site.Areas.Admin.Controllers
             {
                 var path = Path.Combine(Server.MapPath("~/ResourceUploads"), fileName);
                 file.SaveAs(path);
-                db.Resources.SaveOrUpdate(resource);
+                db.Resources.AddOrUpdate(resource);
                 return RedirectToAction("MiniBrowser");
             }
 
             return View(resource);
         }
+
+        #endregion
+
+        #region Edit
+
+        //
+        // GET: /Admin/Resource/Edit/5
+
+        [Restrict(Identifier = "Admin.Resource.Edit")]
+        public ActionResult Edit(Guid id)
+        {
+            Resource resource = db.Resources.Single(r => r.ID == id);
+            ViewBag.SourceTextColorID = new SelectList(db.Colors.Get(), "ID", "Name", resource.SourceTextColorID);
+            return View(resource);
+        }
+
+        //
+        // POST: /Admin/Resource/Edit/5
+
+        [HttpPost]
+        [Restrict(Identifier = "Admin.Resource.Edit")]
+        public ActionResult Edit(Resource resource)
+        {
+            if (ModelState.IsValid)
+            {
+                if (db.Resources.Any(x => x.Title == resource.Title && x.ID != resource.ID))
+                {
+                    ModelState.AddModelError("Title", "A Resource with that Title already exists.");
+                    ViewBag.SourceTextColorID = new SelectList(db.Colors.Get(), "ID", "Name", resource.SourceTextColorID);
+                    return View(resource);
+                }
+                resource.LastModified = DateTime.Now;
+                db.Resources.AddOrUpdate(resource);
+                return RedirectToAction("Index");
+            }
+            ViewBag.SourceTextColorID = new SelectList(db.Colors.Get(), "ID", "Name", resource.SourceTextColorID);
+            return View(resource);
+        }
+        #endregion
+
+        #region Delete
+        // This is confirmed in a JS modal in the webadmin
+        [Restrict(Identifier = "Admin.Resource.Delete")]
+        public ActionResult Delete(Guid id)
+        {
+            Resource resource = db.Resources.Single(r => r.ID == id);
+            var path = Path.Combine(Server.MapPath("~/ResourceUploads"), resource.ID.ToString());
+            if(System.IO.File.Exists(path)) System.IO.File.Delete(path);
+            db.Resources.Delete(resource);
+            return RedirectToAction("Index");
+        }
+        #endregion
+
+        #region Other Browsers
+        [Restrict(Identifier = "Admin.Resource.Index")]
+        public ActionResult MiniBrowser(string filter)
+        {
+            List<Resource> result;
+            if (!String.IsNullOrEmpty(filter)) result = db.Resources.Get().Where(x => x.Type.StartsWith(filter)).ToList();
+            else result = db.Resources.Get().OrderBy(x => x.Title).ToList();
+
+            return View(result);
+        }
+
+        [Restrict(Identifier = "Admin.Resource.Index")]
+        public ActionResult CKEditorBrowser()
+        {
+            ViewBag.CKEditor = true;
+            return View("MiniBrowser", db.Resources.Get().ToList());
+        }
+        #endregion
+
+        #region Crop
         [Restrict(Identifier = "Admin.Resource.Crop")]
         public ActionResult Crop(Guid id)
         {
@@ -262,8 +252,14 @@ namespace Review_Site.Areas.Admin.Controllers
             string newImagePath = Path.Combine(Server.MapPath("~/ResourceUploads"), newResource.ID.ToString());
 
             image.Save(newImagePath, null, false);
-            db.Resources.SaveOrUpdate(newResource);
+            db.Resources.AddOrUpdate(newResource);
             return View("_CloseAndRefreshParent");
+        }
+        #endregion
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
         }
     }
 }

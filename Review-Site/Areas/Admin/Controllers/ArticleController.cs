@@ -16,8 +16,7 @@ namespace Review_Site.Areas.Admin.Controllers
     {
         private DataContext db = new DataContext();
 
-        //
-        // GET: /Admin/Article/
+        #region Browsers and Details
 
         [Restrict(Identifier = "Admin.Article.Index")]
         public ViewResult Index()
@@ -26,26 +25,21 @@ namespace Review_Site.Areas.Admin.Controllers
             return View(articles.OrderBy(x => x.Title).ToList());
         }
 
-        //
-        // GET: /Admin/Article/MiniBrowser
-
         [Restrict(Identifier = "Admin.Article.Index")]
         public ActionResult MiniBrowser()
         {
             return View(db.Articles.Get().ToList());
         }
 
-        //
-        // GET: /Admin/Article/Details/5
         [Restrict(Identifier = "Admin.Article.Index")]
         public ViewResult Details(Guid id)
         {
             Article article = db.Articles.Get(id);
             return View(article);
         }
+        #endregion
 
-        //
-        // GET: /Admin/Article/Create
+        #region Create
         [Restrict(Identifier = "Admin.Article.Create")]
         public ActionResult Create()
         {
@@ -53,9 +47,6 @@ namespace Review_Site.Areas.Admin.Controllers
             ViewBag.TagList = db.Tags.Get().Select(x => x.Name).ToList();
             return View();
         }
-
-        //
-        // POST: /Admin/Article/Create
 
         [HttpPost]
         [Restrict(Identifier = "Admin.Article.Create")]
@@ -75,7 +66,7 @@ namespace Review_Site.Areas.Admin.Controllers
                                       ID = Guid.NewGuid(),
                                       Name = s
                                   };
-                    db.Tags.SaveOrUpdate(tag);
+                    db.Tags.AddOrUpdate(tag);
                     article.Tags.Add(tag);
                 }
             }
@@ -94,7 +85,7 @@ namespace Review_Site.Areas.Admin.Controllers
                 article.LastModified = currentTime;
                 article.Created = currentTime;
                 article.AuthorID = SiteAuthentication.GetUserCookie().ID;
-                db.Articles.SaveOrUpdate(article);
+                db.Articles.AddOrUpdate(article);
 
                 LuceneSearch.AddUpdate(article);
 
@@ -105,10 +96,9 @@ namespace Review_Site.Areas.Admin.Controllers
             ViewBag.TagList = db.Tags.Get().Select(x => x.Name).ToList();
             return View(article);
         }
+        #endregion
 
-        //
-        // GET: /Admin/Article/Edit/5
-
+        #region Edit
         [Restrict(Identifier = "Admin.Article.Edit")]
         public ActionResult Edit(Guid id)
         {
@@ -118,9 +108,6 @@ namespace Review_Site.Areas.Admin.Controllers
             ViewBag.TagList = db.Tags.Get().Select(x => x.Name).ToList();
             return View(article);
         }
-
-        //
-        // POST: /Admin/Article/Edit/5
 
         [HttpPost]
         [Restrict(Identifier = "Admin.Article.Edit")]
@@ -156,7 +143,7 @@ namespace Review_Site.Areas.Admin.Controllers
                     }
                 }
                 article.LastModified = DateTime.Now;
-                db.Articles.SaveOrUpdate(article);
+                db.Articles.AddOrUpdate(article);
                 LuceneSearch.AddUpdate(article);
 
                 return RedirectToAction("Index");
@@ -166,9 +153,9 @@ namespace Review_Site.Areas.Admin.Controllers
             ViewBag.TagList = db.Tags.Get().Select(x => x.Name).ToList();
             return View(article);
         }
+        #endregion
 
-        //
-        // GET: /Admin/Article/Delete/5
+        #region Delete
         [Restrict(Identifier = "Admin.Article.Delete")]
         public ActionResult Delete(Guid id)
         {
@@ -190,9 +177,11 @@ namespace Review_Site.Areas.Admin.Controllers
 
             return RedirectToAction("Index");
         }
+        #endregion
 
         protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
         }
     }
 }

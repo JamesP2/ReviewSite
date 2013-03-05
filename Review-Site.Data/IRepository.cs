@@ -17,8 +17,14 @@ namespace Review_Site.Data
         T Get(Guid id);
         T Single(Expression<Func<T, bool>> predicate);
 
-        void SaveOrUpdate(params T[] entities);
-        void SaveOrUpdate(T entity);
+        void Add(params T[] entities);
+        void Add(T entity);
+
+        void AddOrUpdate(params T[] entities);
+        void AddOrUpdate(T entity);
+
+        void Update(params T[] entities);
+        void Update(T entity);
     }
     public interface IRepository
     {

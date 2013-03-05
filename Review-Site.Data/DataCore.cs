@@ -56,21 +56,21 @@ namespace Review_Site.Data
         {
             DataContext db = new DataContext();
 
-            db.Colors.SaveOrUpdate(new Color { ID = Guid.Parse("85a540a7-2de7-4812-b8fe-0698bb62ae06"), Name = "Light Green", Value = "8AA359" });
-            db.Colors.SaveOrUpdate(new Color { ID = Guid.Parse("e5475bc5-5aa8-4116-bfdd-0749dff93bfb"), Name = "Purple", Value = "9900FF" });
-            db.Colors.SaveOrUpdate(new Color { ID = Guid.Parse("01ad4b4b-fd0d-496c-85d3-0b3d4b577780"), Name = "Blue", Value = "0B76C2" });
-            db.Colors.SaveOrUpdate(new Color { ID = Guid.Parse("5697e61f-aa6c-49c1-8dbc-10003ccc43ef"), Name = "Light Orange", Value = "F3B32B" });
-            db.Colors.SaveOrUpdate(new Color { ID = Guid.Parse("f6945f5b-4cbd-4b0d-b21c-158d7140eb84"), Name = "Light Red", Value = "FF5250" });
-            db.Colors.SaveOrUpdate(new Color { ID = Guid.Parse("d026fd65-9b7f-4fc4-b844-1afa97f85c09"), Name = "Pink", Value = "FF36FF" });
-            db.Colors.SaveOrUpdate(new Color { ID = Guid.Parse("1aebb28b-0b46-4839-862b-29bec947f592"), Name = "Light Blue", Value = "1582B3" });
-            db.Colors.SaveOrUpdate(new Color { ID = Guid.Parse("fe0bc322-4c83-4463-866d-35b2ba63ec08"), Name = "Light Brown", Value = "DA9349" });
-            db.Colors.SaveOrUpdate(new Color { ID = Guid.Parse("8ba75eed-27d4-4c9e-af33-40bce4a785e6"), Name = "Grey", Value = "858786" });
-            db.Colors.SaveOrUpdate(new Color { ID = Guid.Parse("c4997c1e-b9fc-4642-81bb-4319618104aa"), Name = "Black", Value = "000000" });
-            db.Colors.SaveOrUpdate(new Color { ID = Guid.Parse("54b074d0-42c8-41f2-9d54-45fc194adf70"), Name = "White", Value = "FFFFFF" });
+            db.Colors.AddOrUpdate(new Color { ID = Guid.Parse("85a540a7-2de7-4812-b8fe-0698bb62ae06"), Name = "Light Green", Value = "8AA359" });
+            db.Colors.AddOrUpdate(new Color { ID = Guid.Parse("e5475bc5-5aa8-4116-bfdd-0749dff93bfb"), Name = "Purple", Value = "9900FF" });
+            db.Colors.AddOrUpdate(new Color { ID = Guid.Parse("01ad4b4b-fd0d-496c-85d3-0b3d4b577780"), Name = "Blue", Value = "0B76C2" });
+            db.Colors.AddOrUpdate(new Color { ID = Guid.Parse("5697e61f-aa6c-49c1-8dbc-10003ccc43ef"), Name = "Light Orange", Value = "F3B32B" });
+            db.Colors.AddOrUpdate(new Color { ID = Guid.Parse("f6945f5b-4cbd-4b0d-b21c-158d7140eb84"), Name = "Light Red", Value = "FF5250" });
+            db.Colors.AddOrUpdate(new Color { ID = Guid.Parse("d026fd65-9b7f-4fc4-b844-1afa97f85c09"), Name = "Pink", Value = "FF36FF" });
+            db.Colors.AddOrUpdate(new Color { ID = Guid.Parse("1aebb28b-0b46-4839-862b-29bec947f592"), Name = "Light Blue", Value = "1582B3" });
+            db.Colors.AddOrUpdate(new Color { ID = Guid.Parse("fe0bc322-4c83-4463-866d-35b2ba63ec08"), Name = "Light Brown", Value = "DA9349" });
+            db.Colors.AddOrUpdate(new Color { ID = Guid.Parse("8ba75eed-27d4-4c9e-af33-40bce4a785e6"), Name = "Grey", Value = "858786" });
+            db.Colors.AddOrUpdate(new Color { ID = Guid.Parse("c4997c1e-b9fc-4642-81bb-4319618104aa"), Name = "Black", Value = "000000" });
+            db.Colors.AddOrUpdate(new Color { ID = Guid.Parse("54b074d0-42c8-41f2-9d54-45fc194adf70"), Name = "White", Value = "FFFFFF" });
 
             if (!db.Categories.Any(x => x.ID == new Guid("a323a95c-b475-4886-9f8d-006c2cc84c64")))
             {
-                db.Categories.SaveOrUpdate(new Category
+                db.Categories.AddOrUpdate(new Category
                     {
                         ID = Guid.Parse("a323a95c-b475-4886-9f8d-006c2cc84c64"),
                         Title = "Home",
@@ -81,7 +81,7 @@ namespace Review_Site.Data
                     }
                 );
 
-                db.Permissions.SaveOrUpdate(new Permission[]{
+                db.Permissions.AddOrUpdate(new Permission[]{
                 new Permission{
                     ID = Guid.Parse("b7c48bc8-7674-4cae-b96e-327e9c50d920"),
                     Identifier = "Admin.Article.Index",
@@ -249,7 +249,7 @@ namespace Review_Site.Data
                 }
             }
 
-            db.Roles.SaveOrUpdate(globalAdmin);
+            db.Roles.AddOrUpdate(globalAdmin);
 
             foreach (Permission permission in GetPermissionCollection("Admin.Article", db).Union(GetPermissionCollection("Admin.Resource", db)).ToList())
             {
@@ -259,11 +259,11 @@ namespace Review_Site.Data
                 }
             }
 
-            db.Roles.SaveOrUpdate(contentEditor);
+            db.Roles.AddOrUpdate(contentEditor);
 
             if (!db.Users.Any(x => x.ID == new Guid("4dd27ddf-995c-43cf-9867-43e4f9bee080")))
             {
-                db.Users.SaveOrUpdate(new User
+                db.Users.AddOrUpdate(new User
                 {
                     ID = Guid.Parse("4dd27ddf-995c-43cf-9867-43e4f9bee080"),
                     Username = "admin",
