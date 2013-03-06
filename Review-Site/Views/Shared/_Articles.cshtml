@@ -5,7 +5,7 @@
 {
             <div class="media">
                 <div class="dateBlock">
-                    <h1>@article.Created.Day</h1>
+                    <h1>@if (article.Created.Day < 10 ){<text>0</text>}@article.Created.Day</h1>
                     <h2>@article.Created.ToString("MMM").ToUpper()</h2>
                 </div>
                 <div class="media-body">
