@@ -78,18 +78,17 @@ namespace Review_Site
 
         protected void Application_Start()
         {
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(DataCore.Container));
+
             DataCore.MigrateDBToLatest(ConfigurationManager.ConnectionStrings["NHibernateConnection"].ConnectionString);
             DataCore.SeedBaseData();
             AreaRegistration.RegisterAllAreas();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(DataCore.Container));
         }
 
         protected void Application_EndRequest()
         {
-            NHProvider.DisposeSession();
             if (Context.Response.StatusCode == 404)
             {
                 Application_Error(new HttpException(404, Context.Response.StatusDescription));

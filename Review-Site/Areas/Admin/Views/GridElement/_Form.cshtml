@@ -20,36 +20,36 @@
         <div class="tab-content">
             <div class="tab-pane active" id="basic">
                 <div class="editor-label">
-                    @Html.LabelFor(model => model.GridID, "Parent Grid")
+                    @Html.LabelFor(model => model.Grid.ID, "Parent Grid")
                 </div>
                 <div class="editor-field">
-                    @Html.DropDownList("GridID", (SelectList)ViewBag.GridIDs, String.Empty)
-                    @Html.ValidationMessageFor(model => model.GridID)
+                    @Html.DropDownList("Grid.ID", (SelectList)ViewBag.GridIDs, String.Empty)
+                    @Html.ValidationMessageFor(model => model.Grid.ID, "You must choose a Grid to use.")
                 </div>
                 <div class="editor-label">
                     <p>Selected Article: <span id="selectedArticle">@((Model == null || Model.Article == null) ? "None" : Model.Article.Title)</span></p>
                     <a class="btn" href="#" onclick="openArticleSelector()">Select Article</a>
                 </div>
                 <div class="editor-field">
-                    @Html.HiddenFor(model => model.ArticleID)
-                    @Html.ValidationMessageFor(model => model.ArticleID, "You must select an article.")
+                    @Html.HiddenFor(model => model.Article.ID)
+                    @Html.ValidationMessageFor(model => model.Article.ID, "You must select an article.")
                 </div>
             </div>
             <div class="tab-pane" id="visual-styling">
                 <div class="editor-label">
-                    @Html.LabelFor(model => model.BorderColorID, "Border Colour")
+                    @Html.LabelFor(model => model.BorderColor.ID, "Border Colour")
                 </div>
                 <div class="editor-field">
-                    @Html.DropDownList("BorderColorID", (SelectList)ViewBag.BorderColorIDs)
-                    @Html.ValidationMessageFor(model => model.BorderColorID)
+                    @Html.DropDownList("BorderColor.ID", (SelectList)ViewBag.BorderColorIDs)
+                    @Html.ValidationMessageFor(model => model.BorderColor.ID, "You must pick a Colour!")
                 </div>
                 <div class="editor-label">
                     <p>Selected Image: <span id="selectedImage">@((Model == null || Model.Image == null || Model.Image.Title == null) ? "None" : Model.Image.Title)</span></p>
                     <a class="btn" href="#" onclick="openResourceSelector()">Select Image</a>
                 </div>
                 <div class="editor-field">
-                    @Html.HiddenFor(model => model.ImageID)
-                    @Html.ValidationMessageFor(model => model.ImageID, "You must select an image to use.")
+                    @Html.HiddenFor(model => model.Image.ID)
+                    @Html.ValidationMessageFor(model => model.Image.ID, "You must select an image to use.")
                 </div>
                 <div class="editor-label">
                     @Html.LabelFor(model => model.HeadingClass, "Heading Position")

@@ -62,7 +62,7 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             Category category = db.Categories.Single(c => c.ID == id);
             ViewBag.Colors = new SelectList(db.Colors.Get(), "ID", "Name", category.Color.ID);
-            ViewBag.Grids = new SelectList(GetGrids(), "Value", "Text", category.Grid == null ? (Guid?)null : category.Grid.ID);
+            ViewBag.Grids = new SelectList(GetGrids(), "Value", "Text", category.Grid == null ? Guid.Empty : category.Grid.ID);
             return View(category);
         }
 
@@ -84,7 +84,7 @@ namespace Review_Site.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.Colors = new SelectList(db.Colors.Get(), "ID", "Name", category.Color.ID);
-            ViewBag.Grids = new SelectList(GetGrids(), "Value", "Text", category.Grid == null ? (Guid?)null : category.Grid.ID);
+            ViewBag.Grids = new SelectList(GetGrids(), "Value", "Text", category.Grid == null ? Guid.Empty : category.Grid.ID);
             return View(category);
         }
         #endregion
@@ -106,7 +106,7 @@ namespace Review_Site.Areas.Admin.Controllers
         private IEnumerable<SelectListItem> GetGrids()
         {
             return
-                new List<SelectListItem> { new SelectListItem { Text = " -- None --", Value = null } }.Concat(
+                new List<SelectListItem> { new SelectListItem { Text = " -- None --", Value = Guid.Empty.ToString() } }.Concat(
                     db.Grids.Get().ToList().Select(x => new SelectListItem { Text = x.Name, Value = x.ID.ToString() }));
         }
 

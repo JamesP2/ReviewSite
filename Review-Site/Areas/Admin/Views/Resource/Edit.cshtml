@@ -17,7 +17,7 @@
         @Html.HiddenFor(model => model.ID)
         @Html.HiddenFor(model => model.Type)
         @Html.HiddenFor(model => model.DateAdded)
-        @Html.HiddenFor(model => model.CreatorID)
+        @Html.HiddenFor(model => model.Creator.ID)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Title)
@@ -35,11 +35,11 @@
             @Html.ValidationMessageFor(model => model.Source)
         </div>
         <div class="editor-label">
-            @Html.LabelFor(model => model.SourceTextColorID)
+            @Html.LabelFor(model => model.SourceTextColor)
         </div>
         <div class="editor-field">
-            @Html.DropDownList("SourceTextColorID")
-            @Html.ValidationMessageFor(model => model.SourceTextColorID)
+            @Html.DropDownList("SourceTextColor.ID", (SelectList)ViewBag.SourceTextColorID)
+            @Html.ValidationMessageFor(model => model.SourceTextColor.ID)
         </div>
 
         <p>

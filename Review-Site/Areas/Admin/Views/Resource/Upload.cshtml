@@ -29,8 +29,8 @@
             @Html.LabelFor(model => model.SourceTextColor)
         </div>
         <div class="editor-field">
-            @Html.DropDownList("SourceTextColorID")
-            @Html.ValidationMessageFor(model => model.SourceTextColorID)
+            @Html.DropDownList("SourceTextColor.ID", (SelectList)ViewBag.SourceTextColorID)
+            @Html.ValidationMessageFor(model => model.SourceTextColor.ID)
         </div>
         <div class="editor-label">
             Resource File (Maximum size 10MB)

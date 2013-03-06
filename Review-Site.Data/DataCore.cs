@@ -30,6 +30,7 @@ namespace Review_Site.Data
                     var builder = new ContainerBuilder();
                     builder.RegisterGeneric(typeof(NHRepository<>)).As(typeof(IRepository<>));
                     builder.RegisterType(typeof(DataContext));
+                    builder.RegisterType(typeof(NHSessionManager)).InstancePerHttpRequest();
                     builder.RegisterModelBinders(typeof(CategoryModelBinder).Assembly);
                     builder.RegisterModelBinderProvider();
                     container = builder.Build();

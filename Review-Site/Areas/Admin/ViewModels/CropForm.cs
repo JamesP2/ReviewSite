@@ -24,8 +24,6 @@ namespace Review_Site.Areas.Admin.Models
         public double x2 { get; set; }
         public double y2 { get; set; }
 
-        public string Source { get; set; }
-
-        
+        public string Source { get; set; }        
     }
 }

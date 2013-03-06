@@ -11,14 +11,6 @@ namespace Review_Site.Data.Models
     {
         [Key]
         public virtual Guid ID { get; set; }
-        [Required(ErrorMessage = "You must select a colour to use.")]
-        public virtual Guid BorderColorID { get; set; }
-        [Required(ErrorMessage = "You must select an article to reference.")]
-        public virtual Guid ArticleID { get; set; }
-        [Required(ErrorMessage = "You must associate this element with a grid.")]
-        public virtual Guid GridID { get; set; }
-        [Required(ErrorMessage="You must select an image to use.")]
-        public virtual Guid ImageID { get; set; }
         [Required]
         public virtual string SizeClass { get; set; }
         [Required]

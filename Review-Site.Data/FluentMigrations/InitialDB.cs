@@ -21,7 +21,7 @@ namespace Review_Site.Data.FluentMigrations
                 .WithColumn("ShortDescription").AsString(150)
                 .WithColumn("Text").AsString().NotNullable()
                 .WithColumn("Created").AsDateTime().NotNullable()
-                .WithColumn("LastModified").AsDateTime()
+                .WithColumn("LastModified").AsDateTime().Nullable()
                 .WithColumn("Author_id").AsString(40)
                 .WithColumn("Category_id").AsString(40);
 
@@ -30,7 +30,7 @@ namespace Review_Site.Data.FluentMigrations
                 .WithColumn("Title").AsString().NotNullable()
                 .WithColumn("IsSystemCategory").AsBoolean()
                 .WithColumn("Created").AsDateTime().NotNullable()
-                .WithColumn("LastModified").AsDateTime()
+                .WithColumn("LastModified").AsDateTime().Nullable()
                 .WithColumn("Grid_id").AsString(40).Nullable()
                 .WithColumn("Color_id").AsString(40);
 
@@ -45,7 +45,7 @@ namespace Review_Site.Data.FluentMigrations
                 .WithColumn("Alias").AsString().NotNullable()
                 .WithColumn("Description").AsString().NotNullable()
                 .WithColumn("Created").AsDateTime().NotNullable()
-                .WithColumn("LastModified").AsDateTime();
+                .WithColumn("LastModified").AsDateTime().Nullable();
 
             Create.Table("gridelement")
                 .WithColumn("ID").AsString(40).NotNullable().PrimaryKey()
@@ -56,7 +56,7 @@ namespace Review_Site.Data.FluentMigrations
                 .WithColumn("UseHeadingText").AsBoolean().NotNullable()
                 .WithColumn("InverseHeading").AsBoolean().NotNullable()
                 .WithColumn("Created").AsDateTime().NotNullable()
-                .WithColumn("LastModified").AsDateTime()
+                .WithColumn("LastModified").AsDateTime().Nullable()
                 .WithColumn("Article_id").AsString(40)
                 .WithColumn("BorderColor_id").AsString(40)
                 .WithColumn("Grid_id").AsString(40)
@@ -81,8 +81,9 @@ namespace Review_Site.Data.FluentMigrations
                 .WithColumn("ID").AsString(40).NotNullable().PrimaryKey()
                 .WithColumn("Title").AsString().NotNullable()
                 .WithColumn("Type").AsString().NotNullable()
+                .WithColumn("Source").AsString()
                 .WithColumn("Created").AsDateTime().NotNullable()
-                .WithColumn("LastModified").AsDateTime()
+                .WithColumn("LastModified").AsDateTime().Nullable()
                 .WithColumn("Creator_id").AsString(40)
                 .WithColumn("SourceTextColor_id").AsString(40);
 
@@ -110,7 +111,7 @@ namespace Review_Site.Data.FluentMigrations
                 .WithColumn("LastName").AsString().NotNullable()
                 .WithColumn("AuthWithAD").AsBoolean()
                 .WithColumn("Created").AsDateTime().NotNullable()
-                .WithColumn("LastModified").AsDateTime();
+                .WithColumn("LastModified").AsDateTime().Nullable();
         }
     }
 }

@@ -17,6 +17,8 @@ namespace Review_Site.Data.Models.Mappings
                 .Not.Nullable();
             Map(x => x.Type)
                 .Not.Nullable();
+            Map(x => x.Source)
+                .Nullable();
 
             Map(x => x.Created)
                 .Not.Nullable();

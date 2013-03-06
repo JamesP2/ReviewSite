@@ -13,9 +13,6 @@ namespace Review_Site.Data.Models
     {
         [Key]
         public virtual Guid ID { get; set; }
-        public virtual Guid CreatorID { get; set; }
-        [Display(Name = "Source Text Colour")]
-        public virtual Guid? SourceTextColorID { get; set; }
 
         [Required(ErrorMessage="You must name your Resource.")]
         public virtual string Title { get; set; }

@@ -75,7 +75,7 @@ namespace Review_Site.Areas.Admin.Controllers
                 if (db.Articles.Any(x => x.Title == article.Title))
                 {
                     ModelState.AddModelError("Title", "An Article already exists with that title.");
-                    ViewBag.CategoryID = new SelectList(db.Categories.Get(), "ID", "Title", article.CategoryID);
+                    ViewBag.CategoryID = new SelectList(db.Categories.Get(), "ID", "Title", article.Category == null ? (Guid?)null : article.Category.ID);
                     ViewBag.TagList = db.Tags.Get().Select(x => x.Name).ToList();
                     return View(article);
                 }
@@ -83,15 +83,15 @@ namespace Review_Site.Areas.Admin.Controllers
                 DateTime currentTime = DateTime.Now;
                 article.LastModified = currentTime;
                 article.Created = currentTime;
-                article.AuthorID = SiteAuthentication.GetUserCookie().ID;
-                db.Articles.AddOrUpdate(article);
+                article.Author = db.Users.Get(SiteAuthentication.GetUserCookie().ID);
+                db.Articles.Add(article);
 
                 LuceneSearch.AddUpdate(article);
 
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CategoryID = new SelectList(db.Categories.Get(), "ID", "Title", article.CategoryID);
+            ViewBag.CategoryID = new SelectList(db.Categories.Get(), "ID", "Title", article.Category == null ? (Guid?)null : article.Category.ID);
             ViewBag.TagList = db.Tags.Get().Select(x => x.Name).ToList();
             return View(article);
         }
@@ -102,8 +102,8 @@ namespace Review_Site.Areas.Admin.Controllers
         public ActionResult Edit(Guid id)
         {
             Article article = db.Articles.Single(a => a.ID == id);
-            ViewBag.CategoryID = new SelectList(db.Categories.Get(), "ID", "Title", article.CategoryID);
-            ViewBag.AuthorID = new SelectList(db.Users.Get(), "ID", "FullName", article.AuthorID);
+            ViewBag.CategoryID = new SelectList(db.Categories.Get(), "ID", "Title", article.Category == null ? (Guid?)null : article.Category.ID);
+            ViewBag.AuthorID = new SelectList(db.Users.Get(), "ID", "FullName", article.Author.ID);
             ViewBag.TagList = db.Tags.Get().Select(x => x.Name).ToList();
             return View(article);
         }
@@ -117,8 +117,8 @@ namespace Review_Site.Areas.Admin.Controllers
                 if (db.Articles.Any(x => x.Title == article.Title && x.ID != article.ID))
                 {
                     ModelState.AddModelError("Title", "Another Article exists with that title.");
-                    ViewBag.CategoryID = new SelectList(db.Categories.Get(), "ID", "Title", article.CategoryID);
-                    ViewBag.AuthorID = new SelectList(db.Users.Get(), "ID", "FullName", article.AuthorID);
+                    ViewBag.CategoryID = new SelectList(db.Categories.Get(), "ID", "Title", article.Category == null ? (Guid?)null : article.Category.ID);
+                    ViewBag.AuthorID = new SelectList(db.Users.Get(), "ID", "FullName", article.Author.ID);
                     ViewBag.TagList = db.Tags.Get().Select(x => x.Name).ToList();
                     return View(article);
                 }
@@ -142,13 +142,13 @@ namespace Review_Site.Areas.Admin.Controllers
                     }
                 }
                 article.LastModified = DateTime.Now;
-                db.Articles.AddOrUpdate(article);
+                db.Articles.Update(article);
                 LuceneSearch.AddUpdate(article);
 
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryID = new SelectList(db.Categories.Get(), "ID", "Title", article.CategoryID);
-            ViewBag.AuthorID = new SelectList(db.Users.Get(), "ID", "FullName", article.AuthorID);
+            ViewBag.CategoryID = new SelectList(db.Categories.Get(), "ID", "Title", article.Category == null ? (Guid?)null : article.Category.ID);
+            ViewBag.AuthorID = new SelectList(db.Users.Get(), "ID", "FullName", article.Author.ID);
             ViewBag.TagList = db.Tags.Get().Select(x => x.Name).ToList();
             return View(article);
         }

@@ -12,9 +12,6 @@ namespace Review_Site.Data.Models
     {
         [Key]
         public virtual Guid ID { get; set; }
-        [Required(ErrorMessage="You must select a Category!")]
-        public virtual Guid CategoryID { get; set; }
-        public virtual Guid AuthorID { get; set; }
 
         [Required(ErrorMessage="You must provide a title!")]
         public virtual string Title { get; set; }
@@ -30,6 +27,7 @@ namespace Review_Site.Data.Models
 
         public virtual User Author { get; set; }
         public virtual Category Category { get; set; }
+
         public virtual IList<Tag> Tags { get; set; }
 
         public Article()

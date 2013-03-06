@@ -14,11 +14,11 @@
     @Html.ValidationSummary(true)
     <fieldset>
         <div class="editor-label">
-            @Html.LabelFor(model => model.CategoryID, "Article Category")
+            @Html.LabelFor(model => model.Category.ID, "Article Category")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("CategoryID", String.Empty)
-            @Html.ValidationMessageFor(model => model.CategoryID)
+            @Html.DropDownList("Category.ID", (SelectList)ViewBag.CategoryID, String.Empty)
+            @Html.ValidationMessageFor(model => model.Category.ID, "You must select a Category.")
         </div>
 
         <div class="editor-label">

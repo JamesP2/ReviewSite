@@ -5,6 +5,8 @@ using System.Linq.Expressions;
 using System.Web;
 using NHibernate;
 using NHibernate.Linq;
+using Autofac;
+using System.Web.Mvc;
 
 namespace Review_Site.Data
 {
@@ -14,7 +16,8 @@ namespace Review_Site.Data
         
         public NHRepository()
         {
-            session = NHProvider.Session;
+            NHSessionManager manager = DependencyResolver.Current.GetService <NHSessionManager>();
+            session = manager.Session;
         }
 
         public NHRepository(ISession existingSession)

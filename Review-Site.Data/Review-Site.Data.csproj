@@ -100,6 +100,10 @@
   <ItemGroup>
     <Compile Include="MigrationProcessorOptions.cs" />
     <Compile Include="ModelBinders\CategoryModelBinder.cs" />
+    <Compile Include="ModelBinders\ArticleModelBinder.cs" />
+    <Compile Include="ModelBinders\GridElementBinder.cs" />
+    <Compile Include="ModelBinders\ResourceModelBinder.cs" />
+    <Compile Include="NHSessionManager.cs" />
     <Compile Include="Utility\DataAnnotations.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="DataCore.cs" />
@@ -136,9 +140,9 @@
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TagViewModel.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="NHProvider.cs" />
     <Compile Include="NHRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\ModelBinderUtility.cs" />
     <Compile Include="Utility\PasswordHashing.cs" />
     <Compile Include="Utility\PermissionManager.cs" />
   </ItemGroup>

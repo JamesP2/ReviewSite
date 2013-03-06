@@ -94,7 +94,7 @@ namespace Review_Site.Areas.Admin.Controllers
         [Restrict(Identifier = "Admin.User.Edit")]
         public ActionResult Edit(Guid id)
         {
-            User user = db.Users.Single(u => u.ID == id);
+            User user = db.Users.Get(id);
             ViewBag.RoleList = GetRoleList();
             return View(userToForm(user));
         }
@@ -105,14 +105,16 @@ namespace Review_Site.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = db.Users.Single(x => x.ID == form.ID);
+                User user = db.Users.Get(form.ID);
+                bool passChanged = false;
 
                 //Check for new passwords
-                if (form.Password != null && form.ConfirmedPassword != null)
+                if (!string.IsNullOrEmpty(form.Password))
                 {
-                    if (form.ConfirmedPassword.Equals(form.Password))
+                    if (!string.IsNullOrEmpty(form.ConfirmedPassword) && form.ConfirmedPassword.Equals(form.Password))
                     {
                         user.Password = PasswordHashing.GetHash(form.Password);
+                        passChanged = true;
                     }
                     else
                     {
@@ -120,6 +122,14 @@ namespace Review_Site.Areas.Admin.Controllers
                         ViewBag.RoleList = GetRoleList(); 
                         return View(form);
                     }
+                }
+
+                //If the password has not been changed and there is a value here, complain!!
+                if (!string.IsNullOrEmpty(form.ConfirmedPassword) && !passChanged)
+                {
+                    ModelState.AddModelError("ConfirmedPassword", "The new Passwords do not match.");
+                    ViewBag.RoleList = GetRoleList();
+                    return View(form);
                 }
 
                 if (form.SelectedRoleIds.Count == 0)

@@ -21,7 +21,7 @@ namespace Review_Site.Areas.Admin.Controllers
             if (id != null)
             {
                 if (!db.Grids.Any(x => x.ID == id)) return HttpNotFound();
-                gridelements = db.GridElements.Get().Where(x => x.GridID == id);
+                gridelements = db.GridElements.Get().Where(x => x.Grid.ID == id);
                 Grid grid = db.Grids.Get(id.Value);
                 ViewBag.GridName = grid.Name;
             }
@@ -62,10 +62,10 @@ namespace Review_Site.Areas.Admin.Controllers
                 db.GridElements.AddOrUpdate(gridelement);
                 return RedirectToAction("Index");
             }
-            ViewBag.BorderColorIDs = new SelectList(db.Colors.Get(), "ID", "Name", gridelement.BorderColorID);
-            ViewBag.GridIDs = new SelectList(db.Grids.Get(), "ID", "Name", gridelement.GridID);
+            ViewBag.BorderColorIDs = new SelectList(db.Colors.Get(), "ID", "Name", gridelement.BorderColor.ID);
+            ViewBag.GridIDs = new SelectList(db.Grids.Get(), "ID", "Name", gridelement.Grid.ID);
             populateFormViewBag(gridelement);
-            if(gridelement.ImageID != Guid.Empty) gridelement.Image = db.Resources.Single(x => x.ID == gridelement.ImageID);
+            if(gridelement.Image != null) gridelement.Image = db.Resources.Single(x => x.ID == gridelement.Image.ID);
             return View(gridelement);
         }
         #endregion
@@ -75,8 +75,8 @@ namespace Review_Site.Areas.Admin.Controllers
         public ActionResult Edit(Guid id)
         {
             GridElement gridelement = db.GridElements.Single(g => g.ID == id);
-            ViewBag.BorderColorIDs = new SelectList(db.Colors.Get(), "ID", "Name", gridelement.BorderColorID);
-            ViewBag.GridIDs = new SelectList(db.Grids.Get(), "ID", "Name", gridelement.GridID);
+            ViewBag.BorderColorIDs = new SelectList(db.Colors.Get(), "ID", "Name", gridelement.BorderColor.ID);
+            ViewBag.GridIDs = new SelectList(db.Grids.Get(), "ID", "Name", gridelement.Grid.ID);
             populateFormViewBag(gridelement);
             return View(gridelement);
         }
@@ -91,8 +91,8 @@ namespace Review_Site.Areas.Admin.Controllers
                 db.GridElements.AddOrUpdate(gridelement);
                 return RedirectToAction("Index");
             }
-            ViewBag.BorderColorIDs = new SelectList(db.Colors.Get(), "ID", "Name", gridelement.BorderColorID);
-            ViewBag.GridIDs = new SelectList(db.Grids.Get(), "ID", "Name", gridelement.GridID);
+            ViewBag.BorderColorIDs = new SelectList(db.Colors.Get(), "ID", "Name", gridelement.BorderColor.ID);
+            ViewBag.GridIDs = new SelectList(db.Grids.Get(), "ID", "Name", gridelement.Grid.ID);
             populateFormViewBag(gridelement);
             return View(gridelement);
         }
