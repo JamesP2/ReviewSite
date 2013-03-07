@@ -115,12 +115,12 @@
 
     function setArticle(id, title){
         $("#selectedArticle").html(title);
-        $("[name='ArticleID']").val(id);
+        $("[name='Article.ID']").val(id);
     }
 
     function setResource(id, title){
         $("#selectedImage").html(title);
-        $("[name='ImageID']").val(id);
+        $("[name='Image.ID']").val(id);
     }
 
     $("form").submit(function(){
