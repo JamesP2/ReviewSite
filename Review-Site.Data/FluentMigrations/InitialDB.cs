@@ -52,7 +52,7 @@ namespace Review_Site.Data.FluentMigrations
                 .WithColumn("SizeClass").AsString().NotNullable()
                 .WithColumn("Width").AsInt32().NotNullable()
                 .WithColumn("HeadingClass").AsString().NotNullable()
-                .WithColumn("HeadingText").AsString().NotNullable()
+                .WithColumn("HeadingText").AsString().Nullable()
                 .WithColumn("UseHeadingText").AsBoolean().NotNullable()
                 .WithColumn("InverseHeading").AsBoolean().NotNullable()
                 .WithColumn("Created").AsDateTime().NotNullable()

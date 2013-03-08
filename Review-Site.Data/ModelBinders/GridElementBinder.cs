@@ -30,7 +30,9 @@ namespace Review_Site.Data.ModelBinders
             element.Grid = element.Grid == null ? null : db.Grids.Get(element.Grid.ID);
             element.Image = element.Image == null ? null : db.Resources.Get(element.Image.ID);
             element.BorderColor = element.BorderColor == null ? null : db.Colors.Get(element.BorderColor.ID);
-            
+
+            ModelBinderUtility.RebuildModelState(controllerContext, bindingContext, element);
+
             return element;
         }
     }
