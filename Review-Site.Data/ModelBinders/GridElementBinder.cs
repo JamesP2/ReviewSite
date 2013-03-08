@@ -31,8 +31,15 @@ namespace Review_Site.Data.ModelBinders
             element.Image = element.Image == null ? null : db.Resources.Get(element.Image.ID);
             element.BorderColor = element.BorderColor == null ? null : db.Colors.Get(element.BorderColor.ID);
 
-            ModelBinderUtility.RebuildModelState(controllerContext, bindingContext, element);
-
+            ModelBinderUtility.ClearErrors(bindingContext, "Article.ID");
+            ModelBinderUtility.ClearErrors(bindingContext, "Article.Title");
+            ModelBinderUtility.ClearErrors(bindingContext, "Article.Text");
+            ModelBinderUtility.ClearErrors(bindingContext, "Grid.ID");
+            ModelBinderUtility.ClearErrors(bindingContext, "Grid.Name");
+            ModelBinderUtility.ClearErrors(bindingContext, "Grid.Alias");
+            ModelBinderUtility.ClearErrors(bindingContext, "Image.ID");
+            ModelBinderUtility.ClearErrors(bindingContext, "Image.Title");
+            
             return element;
         }
     }

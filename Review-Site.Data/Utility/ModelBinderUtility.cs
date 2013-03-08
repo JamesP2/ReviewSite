@@ -18,24 +18,5 @@ namespace Review_Site.Data.Utility
         {
             if (context.ModelState.ContainsKey(key)) context.ModelState[key].Errors.Clear();
         }
-
-        internal static void RebuildModelState(ControllerContext controllerContext, ModelBindingContext bindingContext, object model)
-        {
-            //bindingContext.ModelState.Clear();
-            foreach (string key in bindingContext.ModelState.Keys)
-            {
-                bindingContext.ModelState[key].Errors.Clear();
-            }
-            foreach (ModelMetadata property in bindingContext.PropertyMetadata.Values)
-            {
-                property.Model = bindingContext.ModelType.GetProperty(property.PropertyName).GetValue(model, null);
-
-                foreach (ModelValidator validator in property.GetValidators(controllerContext))
-                {
-                    foreach (ModelValidationResult result in validator.Validate(model)) 
-                        bindingContext.ModelState.AddModelError(property.PropertyName, result.Message);
-                }
-            }
-        }
     }
 }
