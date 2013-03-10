@@ -16,7 +16,7 @@ namespace Review_Site.Data
         
         public NHRepository()
         {
-            NHSessionManager manager = DependencyResolver.Current.GetService <NHSessionManager>();
+            NHSessionManager manager = DependencyResolver.Current.GetService<NHSessionManager>();
             session = manager.Session;
         }
 

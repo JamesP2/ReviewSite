@@ -190,7 +190,7 @@
     <Content Include="Areas\Admin\Views\Role\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Role\Index.cshtml" />
     <None Include="ConnectionStrings.config" />
-    <None Include="Properties\PublishProfiles\CentOS VM Ftp.pubxml" />
+    <None Include="Properties\PublishProfiles\testing.thewhsreview.co.uk.pubxml" />
     <Content Include="Content\Favicon.ico" />
     <Content Include="Scripts\ckeditor\.git" />
     <Content Include="Scripts\ckeditor\CHANGES.md" />
