@@ -713,5 +713,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SolutionDir).nuget\NuGet.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
 </Project>
