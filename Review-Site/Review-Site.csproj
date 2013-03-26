@@ -217,6 +217,7 @@
     <Content Include="Views\ContactUsMailer\_Layout.cshtml" />
     <Content Include="Views\ContactUsMailer\ThankYou.cshtml" />
     <Content Include="Views\ContactUsMailer\UserContact.cshtml" />
+    <None Include="Properties\PublishProfiles\thewhsreview.co.uk - Web Deploy.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Admin.css" />
