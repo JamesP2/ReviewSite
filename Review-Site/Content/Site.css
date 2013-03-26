@@ -1,4 +1,8 @@
-﻿.header h1
+﻿body {
+    padding-top: 60px;
+}
+
+.header h1
 {
     font-family: Rockwell;
     font-size: 90px;
@@ -16,7 +20,7 @@
     font-family: Garamond;
     display: inline;
     position: absolute;
-    top: 30px;
+    top: 90px;
 }
 
 .menu ul
