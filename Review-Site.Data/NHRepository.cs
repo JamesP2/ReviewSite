@@ -48,7 +48,7 @@ namespace Review_Site.Data
 
         public T Single(Expression<Func<T, bool>> predicate)
         {
-            return session.Query<T>().Single(predicate);
+            return Any(predicate) ? session.Query<T>().Single(predicate) : null;
         }
 
         public void Add(params T[] entities)

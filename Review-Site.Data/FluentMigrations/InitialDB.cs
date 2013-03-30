@@ -15,32 +15,36 @@ namespace Review_Site.Data.FluentMigrations
         public override void Up()
         {
             Create.Table("article")
-                .WithColumn("ID").AsString(40).NotNullable().PrimaryKey()
+                .WithColumn("ID").AsGuid().NotNullable().PrimaryKey()
                 .WithColumn("Issue").AsInt32()
-                .WithColumn("Title").AsString().NotNullable()
-                .WithColumn("ShortDescription").AsString(150)
-                .WithColumn("Text").AsString().NotNullable()
+                .WithColumn("Title").AsString(500).NotNullable()
+                .WithColumn("ShortDescription").AsString(150).Nullable()
+                .WithColumn("Text").AsString(int.MaxValue).NotNullable()
                 .WithColumn("Created").AsDateTime().NotNullable()
                 .WithColumn("LastModified").AsDateTime().Nullable()
-                .WithColumn("Author_id").AsString(40)
-                .WithColumn("Category_id").AsString(40);
+                .WithColumn("Author_id").AsGuid()
+                .WithColumn("Category_id").AsGuid();
+
+            Create.Table("articlestotags")
+                .WithColumn("Article_id").AsGuid().NotNullable()
+                .WithColumn("Tag_id").AsGuid().NotNullable();
 
             Create.Table("category")
-                .WithColumn("ID").AsString(40).NotNullable().PrimaryKey()
-                .WithColumn("Title").AsString().NotNullable()
+                .WithColumn("ID").AsGuid().NotNullable().PrimaryKey()
+                .WithColumn("Title").AsString(500).NotNullable()
                 .WithColumn("IsSystemCategory").AsBoolean()
                 .WithColumn("Created").AsDateTime().NotNullable()
                 .WithColumn("LastModified").AsDateTime().Nullable()
-                .WithColumn("Grid_id").AsString(40).Nullable()
-                .WithColumn("Color_id").AsString(40);
+                .WithColumn("Grid_id").AsGuid().Nullable()
+                .WithColumn("Color_id").AsGuid();
 
             Create.Table("color")
-                .WithColumn("ID").AsString(40).NotNullable().PrimaryKey()
+                .WithColumn("ID").AsGuid().NotNullable().PrimaryKey()
                 .WithColumn("Name").AsString(100).NotNullable()
                 .WithColumn("Value").AsString(6).NotNullable();
 
             Create.Table("grid")
-                .WithColumn("ID").AsString(40).NotNullable().PrimaryKey()
+                .WithColumn("ID").AsGuid().NotNullable().PrimaryKey()
                 .WithColumn("Name").AsString().NotNullable()
                 .WithColumn("Alias").AsString().NotNullable()
                 .WithColumn("Description").AsString().NotNullable()
@@ -48,7 +52,7 @@ namespace Review_Site.Data.FluentMigrations
                 .WithColumn("LastModified").AsDateTime().Nullable();
 
             Create.Table("gridelement")
-                .WithColumn("ID").AsString(40).NotNullable().PrimaryKey()
+                .WithColumn("ID").AsGuid().NotNullable().PrimaryKey()
                 .WithColumn("SizeClass").AsString().NotNullable()
                 .WithColumn("Width").AsInt32().NotNullable()
                 .WithColumn("HeadingClass").AsString().NotNullable()
@@ -57,54 +61,50 @@ namespace Review_Site.Data.FluentMigrations
                 .WithColumn("InverseHeading").AsBoolean().NotNullable()
                 .WithColumn("Created").AsDateTime().NotNullable()
                 .WithColumn("LastModified").AsDateTime().Nullable()
-                .WithColumn("Article_id").AsString(40)
-                .WithColumn("BorderColor_id").AsString(40)
-                .WithColumn("Grid_id").AsString(40)
-                .WithColumn("Image_id").AsString(40);
+                .WithColumn("Article_id").AsGuid()
+                .WithColumn("BorderColor_id").AsGuid()
+                .WithColumn("Grid_id").AsGuid()
+                .WithColumn("Image_id").AsGuid();
 
             Create.Table("pagehit")
-                .WithColumn("ID").AsString(40).NotNullable().PrimaryKey()
-                .WithColumn("Target").AsString().NotNullable()
+                .WithColumn("ID").AsGuid().NotNullable().PrimaryKey()
+                .WithColumn("Target").AsGuid().NotNullable()
                 .WithColumn("Time").AsDateTime().NotNullable()
                 .WithColumn("ClientAddress").AsString();
 
             Create.Table("permission")
-                .WithColumn("ID").AsString(40).NotNullable().PrimaryKey()
+                .WithColumn("ID").AsGuid().NotNullable().PrimaryKey()
                 .WithColumn("Name").AsString().NotNullable()
                 .WithColumn("Identifier").AsString().NotNullable();
 
             Create.Table("permissionstoroles")
-                .WithColumn("Permission_id").AsString(40).NotNullable()
-                .WithColumn("Role_id").AsString(40).NotNullable();
+                .WithColumn("Permission_id").AsGuid().NotNullable()
+                .WithColumn("Role_id").AsGuid().NotNullable();
 
             Create.Table("resource")
-                .WithColumn("ID").AsString(40).NotNullable().PrimaryKey()
-                .WithColumn("Title").AsString().NotNullable()
+                .WithColumn("ID").AsGuid().NotNullable().PrimaryKey()
+                .WithColumn("Title").AsString(500).NotNullable()
                 .WithColumn("Type").AsString().NotNullable()
-                .WithColumn("Source").AsString()
+                .WithColumn("Source").AsString(500).Nullable()
                 .WithColumn("Created").AsDateTime().NotNullable()
                 .WithColumn("LastModified").AsDateTime().Nullable()
-                .WithColumn("Creator_id").AsString(40)
-                .WithColumn("SourceTextColor_id").AsString(40);
+                .WithColumn("Creator_id").AsGuid()
+                .WithColumn("SourceTextColor_id").AsGuid();
 
             Create.Table("role")
-                .WithColumn("ID").AsString(40).NotNullable().PrimaryKey()
+                .WithColumn("ID").AsGuid().NotNullable().PrimaryKey()
                 .WithColumn("Name").AsString().NotNullable();
 
             Create.Table("rolestoassignedusers")
-                .WithColumn("Role_id").AsString(40).NotNullable()
-                .WithColumn("User_id").AsString(40).NotNullable();
+                .WithColumn("Role_id").AsGuid().NotNullable()
+                .WithColumn("User_id").AsGuid().NotNullable();
 
             Create.Table("tag")
-                .WithColumn("ID").AsString(40).NotNullable().PrimaryKey()
+                .WithColumn("ID").AsGuid().NotNullable().PrimaryKey()
                 .WithColumn("Name").AsString().NotNullable();
 
-            Create.Table("tagtoarticle")
-                .WithColumn("Article_id").AsString(40).NotNullable()
-                .WithColumn("Tag_id").AsString(40).NotNullable();
-
             Create.Table("user")
-                .WithColumn("ID").AsString(40).NotNullable().PrimaryKey()
+                .WithColumn("ID").AsGuid().NotNullable().PrimaryKey()
                 .WithColumn("Username").AsString().NotNullable()
                 .WithColumn("Password").AsBinary(32).NotNullable()
                 .WithColumn("FirstName").AsString().NotNullable()

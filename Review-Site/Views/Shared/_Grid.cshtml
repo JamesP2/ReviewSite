@@ -32,12 +32,12 @@
         }
         @:<div class="gridsquare @square.SizeClass span@(square.Width)" style="border-color: #@(String.IsNullOrEmpty(square.BorderColor.Value) ? "CCCCCC" : square.BorderColor.Value)">
             @:<div class="overlay @square.HeadingClass @(square.InverseHeading ? "inverse" : "")">
-                @:<a href="@Url.Action("GetArticle", new { controller="Core", area="", id=square.ArticleID })">
+                @:<a href="@Url.Action("GetArticle", new { controller="Core", area="", id=square.Article.ID })">
                     @:<h1>@(square.UseHeadingText ? square.HeadingText : square.Article.Title)</h1>
                 @:</a>
             @:</div>
-            @:<a href="@Url.Action("GetArticle", new { controller="Core", area="", id=square.ArticleID })">
-                @:<img alt="Grid Image @square.Image.Title" src="@Url.Action("GetResource", new { controller="Core", area="", id=square.ImageID, width = width, height = height, noSource = true })"/>
+            @:<a href="@Url.Action("GetArticle", new { controller="Core", area="", id=square.Article.ID })">
+                @:<img alt="Grid Image @square.Image.Title" src="@Url.Action("GetResource", new { controller="Core", area="", id=square.Image.ID, width = width, height = height, noSource = true })"/>
             @:</a>
         @:</div>
         //Append this square's width to the currently used up width of this row.

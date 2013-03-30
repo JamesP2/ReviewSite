@@ -34,6 +34,13 @@ namespace Review_Site
                 new { controller = "Core", action = "GetResource" }
             );
 
+            //Older links need this to stay alive.
+            routes.MapRoute(
+                "OldResourceCompatability",
+                "Home/GetResource/{id}",
+                new { controller = "Core", action = "GetResource" }
+            );
+
             routes.MapRoute(
                 "GetArticle",
                 "Article/{id}",
@@ -80,7 +87,7 @@ namespace Review_Site
         {
             DependencyResolver.SetResolver(new AutofacDependencyResolver(DataCore.Container));
 
-            DataCore.MigrateDBToLatest(ConfigurationManager.ConnectionStrings["NHibernateConnection"].ConnectionString);
+            DataCore.MigrateDBToLatest(ConfigurationManager.ConnectionStrings["SiteConnection"]);
             DataCore.SeedBaseData();
             AreaRegistration.RegisterAllAreas();
             RegisterGlobalFilters(GlobalFilters.Filters);

@@ -15,6 +15,7 @@ using FluentMigrator.Runner.Initialization;
 using Review_Site.Data.Models;
 using Review_Site.Data.Utility;
 using Review_Site.Data.ModelBinders;
+using FluentMigrator.Runner.Processors;
 
 namespace Review_Site.Data
 {
@@ -39,20 +40,31 @@ namespace Review_Site.Data
             }
         }
 
-        public static void MigrateDBToLatest(string connectionString)
+        public static void MigrateDBToLatest(ConnectionStringSettings connectionString)
         {
             var announcer = new TextWriterAnnouncer(s => System.Diagnostics.Debug.WriteLine(s));
 
             var migrationContext = new RunnerContext(announcer);
             migrationContext.Namespace = "Review_Site.Data.FluentMigrations";
 
-            var factory = new FluentMigrator.Runner.Processors.MySql.MySqlProcessorFactory();
+            MigrationProcessorFactory factory = null;
+
+            switch (connectionString.ProviderName)
+            {
+                case "System.Data.SqlClient":
+                    factory = new FluentMigrator.Runner.Processors.SqlServer.SqlServer2008ProcessorFactory();
+                    break;
+                case "MySql.Data.MySqlClient":
+                    factory = new FluentMigrator.Runner.Processors.MySql.MySqlProcessorFactory();
+                    break;
+            }
+            
             var options = new MigrationProcessorOptions
             {
                 PreviewOnly = false,
                 Timeout = 60
             };
-            var processor = factory.Create(connectionString, announcer, options);
+            var processor = factory.Create(connectionString.ConnectionString, announcer, options);
             var runner = new MigrationRunner(Assembly.GetExecutingAssembly(), migrationContext, processor);
             runner.MigrateUp(true);
         }

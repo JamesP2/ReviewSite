@@ -16,7 +16,7 @@ namespace Review_Site.Data.Models.Mappings
             Map(x => x.Name)
                 .Not.Nullable();
 
-            HasMany(x => x.Articles);
+            HasManyToMany(x => x.Articles);
         }
     }
 }
