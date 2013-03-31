@@ -74,7 +74,7 @@
         <hr />
         <footer>
             <div class="pull-right footerRightText">
-            <p><a href="mailto:thewhsreview@gmail.com">Contact Us</a></p>
+            <p><a href="@Url.Action("Contact", "Core", new { area="" })">Contact Us</a></p>
             @{
                 if (User.Identity.IsAuthenticated)
                 {

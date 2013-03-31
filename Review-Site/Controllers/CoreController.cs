@@ -9,6 +9,7 @@ using Review_Site.Core;
 using Review_Site.Data;
 using Microsoft.Web.Helpers;
 using Review_Site.Mailers;
+using System.Configuration;
 
 namespace Review_Site.Controllers
 {
@@ -217,7 +218,7 @@ namespace Review_Site.Controllers
             if (form.ClientAddress == null || form.ClientAddress.ToLower() == "unknown")
                 form.ClientAddress = Request.ServerVariables["REMOTE_ADDR"];
 
-            if (!ReCaptcha.Validate(privateKey: "KEYHERE"))
+            if (!ReCaptcha.Validate(privateKey: ConfigurationManager.AppSettings["ReCaptcha-PrivateKey"]))
             {
                 ModelState.AddModelError("", "One or more words entered in the Captcha Challenge were incorrect.");
             }
@@ -227,10 +228,10 @@ namespace Review_Site.Controllers
             IContactUsMailer mailer = new ContactUsMailer();
 
             //Email them with thanks
-            mailer.ThankYou(form);
+            mailer.ThankYou(form).Send();
 
             //Send to the site team
-            mailer.UserContact(form);
+            mailer.UserContact(form).Send();
 
             return View("ContactThanks");
         }
