@@ -211,7 +211,6 @@
     <Content Include="Areas\Admin\Views\Role\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Role\Index.cshtml" />
     <Compile Include="Models\Feed\Feed.cs" />
-    <None Include="Properties\PublishProfiles\CentOS VM Ftp.pubxml" />
     <Content Include="Content\Favicon.ico" />
     <Content Include="Scripts\ckeditor\.git" />
     <Content Include="Scripts\ckeditor\CHANGES.md" />
@@ -682,12 +681,13 @@
     <Content Include="Views\Core\GetCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\PublishProfiles\JPONE.pubxml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Migrations\201310131920237_CreateDatabase.resx">
       <DependentUpon>201310131920237_CreateDatabase.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\jp2.me.uk.pubxml" />
+    <None Include="Properties\PublishProfiles\JPONE.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
