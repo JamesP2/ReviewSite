@@ -10,8 +10,5 @@
   <add key="site-title" value="theREVIEW"/>
   <add key="meta-keywords" value="William Howard, William Howard School, Sixth Form, William Howard Sixth Form, Student Publication, Newspaper, Magazine, thereview, The WHS Review, online articles, cumbria, academy, review"/>
   <add key="meta-description" value="A Sixth Form Publication produced by students from William Howard School"/>
-
-  <add key="ReCaptcha-PublicKey" value="6LeoJd8SAAAAAEUvlK0hPfIOrPmaVPP4kJtgAh6W"/>
-  <add key="ReCaptcha-PrivateKey" value="6LeoJd8SAAAAAIl1VdV3-NINazWEkul1qsin5CcY"/>
   <add key="contact-email" value="thewhsreview@gmail.com"/>
 </appSettings>

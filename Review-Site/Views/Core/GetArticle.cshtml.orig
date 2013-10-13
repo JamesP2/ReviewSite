@@ -22,13 +22,6 @@
             <div class="article-content">
                 @Html.Raw(Model.Text)
             </div>
-            <!-- AddThis Button BEGIN -->
-            <div class="addthis_toolbox addthis_default_style ">
-                <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-                <a class="addthis_button_tweet"></a>
-            </div>
-            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=xa-5156266e43e0e6ba"></script>
-            <!-- AddThis Button END -->
         </div>
     </div>
     <div class="span4">

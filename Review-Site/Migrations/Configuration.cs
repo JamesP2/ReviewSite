@@ -16,8 +16,6 @@ namespace Review_Site.Migrations
 
         public Configuration()
         {
-            //Uncomment below when updating a MySQL Database!
-            //SetSqlGenerator("MySql.Data.MySqlClient", new MySql.Data.Entity.MySqlMigrationSqlGenerator());
             AutomaticMigrationsEnabled = false;
         }
 

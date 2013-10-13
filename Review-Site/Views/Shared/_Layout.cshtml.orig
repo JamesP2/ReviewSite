@@ -30,17 +30,6 @@
     }
 </head>
 <body>
-    <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container">
-                <ul class="nav">
-                    <li><a href="@Url.Action("GetTag", "Core", new { area = "", id = "Edition-1" })">Edition 1</a></li>
-                    <li><a href="@Url.Action("GetTag", "Core", new { area = "", id = "Edition-2" })">Edition 2</a></li>
-                    <li><a href="@Url.Action("GetTag", "Core", new { area = "", id = "Edition-3" })">Edition 3</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
     <div class="container">
         <div class="row">
             <div class="span12 header"><a href="@Url.Action("Index", "Core", new { area = "" })"><h1><span style="color: #C4BC96;">the</span>REVIEW</h1><h2>| A Sixth Form Publication</h2></a></div>
@@ -74,7 +63,7 @@
         <hr />
         <footer>
             <div class="pull-right footerRightText">
-            <p><a href="@Url.Action("Contact", "Core", new { area="" })">Contact Us</a></p>
+            <p><a href="mailto:thewhsreview@gmail.com">Contact Us</a></p>
             @{
                 if (User.Identity.IsAuthenticated)
                 {

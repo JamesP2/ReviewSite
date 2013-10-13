@@ -9,7 +9,6 @@ using Review_Site.Core;
 using Review_Site.Core.Data;
 using Microsoft.Web.Helpers;
 using Review_Site.Mailers;
-using System.Configuration;
 
 namespace Review_Site.Controllers
 {
@@ -211,14 +210,14 @@ namespace Review_Site.Controllers
         {
 
             //From Stack Overflow 9726576
-            //Look for a proxy address first
+            // Look for a proxy address first
             form.ClientAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
 
             // If there is no proxy, get the standard remote address
             if (form.ClientAddress == null || form.ClientAddress.ToLower() == "unknown")
                 form.ClientAddress = Request.ServerVariables["REMOTE_ADDR"];
 
-            if (!ReCaptcha.Validate(privateKey: ConfigurationManager.AppSettings["ReCaptcha-PrivateKey"]))
+            if (!ReCaptcha.Validate(privateKey: "KEYHERE"))
             {
                 ModelState.AddModelError("", "One or more words entered in the Captcha Challenge were incorrect.");
             }
@@ -228,10 +227,10 @@ namespace Review_Site.Controllers
             IContactUsMailer mailer = new ContactUsMailer();
 
             //Email them with thanks
-            mailer.ThankYou(form).Send();
+            mailer.ThankYou(form);
 
             //Send to the site team
-            mailer.UserContact(form).Send();
+            mailer.UserContact(form);
 
             return View("ContactThanks");
         }

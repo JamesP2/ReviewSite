@@ -1,7 +1,7 @@
 ﻿@model Review_Site.Models.ContactForm
 @{
     ViewBag.Title = "Contact Us";
-    ReCaptcha.PublicKey = ConfigurationManager.AppSettings["ReCaptcha-PublicKey"];
+    ReCaptcha.PublicKey = "6Lcuq9wSAAAAAFeDg6Odu-uSsUJ-pFqMZ4oqlIcQ";
 }
 
 <h2>Contact Us</h2>
@@ -14,7 +14,7 @@
     @Html.TextBoxFor(x => x.Email, new { placeholder="Email Address", @class = "span4" })<br />
     @Html.TextAreaFor(x => x.Message, new { placeholder="Please enter your message here.", @class = "offset2 span8", style = "height: 400px;" })<br />
     <p>Please prove you're human by completing the Captcha Challenge below:</p>
-    @ReCaptcha.GetHtml(theme: "clean")
+    @ReCaptcha.GetHtml(theme: "red")
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Send Message</button>
     </div>

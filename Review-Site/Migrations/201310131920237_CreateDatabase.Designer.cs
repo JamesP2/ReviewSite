@@ -5,13 +5,13 @@ namespace Review_Site.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    public sealed partial class HeadingTextNotRequired : IMigrationMetadata
+    public sealed partial class CreateDatabase : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(HeadingTextNotRequired));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateDatabase));
         
         string IMigrationMetadata.Id
         {
-            get { return "201211122055052_HeadingTextNotRequired"; }
+            get { return "201310131920237_CreateDatabase"; }
         }
         
         string IMigrationMetadata.Source
