@@ -1,8 +1,0 @@
-﻿@{
-    ViewBag.Title = "Thanks!";
-}
-
-<h2>Thank You</h2>
-<p>Thank You for your message.</p>
-<p>&nbsp;</p>
-<p><a href="@Url.Action("Index", "Home")">Home</a></p>
