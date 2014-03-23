@@ -15,7 +15,6 @@ namespace Review_Site.Models
         public virtual string Name { get; set; }
         public virtual string Identifier { get; set; }
 
-
         public virtual IList<Role> Roles { get; set; }
 
         public Permission()

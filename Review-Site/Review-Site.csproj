@@ -28,6 +28,7 @@
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -546,7 +547,9 @@
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Site.config" />
+    <Content Include="Site.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Feed\Feed.cshtml" />
     <Content Include="Views\Core\Contact.cshtml" />
   </ItemGroup>
@@ -689,7 +692,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\jp2.me.uk.pubxml" />
-    <None Include="Properties\PublishProfiles\JPONE.pubxml" />
+    <None Include="Properties\PublishProfiles\Normandy.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,4 +1,5 @@
-﻿@model Review_Site.Models.ContactForm
+﻿@using System.Configuration
+@model Review_Site.Models.ContactForm
 @{
     ViewBag.Title = "Contact Us";
     ReCaptcha.PublicKey = ConfigurationManager.AppSettings["ReCaptcha-PublicKey"];

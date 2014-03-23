@@ -37,7 +37,9 @@
                 @:</a>
             @:</div>
             @:<a href="@Url.Action("GetArticle", new { controller="Core", area="", id=square.ArticleID })">
+			if(square.Image != null && square.ImageID != null){
                 @:<img alt="Grid Image @square.Image.Title" src="@Url.Action("GetResource", new { controller="Core", area="", id=square.ImageID, width = width, height = height, noSource = true })"/>
+				}
             @:</a>
         @:</div>
         //Append this square's width to the currently used up width of this row.
