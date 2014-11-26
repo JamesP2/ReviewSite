@@ -691,8 +691,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\PublishProfiles\jp2.me.uk.pubxml" />
-    <None Include="Properties\PublishProfiles\Normandy.pubxml" />
+    <None Include="Properties\PublishProfiles\HVWIN12R201.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
